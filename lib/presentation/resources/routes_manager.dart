@@ -1,17 +1,20 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:piggybank/presentation/onboarding_view.dart';
 import 'package:piggybank/presentation/wallet_detail_view.dart';
 import 'package:piggybank/presentation/wallet_list_view.dart';
 
 class RoutesManager {
   static const String home = 'home';
   static const String details = 'details';
+  static const String onboarding = 'onboarding';
 
   static const String paramId = 'id';
 }
 
 /// The route configuration.
 final GoRouter router = GoRouter(
+  initialLocation: '/${RoutesManager.onboarding}',
   routes: <RouteBase>[
     GoRoute(
       path: '/',
@@ -29,6 +32,13 @@ final GoRouter router = GoRouter(
           },
         ),
       ],
+    ),
+    GoRoute(
+      path: '/${RoutesManager.onboarding}',
+      name: RoutesManager.onboarding,
+      builder: (BuildContext context, GoRouterState state) {
+        return const OnboardingView();
+      },
     ),
   ],
 );

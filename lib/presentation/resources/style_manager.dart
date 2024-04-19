@@ -8,7 +8,7 @@ class StyleManager {
     return const TextStyle(
       fontFamily: FontConstants.rokkitt,
       fontWeight: FontWeightManager.bold,
-      fontSize: FontSize.title,
+      fontSize: FontSize.large,
     );
   }
 
@@ -16,7 +16,7 @@ class StyleManager {
     return const TextStyle(
       fontFamily: FontConstants.rokkitt,
       fontWeight: FontWeightManager.bold,
-      fontSize: FontSize.title,
+      fontSize: FontSize.large,
     );
   }
 
@@ -26,6 +26,18 @@ class StyleManager {
   }) {
     return TextStyle(
       fontFamily: FontConstants.figtree,
+      fontSize: fontSize,
+      color: color,
+    );
+  }
+
+  static TextStyle headlineText({
+    Color color = ColorManager.black,
+    double fontSize = FontSize.medium,
+  }) {
+    return TextStyle(
+      fontFamily: FontConstants.rokkitt,
+      fontWeight: FontWeightManager.bold,
       fontSize: fontSize,
       color: color,
     );

@@ -23,7 +23,7 @@ ThemeData getApplicationTheme() {
     // App bar theme
     appBarTheme: AppBarTheme(
       centerTitle: true,
-      color: ColorManager.primary,
+      color: ColorManager.white,
       elevation: 4,
       shadowColor: ColorManager.primaryOpacity70,
       titleTextStyle: StyleManager.appBarTitle,
@@ -34,6 +34,13 @@ ThemeData getApplicationTheme() {
       disabledColor: ColorManager.grey,
       buttonColor: ColorManager.primary,
       splashColor: ColorManager.primaryOpacity70,
+    ),
+
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: ColorManager.darkPrimary,
+        textStyle: StyleManager.buttonText,
+      ),
     ),
 
     // elevated button theme
@@ -50,6 +57,10 @@ ThemeData getApplicationTheme() {
 
     //Text theme
     textTheme: TextTheme(
+      headlineLarge: StyleManager.headlineText(
+        fontSize: FontSize.extraLarge,
+        color: ColorManager.darkPrimary,
+      ),
       bodySmall: StyleManager.bodyText(fontSize: FontSize.small),
       bodyMedium: StyleManager.bodyText(fontSize: FontSize.medium),
       bodyLarge: StyleManager.bodyText(fontSize: FontSize.large),

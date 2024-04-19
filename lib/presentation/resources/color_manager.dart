@@ -4,9 +4,11 @@ class ColorManager {
   static const Color white = Colors.white;
   static const Color black = Colors.black;
 
-  static Color primary = HexColor.fromHex("#a5fac3");
-  static Color darkPrimary = HexColor.fromHex("#055959");
-  static Color primaryOpacity70 = HexColor.fromHex("#b3a5fac3");
+  static Color primary = HexColor.fromHex("#CEC6FF");
+  static Color primaryOpacity70 = HexColor.fromHex("#b3cec6ff");
+  static Color onPrimary = HexColor.fromHex("#433e5e");
+  static Color darkPrimary = HexColor.fromHex("#9f91fa");
+
   static Color hotPink = HexColor.fromHex("#f514c4");
   static Color darkGrey = HexColor.fromHex("#5e9170");
   static Color lightGrey = HexColor.fromHex("#9E9E9E");
