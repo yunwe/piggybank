@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import 'package:piggybank/presentation/onboarding_view.dart';
+import 'package:piggybank/presentation/onboarding/onboarding.dart';
 import 'package:piggybank/presentation/wallet_detail_view.dart';
 import 'package:piggybank/presentation/wallet_list_view.dart';
 

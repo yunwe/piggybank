@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:piggybank/presentation/resources/assets_manager.dart';
+import 'package:piggybank/domain/model.dart';
+import 'package:piggybank/presentation/onboarding/onbaording_vm.dart';
 import 'package:piggybank/presentation/resources/color_manager.dart';
 import 'package:piggybank/presentation/resources/routes_manager.dart';
 import 'package:piggybank/presentation/resources/strings_manager.dart';
@@ -14,37 +15,43 @@ class OnboardingView extends StatefulWidget {
 }
 
 class _OnboardingViewState extends State<OnboardingView> {
-  final List<SliderObject> slides = [
-    SliderObject(
-      AppStrings.onBoardingTitle1,
-      AppStrings.onBoardingSubtitle1,
-      AssetsManager.onboardingLogo1,
-    ),
-    SliderObject(
-      AppStrings.onBoardingTitle2,
-      AppStrings.onBoardingSubtitle2,
-      AssetsManager.onboardingLogo2,
-    ),
-    SliderObject(
-      AppStrings.onBoardingTitle3,
-      AppStrings.onBoardingSubtitle3,
-      AssetsManager.onboardingLogo3,
-    ),
-  ];
-
   final PageController _pageController = PageController();
-  int _currentIndex = 0;
+  final OnBoardingViewModel viewModel = OnBoardingViewModelImplementation();
+
+  @override
+  void initState() {
+    viewModel.start();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewModel.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: viewModel.outputSliderViewObject,
+      builder: (context, snapshot) => getContentWidget(snapshot.data),
+    );
+  }
+
+  Widget getContentWidget(SliderViewObject? viewObject) {
+    if (viewObject == null) {
+      return Container();
+    }
+
     return Scaffold(
       backgroundColor: ColorManager.white,
       //  appBar: AppBar(),
       body: PageView.builder(
         controller: _pageController,
-        onPageChanged: (value) => setState(() => _currentIndex = value),
-        itemCount: slides.length,
-        itemBuilder: (context, index) => OnBoardingPage(slides[index]),
+        onPageChanged: (value) => viewModel.onPageChanged(value),
+        itemCount: viewObject.numOfSlides,
+        itemBuilder: (context, index) =>
+            OnBoardingPage(viewObject.sliderObject),
       ),
       bottomSheet: Container(
         color: ColorManager.white,
@@ -63,21 +70,23 @@ class _OnboardingViewState extends State<OnboardingView> {
                 ),
               ),
             ),
-            pageIndicator,
+            pageIndicator(viewObject),
           ],
         ),
       ),
     );
   }
 
-  Widget get pageIndicator => Row(
+  Widget pageIndicator(SliderViewObject viewObject) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          for (var i = 0; i < slides.length; i++)
+          for (var i = 0; i < viewObject.numOfSlides; i++)
             Padding(
               padding: const EdgeInsets.all(AppPadding.p10),
               child: Icon(
-                i == _currentIndex ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                i == viewObject.currentIndex
+                    ? Icons.radio_button_checked
+                    : Icons.radio_button_unchecked,
                 size: AppSize.iconSize,
                 color: ColorManager.darkPrimary,
               ),
@@ -123,12 +132,4 @@ class OnBoardingPage extends StatelessWidget {
       ),
     );
   }
-}
-
-class SliderObject {
-  String title;
-  String subTitle;
-  String image;
-
-  SliderObject(this.title, this.subTitle, this.image);
 }
