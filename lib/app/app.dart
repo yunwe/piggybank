@@ -1,22 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:piggybank/presentation/resources/routes_manager.dart';
-import 'package:piggybank/presentation/resources/theme_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:piggybank/app/di.dart';
+import 'package:piggybank/app/route/app_router.dart';
+import 'package:piggybank/app/route/route_utils.dart';
+import 'package:piggybank/domain/channels/user_channel.dart';
+import 'package:piggybank/domain/usecase/logout_usecase.dart';
+import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
+import 'package:piggybank/presentation/resources/resources.dart';
 
-class MyApp extends StatelessWidget {
-  // private named constructor
-  const MyApp._internal();
+class App extends StatelessWidget {
+  const App({
+    super.key,
+  });
 
-  // single instance -- singleton
-  static const MyApp _instance = MyApp._internal();
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AppBloc(
+        userChannel: injector<UserChannel>(),
+        logoutUseCase: injector<LogoutUseCase>(),
+      ),
+      child: const AppView(),
+    );
+  }
+}
 
-  // factory for the class instance
-  factory MyApp() => _instance;
+class AppView extends StatelessWidget {
+  const AppView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: AppRouter.router,
       theme: getApplicationTheme(),
+      builder: (context, child) {
+        return BlocListener<AppBloc, AppState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case AppStatus.authenticated:
+                AppRouter.router.goNamed(PAGES.walletList.screenName);
+              case AppStatus.unauthenticated:
+              default:
+                AppRouter.router.goNamed(PAGES.signin.screenName);
+            }
+          },
+          child: child,
+        );
+      },
     );
   }
 }
