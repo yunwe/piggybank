@@ -15,20 +15,18 @@ class ForgetPasswordView extends StatelessWidget {
   }
 
   Widget mainContent(BuildContext context) {
-    return GradientContainerWidget(
-      content: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            formContent(context),
-            //     SharedWidgets.whiteSpace,
-            const Divider(),
-            const LinkText(
-              page: PAGES.signin,
-              text: AppStrings.signinText,
-            ),
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          formContent(context),
+          //     SharedWidgets.whiteSpace,
+          const Divider(),
+          const LinkText(
+            page: PAGES.signin,
+            text: AppStrings.signinText,
+          ),
+        ],
       ),
     );
   }

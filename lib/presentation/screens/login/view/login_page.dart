@@ -16,27 +16,25 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.primary,
-      body: GradientContainerWidget(
-        content: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BlocProvider(
-                create: (context) {
-                  return LoginBloc(
-                    useCase: injector<LoginUseCase>(),
-                  );
-                },
-                child: const LoginForm(),
-              ),
-              space,
-              const Divider(),
-              const LinkText(
-                page: PAGES.register,
-                text: AppStrings.registerText,
-              ),
-            ],
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BlocProvider(
+              create: (context) {
+                return LoginBloc(
+                  useCase: injector<LoginUseCase>(),
+                );
+              },
+              child: const LoginForm(),
+            ),
+            space,
+            const Divider(),
+            const LinkText(
+              page: PAGES.register,
+              text: AppStrings.registerText,
+            ),
+          ],
         ),
       ),
     );

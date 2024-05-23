@@ -14,28 +14,27 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: MyColors.primary,
-        body: GradientContainerWidget(
-          content: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BlocProvider(
-                  create: (context) => RegisterBloc(
-                    useCase: injector<SignupUseCase>(),
-                  ),
-                  child: const RegisterForm(),
-                ),
-
-                //          SharedWidgets.whiteSpace,
-                const Divider(),
-                const LinkText(
-                  page: PAGES.signin,
-                  text: AppStrings.signinText,
-                ),
-              ],
+      backgroundColor: MyColors.primary,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BlocProvider(
+              create: (context) => RegisterBloc(
+                useCase: injector<SignupUseCase>(),
+              ),
+              child: const RegisterForm(),
             ),
-          ),
-        ));
+
+            //          SharedWidgets.whiteSpace,
+            const Divider(),
+            const LinkText(
+              page: PAGES.signin,
+              text: AppStrings.signinText,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

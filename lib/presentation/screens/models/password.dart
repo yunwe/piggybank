@@ -1,5 +1,5 @@
 import 'package:formz/formz.dart';
-import 'package:mvmm_auth_demo/presentation/resources/app_strings.dart';
+import 'package:piggybank/presentation/resources/app_strings.dart';
 
 enum PasswordValidationError {
   empty,
