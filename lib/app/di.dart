@@ -1,8 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:piggybank/data/auth/repository/repository_impl.dart';
+import 'package:piggybank/data/auth/repository_impl.dart';
+import 'package:piggybank/data/wallet/repository_impl.dart';
 import 'package:piggybank/domain/channels/user_channel.dart';
 import 'package:piggybank/domain/repository/auth_repository.dart';
+import 'package:piggybank/domain/repository/wallet_repository.dart';
+import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
 import 'package:piggybank/domain/usecase/signup_usercase.dart';
@@ -18,7 +21,9 @@ Future<void> initAppModule() async {
   injector.registerLazySingleton<AuthRepository>(
     () => FirebaseAuthRepository(),
   );
-
+  injector.registerLazySingleton<WalletRepository>(
+    () => FirebaseWalletRepository(),
+  );
   injector.registerLazySingleton<UserChannel>(
     () => UserChannel(repository: injector<AuthRepository>()),
   );
@@ -42,6 +47,16 @@ initSignupModule() {
   if (!GetIt.I.isRegistered<SignupUseCase>()) {
     injector.registerLazySingleton<SignupUseCase>(
       () => SignupUseCase(injector<AuthRepository>()),
+    );
+  }
+}
+
+initCreateWalletModule() {
+  if (!GetIt.I.isRegistered<CreateWalletUseCase>()) {
+    injector.registerLazySingleton<CreateWalletUseCase>(
+      () => CreateWalletUseCase(
+        injector<WalletRepository>(),
+      ),
     );
   }
 }

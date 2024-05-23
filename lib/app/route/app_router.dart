@@ -5,8 +5,9 @@ import 'package:piggybank/app/di.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
 import 'package:piggybank/presentation/screens/error/error.dart';
 import 'package:piggybank/presentation/screens/home/home.dart';
-import 'package:piggybank/presentation/screens/login/login.dart';
-import 'package:piggybank/presentation/screens/register/register.dart';
+import 'package:piggybank/presentation/screens/auth/login/login.dart';
+import 'package:piggybank/presentation/screens/auth/register/register.dart';
+import 'package:piggybank/presentation/screens/new_wallet/new_wallet.dart';
 import 'route_utils.dart';
 
 class AppRouter {
@@ -25,6 +26,16 @@ class AppRouter {
           child: const HomePage(),
         ),
       ),
+      GoRoute(
+          path: PAGES.walletNew.screenPath,
+          name: PAGES.walletNew.screenName,
+          builder: (context, state) {
+            initCreateWalletModule();
+            return BlocProvider.value(
+              value: context.read<AppBloc>(),
+              child: const NewWalletPage(),
+            );
+          }),
       GoRoute(
         path: PAGES.signin.screenPath,
         name: PAGES.signin.screenName,

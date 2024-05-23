@@ -17,13 +17,13 @@ extension AppPageExtension on PAGES {
       case PAGES.walletList:
         return "/";
       case PAGES.walletDetail:
-        return "/wallet";
+        return "/wallet/:id";
       case PAGES.walletNew:
-        return "/wallet/new";
+        return "/new";
       case PAGES.walletTransaction:
-        return "/wallet/transaction";
+        return "/transaction";
       case PAGES.archivedWalletList:
-        return "/wallet/archived";
+        return "/archived";
       case PAGES.onboarding:
         return "/onboarding";
       case PAGES.signin:

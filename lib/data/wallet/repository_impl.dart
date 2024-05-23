@@ -9,7 +9,7 @@ class FirebaseWalletRepository implements WalletRepository {
 
   final FirebaseFirestore _db;
 
-  String collectionPath(String userId) => 'wallets/$userId';
+  String collectionPath(String userId) => 'wallets';
 
   @override
   Future<void> create({
@@ -23,16 +23,18 @@ class FirebaseWalletRepository implements WalletRepository {
       'amount': 0,
       'target_amount': targetAmount,
       'target_date': targetEndDate,
-      'created_at': DateTime.now(),
+      'created_at': DateTime.now().toString(),
       'is_archived': false,
       'archived_at': null,
       'is_deleted': false,
       'deleted_at': null,
     };
 
-    _db.collection(collectionPath(userId)).add(wallet).then(
-          (DocumentReference doc) => print('DocumentSnapshot added with ID: ${doc.id}'),
-        );
+    try {
+      _db.collection(collectionPath(userId)).add(wallet);
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override

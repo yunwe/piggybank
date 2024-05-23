@@ -32,4 +32,13 @@ class AppStrings {
   static const String onBoardingSubtitle3 = 'Reach your financial milestones and secure your future';
 
   static const String skip = 'Skip';
+
+  //Wallet
+  static const String errorEmptyInput = 'This must not be empty';
+  static const String errorNotANumber = 'This must be a number';
+  static const String errorLessThanZero = 'Input must be larger than zero.';
+
+  static const String errorShortWalletname = 'Must be at least 4 characters.';
+  static const String errorLongWalletname = 'Must not be more than 30 characters.';
+  static const String errorInvalidTargetDate = 'Must be within 3 years.';
 }
