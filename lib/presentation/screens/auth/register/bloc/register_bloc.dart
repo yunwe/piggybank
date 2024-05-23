@@ -5,7 +5,6 @@ import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/signup_usercase.dart';
 import 'package:piggybank/presentation/screens/auth/models/models.dart';
-import 'package:piggybank/presentation/screens/auth/models/password_confirm.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
