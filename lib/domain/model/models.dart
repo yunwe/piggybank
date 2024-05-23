@@ -1,3 +1,5 @@
 export 'user.dart';
-export 'device_info.dart';
 export 'failure.dart';
+export 'slider_object.dart';
+export 'wallet.dart';
+export 'transaction.dart';
