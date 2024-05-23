@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:either_dart/either.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/repository/exceptions.dart';
-import 'package:piggybank/domain/repository/repository.dart';
+import 'package:piggybank/domain/repository/auth_repository.dart';
 import 'package:piggybank/domain/usecase/base_usecase.dart';
 
 class LoginUseCase implements BaseUseCase<LoginUseCaseInput, void> {

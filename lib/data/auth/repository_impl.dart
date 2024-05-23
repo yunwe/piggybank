@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:piggybank/domain/model/models.dart';
-import 'package:piggybank/domain/repository/repository.dart';
+import 'package:piggybank/domain/repository/auth_repository.dart';
 import 'mappers.dart';
 import 'exceptions.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:piggybank/domain/model/models.dart';
-import 'package:piggybank/domain/repository/repository.dart';
+import 'package:piggybank/domain/repository/auth_repository.dart';
 
 class UserChannel {
   UserChannel({
