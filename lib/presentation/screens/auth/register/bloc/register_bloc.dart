@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/signup_usercase.dart';
-import 'package:piggybank/presentation/screens/models/models.dart';
-import 'package:piggybank/presentation/screens/models/password_confirm.dart';
+import 'package:piggybank/presentation/screens/auth/models/models.dart';
+import 'package:piggybank/presentation/screens/auth/models/password_confirm.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
@@ -85,8 +85,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   ) async {
     if (state.isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
-      SignupUseCaseInput input =
-          SignupUseCaseInput(state.username.value, state.password.value);
+      SignupUseCaseInput input = SignupUseCaseInput(state.username.value, state.password.value);
       Either<Failure, void> value = await _useCase.execute(input);
       if (value.isLeft) {
         emit(state.copyWith(

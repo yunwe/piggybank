@@ -6,8 +6,7 @@ import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/presentation/resources/app_strings.dart';
 import 'package:piggybank/presentation/resources/colors.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/login/bloc/login_bloc.dart';
-import 'package:piggybank/presentation/screens/login/view/login_form.dart';
+import 'package:piggybank/presentation/screens/auth/login/login.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

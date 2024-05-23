@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
-import 'package:piggybank/presentation/screens/models/models.dart';
+import 'package:piggybank/presentation/screens/auth/models/models.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -54,8 +54,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     if (state.isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
-      LoginUseCaseInput input =
-          LoginUseCaseInput(state.username.value, state.password.value);
+      LoginUseCaseInput input = LoginUseCaseInput(state.username.value, state.password.value);
       Either<Failure, void> value = await _useCase.execute(input);
       if (value.isLeft) {
         emit(state.copyWith(

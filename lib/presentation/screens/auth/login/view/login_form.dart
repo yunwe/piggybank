@@ -4,7 +4,7 @@ import 'package:formz/formz.dart';
 import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/login/bloc/login_bloc.dart';
+import 'package:piggybank/presentation/screens/auth/login/login.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});

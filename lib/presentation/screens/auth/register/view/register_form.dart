@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/register/register.dart';
+import 'package:piggybank/presentation/screens/auth/register/register.dart';
 
 class RegisterForm extends StatelessWidget {
   const RegisterForm({super.key});
@@ -100,9 +100,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterBloc, RegisterState>(
-      buildWhen: (previous, current) =>
-          previous.password != current.password ||
-          previous.confirmation != current.confirmation,
+      buildWhen: (previous, current) => previous.password != current.password || previous.confirmation != current.confirmation,
       builder: (context, state) {
         return MyTextField(
           Icons.lock,
