@@ -3,3 +3,4 @@ export 'colors.dart';
 export 'fonts.dart';
 export 'theme.dart';
 export 'values.dart';
+export 'assets.dart';
