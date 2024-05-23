@@ -1,6 +1,6 @@
 import '../model/models.dart';
 
-abstract class Repository {
+abstract class AuthRepository {
   //Output
   Stream<User> get user;
 

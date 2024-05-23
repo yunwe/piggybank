@@ -7,7 +7,7 @@ import 'package:piggybank/domain/repository/repository.dart';
 import 'mappers.dart';
 import 'exceptions.dart';
 
-class FirebaseAuthRepository extends Repository {
+class FirebaseAuthRepository extends AuthRepository {
   FirebaseAuthRepository({
     firebase_auth.FirebaseAuth? firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;

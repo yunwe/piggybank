@@ -8,7 +8,7 @@ class UserChannel {
     required this.repository,
   });
 
-  final Repository repository;
+  final AuthRepository repository;
 
   Stream<User> get user => repository.user;
 }

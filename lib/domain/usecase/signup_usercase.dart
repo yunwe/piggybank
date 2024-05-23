@@ -7,7 +7,7 @@ import 'package:piggybank/domain/repository/repository.dart';
 import 'package:piggybank/domain/usecase/base_usecase.dart';
 
 class SignupUseCase implements BaseUseCase<SignupUseCaseInput, void> {
-  final Repository _repository;
+  final AuthRepository _repository;
 
   SignupUseCase(this._repository);
 
@@ -19,8 +19,7 @@ class SignupUseCase implements BaseUseCase<SignupUseCaseInput, void> {
     } on BaseException catch (failure) {
       return Left(failure.toFailure);
     } catch (error) {
-      var failure =
-          const Failure('Default Error Message'); //Todo: Change String
+      var failure = const Failure('Default Error Message'); //Todo: Change String
       return Left(failure);
     }
   }

@@ -5,7 +5,7 @@ import 'package:piggybank/domain/repository/repository.dart';
 import 'package:piggybank/domain/usecase/base_usecase.dart';
 
 class LogoutUseCase implements BaseUseCase<LogoutUseCaseInput, bool> {
-  final Repository _repository;
+  final AuthRepository _repository;
 
   LogoutUseCase(this._repository);
 
@@ -17,8 +17,7 @@ class LogoutUseCase implements BaseUseCase<LogoutUseCaseInput, bool> {
     } on BaseException catch (failure) {
       return Left(failure.toFailure);
     } catch (error) {
-      var failure =
-          const Failure('Default Error Message'); //Todo: Change String
+      var failure = const Failure('Default Error Message'); //Todo: Change String
       return Left(failure);
     }
   }
