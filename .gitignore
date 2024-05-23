@@ -25,3 +25,12 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+.fvm/flutter_sdk
+
+.DS_Store
+*.json
+
+#Avoid Adding Firebase Setting
+android/app/google-services.json
+lib/firebase_options.dart
