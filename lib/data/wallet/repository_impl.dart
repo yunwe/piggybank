@@ -68,9 +68,13 @@ class FirebaseWalletRepository implements WalletRepository {
   Future<void> list(String userId) async {
     bool isConnected = await networkInfo.isConnected;
     if (!isConnected) {
+      print('ConnectionFailure');
+
       throw const ConnectionFailure();
     }
     try {
+      print('Retrieve from firestore');
+
       //Retrieve from firestore
       final snapShot = await _db.collection(_collection).where("user_id", isEqualTo: userId).get();
 
@@ -80,6 +84,8 @@ class FirebaseWalletRepository implements WalletRepository {
         result.add(WalletMapper.fromDocument(docSnapshot));
       }
 
+      print('Success');
+      print(result.length);
       //Add to stream
       _streamController.sink.add(result);
     } catch (e) {
