@@ -13,13 +13,7 @@ class ListWalletUseCase implements BaseUseCase<ListWalletUseCaseInput, void> {
   @override
   Future<Either<Failure, void>> execute(ListWalletUseCaseInput input) async {
     try {
-      print('Executing list usecase');
-      List<Wallet> result = await _repository.list(input.userId);
-      print('success');
-      print(result.length);
-      for (Wallet w in result) {
-        print(w.title);
-      }
+      await _repository.list(input.userId);
       return const Right(null);
     } on BaseException catch (failure) {
       return Left(failure.toFailure);

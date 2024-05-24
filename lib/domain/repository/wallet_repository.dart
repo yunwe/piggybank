@@ -1,6 +1,10 @@
 import '../model/models.dart';
 
 abstract class WalletRepository {
+  //Output
+
+  Stream<List<Wallet>> get wallets;
+
   //Input Functions
   Future<void> create({
     required String userId,
@@ -13,7 +17,7 @@ abstract class WalletRepository {
 
   Future<void> delete({required String id});
 
-  Future<List<Wallet>> list(String userId);
+  Future<void> list(String userId);
 
   Future<Wallet> get({required String id});
 }

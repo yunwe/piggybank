@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:piggybank/app/service/network_info.dart';
 import 'package:piggybank/data/wallet/mappers.dart';
@@ -15,6 +17,10 @@ class FirebaseWalletRepository implements WalletRepository {
   final NetworkInfo networkInfo;
 
   static const String _collection = 'wallets';
+  @override
+  Stream<List<Wallet>> get wallets => _streamController.stream;
+
+  final StreamController<List<Wallet>> _streamController = StreamController<List<Wallet>>();
 
   @override
   Future<void> create({
@@ -59,21 +65,23 @@ class FirebaseWalletRepository implements WalletRepository {
   }
 
   @override
-  Future<List<Wallet>> list(String userId) async {
+  Future<void> list(String userId) async {
     bool isConnected = await networkInfo.isConnected;
     if (!isConnected) {
-      print('Connection Failure');
       throw const ConnectionFailure();
     }
     try {
+      //Retrieve from firestore
       final snapShot = await _db.collection(_collection).where("user_id", isEqualTo: userId).get();
-      List<Wallet> result = [];
 
+      //Convert to Wallet Objects
+      List<Wallet> result = [];
       for (var docSnapshot in snapShot.docs) {
         result.add(WalletMapper.fromDocument(docSnapshot));
       }
 
-      return result;
+      //Add to stream
+      _streamController.sink.add(result);
     } catch (e) {
       if (e is FirebaseException) {
         throw FirestoreFailure(e.message ?? 'Unknown failure occured.');
