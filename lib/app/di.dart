@@ -7,6 +7,7 @@ import 'package:piggybank/domain/channels/user_channel.dart';
 import 'package:piggybank/domain/repository/auth_repository.dart';
 import 'package:piggybank/domain/repository/wallet_repository.dart';
 import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
+import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
 import 'package:piggybank/domain/usecase/signup_usercase.dart';
@@ -58,6 +59,16 @@ initCreateWalletModule() {
   if (!GetIt.I.isRegistered<CreateWalletUseCase>()) {
     injector.registerLazySingleton<CreateWalletUseCase>(
       () => CreateWalletUseCase(
+        injector<WalletRepository>(),
+      ),
+    );
+  }
+}
+
+initListWalletModule() {
+  if (!GetIt.I.isRegistered<ListWalletUseCase>()) {
+    injector.registerLazySingleton<ListWalletUseCase>(
+      () => ListWalletUseCase(
         injector<WalletRepository>(),
       ),
     );

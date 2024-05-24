@@ -1,23 +1,25 @@
 import 'package:either_dart/either.dart';
 import 'package:piggybank/domain/model/failure.dart';
+import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/repository/exceptions.dart';
 import 'package:piggybank/domain/repository/wallet_repository.dart';
 import 'package:piggybank/domain/usecase/base_usecase.dart';
 
-class CreateWalletUseCase implements BaseUseCase<CreateWalletUseCaseInput, void> {
+class ListWalletUseCase implements BaseUseCase<ListWalletUseCaseInput, void> {
   final WalletRepository _repository;
 
-  CreateWalletUseCase(this._repository);
+  ListWalletUseCase(this._repository);
 
   @override
-  Future<Either<Failure, void>> execute(CreateWalletUseCaseInput input) async {
+  Future<Either<Failure, void>> execute(ListWalletUseCaseInput input) async {
     try {
-      await _repository.create(
-        userId: input.userId,
-        title: input.title,
-        targetAmount: input.targetAmount,
-        targetEndDate: input.targetDate,
-      );
+      print('Executing list usecase');
+      List<Wallet> result = await _repository.list(input.userId);
+      print('success');
+      print(result.length);
+      for (Wallet w in result) {
+        print(w.title);
+      }
       return const Right(null);
     } on BaseException catch (failure) {
       return Left(failure.toFailure);
@@ -28,16 +30,8 @@ class CreateWalletUseCase implements BaseUseCase<CreateWalletUseCaseInput, void>
   }
 }
 
-class CreateWalletUseCaseInput {
+class ListWalletUseCaseInput {
   String userId;
-  String title;
-  double? targetAmount;
-  DateTime? targetDate;
 
-  CreateWalletUseCaseInput({
-    required this.userId,
-    required this.title,
-    this.targetAmount,
-    this.targetDate,
-  });
+  ListWalletUseCaseInput(this.userId);
 }

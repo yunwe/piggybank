@@ -13,7 +13,7 @@ abstract class WalletRepository {
 
   Future<void> delete({required String id});
 
-  Future<List<Wallet>> getAll();
+  Future<List<Wallet>> list(String userId);
 
   Future<Wallet> get({required String id});
 }

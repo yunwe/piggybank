@@ -19,13 +19,15 @@ class AppRouter {
     initialLocation: PAGES.onboarding.screenPath,
     routes: [
       GoRoute(
-        path: PAGES.walletList.screenPath,
-        name: PAGES.walletList.screenName,
-        builder: (context, state) => BlocProvider.value(
-          value: context.read<AppBloc>(),
-          child: const HomePage(),
-        ),
-      ),
+          path: PAGES.walletList.screenPath,
+          name: PAGES.walletList.screenName,
+          builder: (context, state) {
+            initListWalletModule();
+            return BlocProvider.value(
+              value: context.read<AppBloc>(),
+              child: const HomePage(),
+            );
+          }),
       GoRoute(
           path: PAGES.walletNew.screenPath,
           name: PAGES.walletNew.screenName,
