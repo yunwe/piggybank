@@ -21,16 +21,33 @@ class WalletMapper {
     print('Converting ${snapshot.id}');
 
     Map<String, dynamic> data = snapshot.data();
+
     return Wallet(
       id: snapshot.id,
       title: data[TITLE],
-      amount: data[AMOUNT],
-      startDate: DateTime(data[CREATED_AT]), //TODO: Fix Here
-      // targetAmount: data[TARGET_AMOUNT],
-      // targetEndDate: data[TARGET_DATE],
-      // isArchived: data[IS_ARCHIVED],
-      // archivedDate: data[ARCHIVED_AT],
+      amount: _toDouble(data[AMOUNT]),
+      startDate: _toDateTime(data[CREATED_AT]),
+      targetAmount: _toDouble(data[TARGET_AMOUNT]),
+      targetEndDate: _toNullableDateTime(data[TARGET_DATE]),
+      isArchived: data[IS_ARCHIVED],
+      archivedDate: _toNullableDateTime(data[ARCHIVED_AT]),
     );
+  }
+
+  static double _toDouble(dynamic value) {
+    return double.tryParse(value.toString()) ?? 0;
+  }
+
+  static DateTime _toDateTime(dynamic value) {
+    return DateTime.fromMillisecondsSinceEpoch(value);
+  }
+
+  static DateTime? _toNullableDateTime(dynamic? value) {
+    if (value == null) {
+      return null;
+    }
+
+    return _toDateTime(value!);
   }
 
   static Map<String, dynamic> toDocument({
@@ -42,10 +59,10 @@ class WalletMapper {
     return <String, dynamic>{
       USER_ID: userId,
       TITLE: title,
-      AMOUNT: 0,
+      AMOUNT: 0.0,
       TARGET_AMOUNT: targetAmount,
-      TARGET_DATE: targetEndDate,
-      CREATED_AT: DateTime.now().toString(),
+      TARGET_DATE: targetEndDate?.millisecondsSinceEpoch,
+      CREATED_AT: DateTime.now().millisecondsSinceEpoch,
       IS_ARCHIVED: false,
       ARCHIVED_AT: null,
       IS_DELETED: false,
