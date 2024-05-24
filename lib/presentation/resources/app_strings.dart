@@ -1,4 +1,7 @@
 class AppStrings {
+  //Common Widgets
+  static const String selectDate = 'Select Date';
+
   //Authentication
   static const String rememberMe = 'Remember me';
   static const String forgotPassword = 'Forgot Password?';
@@ -41,4 +44,9 @@ class AppStrings {
   static const String errorShortWalletname = 'Must be at least 4 characters.';
   static const String errorLongWalletname = 'Must not be more than 30 characters.';
   static const String errorInvalidTargetDate = 'Must be within 3 years.';
+
+  static const String titleCreate = 'Create New Goal';
+  static const String labelSetTarget = 'Set Target';
+  static const String labelTargetAmount = 'Target Amount';
+  static const String labelCreate = 'Create Goal';
 }

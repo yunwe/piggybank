@@ -32,6 +32,12 @@ class AppKeys {
   static const Key registerPassword = Key('registerForm_passwordInput_textField');
   static const Key registerConfirmPassword = Key('registerForm_confirmPasswordInput_textField');
   static const Key registerSubmit = Key('registerForm_continue_raisedButton');
+
+  static const Key walletNameInput = Key('walletNew_goalNameInput_textField');
+  static const Key walletSetTargetToggle = Key('walletNew_setTarget_switch');
+  static const Key walletTargetAmount = Key('walletNew_targetAmountInput_textField');
+  static const Key walletTargetDate = Key('walletNew_targetDateInput_datePicker');
+  static const Key walletCreateSubmit = Key('walletNew_submit_raisedButton');
 }
 
 class FontSize {

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/auth/login/login.dart';
 import 'package:piggybank/presentation/screens/new_wallet/new_wallet.dart';
 
 class NewWalletForm extends StatelessWidget {
@@ -26,21 +24,21 @@ class NewWalletForm extends StatelessWidget {
     );
   }
 
-  Widget formContent(BuildContext context) => FormContainerWidget(
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              AppStrings.titleSignin,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            spaceP20,
-            _WalletNameInput(),
-            spaceP20,
-            _SubmitButton(),
-          ],
-        ),
+  Widget formContent(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          spaceP20,
+          _WalletNameInput(),
+          spaceP20,
+          _WalletSetTargetInput(),
+          spaceP20,
+          _WalletTargetAmountInput(),
+          spaceP20,
+          _WalletTargetDateInput(),
+          spaceP8,
+          _SubmitButton(),
+        ],
       );
 
   Widget get spaceP20 => const SizedBox(
@@ -59,13 +57,74 @@ class _WalletNameInput extends StatelessWidget {
         buildWhen: (previous, current) => previous.goalName != current.goalName,
         builder: (context, state) {
           return MyTextField(
-            Icons.person,
-            AppStrings.hintUserName,
-            key: AppKeys.loginUsername,
+            Icons.savings,
+            'Goal Name',
+            key: AppKeys.walletNameInput,
             onChanged: (goalname) => context.read<NewWalletBloc>().add(
                   NewWalletGoalNameChanged(goalName: goalname),
                 ),
             errorText: state.goalName.displayError?.text(),
+          );
+        });
+  }
+}
+
+class _WalletSetTargetInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NewWalletBloc, NewWalletState>(
+        buildWhen: (previous, current) => previous.setTarget != current.setTarget,
+        builder: (context, state) {
+          return LabelSwitch(
+            key: AppKeys.walletSetTargetToggle,
+            label: AppStrings.labelSetTarget,
+            isOn: state.setTarget,
+            onChanged: (isOn) => context.read<NewWalletBloc>().add(
+                  NewWalletSetTargetChanged(setTarget: isOn),
+                ),
+          );
+        });
+  }
+}
+
+class _WalletTargetAmountInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NewWalletBloc, NewWalletState>(
+        buildWhen: (previous, current) => previous.setTarget != current.setTarget || previous.targetAmount != current.targetAmount,
+        builder: (context, state) {
+          if (!state.setTarget) {
+            return const SizedBox();
+          }
+          return MyTextField(
+            Icons.attach_money,
+            AppStrings.labelTargetAmount,
+            key: AppKeys.walletTargetAmount,
+            onChanged: (amount) => context.read<NewWalletBloc>().add(
+                  NewWalletTargetAmountChanged(targetAmount: amount),
+                ),
+            errorText: state.targetAmount.displayError?.text(),
+          );
+        });
+  }
+}
+
+class _WalletTargetDateInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NewWalletBloc, NewWalletState>(
+        buildWhen: (previous, current) => previous.setTarget != current.setTarget || previous.targetDate != current.targetDate,
+        builder: (context, state) {
+          if (!state.setTarget) {
+            return const SizedBox();
+          }
+          return DatePicker(
+            key: AppKeys.walletTargetDate,
+            selectedDate: state.targetDate.value,
+            onDateChanged: (date) => context.read<NewWalletBloc>().add(
+                  NewWalletTargetDateChanged(targetDate: date),
+                ),
+            error: state.targetDate.displayError?.text(),
           );
         });
   }
@@ -79,13 +138,13 @@ class _SubmitButton extends StatelessWidget {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
             : MyButton(
-                key: AppKeys.loginSubmit,
+                key: AppKeys.walletCreateSubmit,
                 onPressed: state.isValid
                     ? () {
                         context.read<NewWalletBloc>().add(const NewWalletSubmitted());
                       }
                     : null,
-                label: AppStrings.labelLogin,
+                label: AppStrings.labelCreate,
               );
       },
     );

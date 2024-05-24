@@ -9,7 +9,7 @@ class FirebaseWalletRepository implements WalletRepository {
 
   final FirebaseFirestore _db;
 
-  String collectionPath(String userId) => 'wallets';
+  static const String _collection = 'wallets';
 
   @override
   Future<void> create({
@@ -18,20 +18,15 @@ class FirebaseWalletRepository implements WalletRepository {
     double? targetAmount,
     DateTime? targetEndDate,
   }) async {
-    final wallet = <String, dynamic>{
-      'title': title,
-      'amount': 0,
-      'target_amount': targetAmount,
-      'target_date': targetEndDate,
-      'created_at': DateTime.now().toString(),
-      'is_archived': false,
-      'archived_at': null,
-      'is_deleted': false,
-      'deleted_at': null,
-    };
-
     try {
-      _db.collection(collectionPath(userId)).add(wallet);
+      _db.collection(_collection).add(
+            _doc(
+              userId: userId,
+              title: title,
+              targetAmount: targetAmount,
+              targetEndDate: targetEndDate,
+            ),
+          );
     } catch (error) {
       print(error);
     }
@@ -59,5 +54,25 @@ class FirebaseWalletRepository implements WalletRepository {
   Future<void> update() {
     // TODO: implement update
     throw UnimplementedError();
+  }
+
+  Map<String, dynamic> _doc({
+    required String userId,
+    required String title,
+    double? targetAmount,
+    DateTime? targetEndDate,
+  }) {
+    return <String, dynamic>{
+      'user_id': userId,
+      'title': title,
+      'amount': 0,
+      'target_amount': targetAmount,
+      'target_date': targetEndDate,
+      'created_at': DateTime.now().toString(),
+      'is_archived': false,
+      'archived_at': null,
+      'is_deleted': false,
+      'deleted_at': null,
+    };
   }
 }
