@@ -10,3 +10,7 @@ abstract class BaseException implements Exception {
     return Failure(message);
   }
 }
+
+class ConnectionFailure extends BaseException {
+  const ConnectionFailure([super.message = 'Please check your internet connnection.']);
+}

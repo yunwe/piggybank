@@ -101,6 +101,7 @@ class NewWalletBloc extends Bloc<NewWalletEvent, NewWalletState> {
         targetAmount: state.setTarget ? double.parse(state.targetAmount.value) : null,
         targetDate: state.setTarget ? state.targetDate.value : null,
       );
+      print('Processing - ${state.goalName.value}');
       Either<Failure, void> value = await _useCase.execute(input);
 
       if (value.isLeft) {
@@ -108,8 +109,10 @@ class NewWalletBloc extends Bloc<NewWalletEvent, NewWalletState> {
           status: FormzSubmissionStatus.failure,
           failure: value.left,
         ));
+        print('failed');
       } else {
         emit(state.copyWith(status: FormzSubmissionStatus.success));
+        print('success');
       }
     }
   }

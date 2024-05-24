@@ -1,5 +1,3 @@
-//TODO: Use Constant Strings
-
 import 'package:piggybank/domain/repository/exceptions.dart';
 
 /// {@template sign_up_with_email_and_password_failure}
@@ -48,8 +46,7 @@ class SignUpWithEmailAndPasswordFailure extends BaseException {
 /// {@endtemplate}
 class LogInWithEmailAndPasswordFailure extends BaseException {
   /// {@macro log_in_with_email_and_password_failure}
-  const LogInWithEmailAndPasswordFailure(
-      [super.message = 'An unknown exception occurred.']);
+  const LogInWithEmailAndPasswordFailure([super.message = 'An unknown exception occurred.']);
 
   /// Create an authentication message
   /// from a firebase authentication exception code.

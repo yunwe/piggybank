@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:piggybank/app/service/network_info.dart';
 import 'package:piggybank/data/auth/repository_impl.dart';
 import 'package:piggybank/data/wallet/repository_impl.dart';
 import 'package:piggybank/domain/channels/user_channel.dart';
@@ -18,11 +19,13 @@ Future<void> initAppModule() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  NetworkInfo networkInfo = NetworkInfo();
+
   injector.registerLazySingleton<AuthRepository>(
-    () => FirebaseAuthRepository(),
+    () => FirebaseAuthRepository(networkInfo: networkInfo),
   );
   injector.registerLazySingleton<WalletRepository>(
-    () => FirebaseWalletRepository(),
+    () => FirebaseWalletRepository(networkInfo: networkInfo),
   );
   injector.registerLazySingleton<UserChannel>(
     () => UserChannel(repository: injector<AuthRepository>()),

@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:piggybank/app/service/network_info.dart';
 import 'package:piggybank/domain/model/wallet.dart';
+import 'package:piggybank/domain/repository/exceptions.dart';
 import 'package:piggybank/domain/repository/wallet_repository.dart';
 
 class FirebaseWalletRepository implements WalletRepository {
   FirebaseWalletRepository({
     FirebaseFirestore? db,
+    required this.networkInfo,
   }) : _db = db ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore _db;
+  final NetworkInfo networkInfo;
 
   static const String _collection = 'wallets';
 
@@ -18,8 +22,12 @@ class FirebaseWalletRepository implements WalletRepository {
     double? targetAmount,
     DateTime? targetEndDate,
   }) async {
+    bool isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      throw const ConnectionFailure();
+    }
     try {
-      _db.collection(_collection).add(
+      final ref = await _db.collection(_collection).add(
             _doc(
               userId: userId,
               title: title,
@@ -27,8 +35,13 @@ class FirebaseWalletRepository implements WalletRepository {
               targetEndDate: targetEndDate,
             ),
           );
-    } catch (error) {
-      print(error);
+      print('success');
+    } catch (e) {
+      if (e is FirebaseException) {
+        throw FirestoreFailure(e.message ?? 'Unknown failure occured.');
+      } else {
+        throw const FirestoreFailure();
+      }
     }
   }
 
@@ -75,4 +88,9 @@ class FirebaseWalletRepository implements WalletRepository {
       'deleted_at': null,
     };
   }
+}
+
+/// Thrown during the logout process if a failure occurs.
+class FirestoreFailure extends BaseException {
+  const FirestoreFailure([super.message = 'An unknown exception occurred.']);
 }

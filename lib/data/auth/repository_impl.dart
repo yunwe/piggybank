@@ -2,17 +2,21 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:piggybank/app/service/network_info.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/repository/auth_repository.dart';
+import 'package:piggybank/domain/repository/exceptions.dart';
 import 'mappers.dart';
 import 'exceptions.dart';
 
 class FirebaseAuthRepository extends AuthRepository {
   FirebaseAuthRepository({
     firebase_auth.FirebaseAuth? firebaseAuth,
+    required this.networkInfo,
   }) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
   final firebase_auth.FirebaseAuth _firebaseAuth;
+  final NetworkInfo networkInfo;
 
   /// Whether or not the current environment is web
   /// Should only be overridden for testing purposes. Otherwise,
@@ -36,6 +40,11 @@ class FirebaseAuthRepository extends AuthRepository {
   /// Throws a [SignUpWithEmailAndPasswordFailure] if an exception occurs.
   @override
   Future<void> signUp({required String email, required String password}) async {
+    bool isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      throw const ConnectionFailure();
+    }
+
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -56,6 +65,11 @@ class FirebaseAuthRepository extends AuthRepository {
     required String email,
     required String password,
   }) async {
+    bool isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      throw const ConnectionFailure();
+    }
+
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -74,6 +88,11 @@ class FirebaseAuthRepository extends AuthRepository {
   /// Throws a [LogOutFailure] if an exception occurs.
   @override
   Future<void> signOut() async {
+    bool isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      throw const ConnectionFailure();
+    }
+
     try {
       await _firebaseAuth.signOut();
     } catch (_) {
