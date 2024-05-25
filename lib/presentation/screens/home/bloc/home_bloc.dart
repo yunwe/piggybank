@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/domain/channels/wallets_channel.dart';
@@ -20,11 +21,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           const HomePageState.loading(),
         ) {
     on<WalletListChanged>(_onWalletsUpdated);
-    on<PageInitialized>(_onPageInitialized);
+    on<WalletListRequested>(_onWalletListRequested);
     _walletsSubscription = _walletsChannel.wallets.listen(
       (wallets) => add(WalletListChanged(wallets)),
     );
-    add(const PageInitialized());
+    add(const WalletListRequested());
   }
 
   final String userId;
@@ -37,11 +38,15 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     emit(HomePageState.result(event.wallets));
   }
 
-  void _onPageInitialized(PageInitialized event, Emitter<HomePageState> emit) {
+  void _onWalletListRequested(WalletListRequested event, Emitter<HomePageState> emit) async {
     ListWalletUseCaseInput input = ListWalletUseCaseInput(userId);
-    _listWalletUseCase.execute(input);
 
     emit(const HomePageState.loading());
+
+    Either<Failure, void> value = await _listWalletUseCase.execute(input);
+    if (value.isLeft) {
+      emit(HomePageState.error(value.left));
+    }
   }
 
   @override

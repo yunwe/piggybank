@@ -8,7 +8,7 @@ import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/home/bloc/home_bloc.dart';
-import 'package:piggybank/presentation/screens/home/view/wallet_list.dart';
+import 'package:piggybank/presentation/screens/home/view/page_content.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
                     walletsChannel: injector<WalletsChannel>(),
                     listWalletUseCase: injector<ListWalletUseCase>(),
                   ),
-                  child: const WalletList(),
+                  child: const HomePageContent(),
                 ),
                 // child: Column(
                 //   mainAxisSize: MainAxisSize.min,

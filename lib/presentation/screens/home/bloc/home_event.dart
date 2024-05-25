@@ -10,6 +10,6 @@ final class WalletListChanged extends HomePageEvent {
   final List<Wallet> wallets;
 }
 
-final class PageInitialized extends HomePageEvent {
-  const PageInitialized();
+final class WalletListRequested extends HomePageEvent {
+  const WalletListRequested();
 }
