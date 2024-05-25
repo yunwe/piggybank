@@ -28,25 +28,16 @@ class NewWalletForm extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          spaceP20,
           _WalletNameInput(),
-          spaceP20,
+          const Spacing.h20(),
           _WalletSetTargetInput(),
-          spaceP20,
+          const Spacing.h20(),
           _WalletTargetAmountInput(),
-          spaceP20,
+          const Spacing.h20(),
           _WalletTargetDateInput(),
-          spaceP8,
+          const Spacing.h8(),
           _SubmitButton(),
         ],
-      );
-
-  Widget get spaceP20 => const SizedBox(
-        height: AppPadding.p20,
-      );
-
-  Widget get spaceP8 => const SizedBox(
-        height: AppPadding.p8,
       );
 }
 

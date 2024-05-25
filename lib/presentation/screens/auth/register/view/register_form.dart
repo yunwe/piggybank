@@ -35,25 +35,17 @@ class RegisterForm extends StatelessWidget {
                 AppStrings.titleRegister,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              spaceP20,
+              const Spacing.h20(),
               _UsernameInput(),
-              spaceP20,
+              const Spacing.h20(),
               _PasswordInput(),
-              spaceP20,
+              const Spacing.h20(),
               _ConfirmPasswordInput(),
-              spaceP8,
+              const Spacing.h8(),
               _RegisterButton(),
             ],
           ),
         ),
-      );
-
-  Widget get spaceP20 => const SizedBox(
-        height: AppPadding.p20,
-      );
-
-  Widget get spaceP8 => const SizedBox(
-        height: AppPadding.p8,
       );
 }
 
