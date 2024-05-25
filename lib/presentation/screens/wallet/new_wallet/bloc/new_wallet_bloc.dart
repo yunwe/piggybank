@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
-import 'package:piggybank/presentation/screens/new_wallet/model/models.dart';
+import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
 
 part 'new_wallet_event.dart';
 part 'new_wallet_state.dart';

@@ -7,7 +7,7 @@ import 'package:piggybank/presentation/screens/error/error.dart';
 import 'package:piggybank/presentation/screens/home/home.dart';
 import 'package:piggybank/presentation/screens/auth/login/login.dart';
 import 'package:piggybank/presentation/screens/auth/register/register.dart';
-import 'package:piggybank/presentation/screens/new_wallet/new_wallet.dart';
+import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
 import 'route_utils.dart';
 
 class AppRouter {

@@ -4,7 +4,7 @@ import 'package:piggybank/app/di.dart';
 import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
-import 'package:piggybank/presentation/screens/new_wallet/new_wallet.dart';
+import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
 
 class NewWalletPage extends StatelessWidget {
   const NewWalletPage({super.key});

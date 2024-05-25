@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/new_wallet/new_wallet.dart';
+import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
 
 class NewWalletForm extends StatelessWidget {
   const NewWalletForm({super.key});
