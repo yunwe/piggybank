@@ -49,4 +49,10 @@ class AppStrings {
   static const String labelSetTarget = 'Set Target';
   static const String labelTargetAmount = 'Target Amount';
   static const String labelCreate = 'Create Goal';
+
+  static const String titleConfirmArchive = 'Archive';
+  static const String contentConfirmArchive = 'Archived wallet can no longer be editable.\n'
+      'But, you can still view it in the archived list.';
+  static const String titleConfirmDelete = 'Delete';
+  static const String contentConfirmDelete = 'Deleted wallet can no longer be accessible';
 }

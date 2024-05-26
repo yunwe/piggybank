@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:piggybank/app/di.dart';
+import 'package:piggybank/domain/model/models.dart';
+import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
+import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
 import 'package:piggybank/presentation/screens/error/error.dart';
 import 'package:piggybank/presentation/screens/home/home.dart';
 import 'package:piggybank/presentation/screens/auth/login/login.dart';
 import 'package:piggybank/presentation/screens/auth/register/register.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
 import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
 import 'route_utils.dart';
 
@@ -29,15 +33,32 @@ class AppRouter {
             );
           }),
       GoRoute(
-          path: PAGES.walletNew.screenPath,
-          name: PAGES.walletNew.screenName,
-          builder: (context, state) {
-            initCreateWalletModule();
-            return BlocProvider.value(
-              value: context.read<AppBloc>(),
-              child: const NewWalletPage(),
-            );
-          }),
+        path: PAGES.walletNew.screenPath,
+        name: PAGES.walletNew.screenName,
+        builder: (context, state) {
+          initCreateWalletModule();
+          return BlocProvider.value(
+            value: context.read<AppBloc>(),
+            child: const NewWalletPage(),
+          );
+        },
+      ),
+      GoRoute(
+        path: PAGES.walletDetail.screenPath,
+        name: PAGES.walletDetail.screenName,
+        builder: (context, state) {
+          initDetailWalletModule();
+
+          return BlocProvider(
+            create: (context) => WalletDetailBloc(
+              wallet: state.extra as Wallet,
+              archiveUseCase: injector<ArchiveWalletUseCase>(),
+              deleteUseCase: injector<DeleteWalletUseCase>(),
+            ),
+            child: const DetailPage(),
+          );
+        },
+      ),
       GoRoute(
         path: PAGES.signin.screenPath,
         name: PAGES.signin.screenName,

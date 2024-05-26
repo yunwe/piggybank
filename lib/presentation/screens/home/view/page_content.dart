@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/domain/model/failure.dart';
 import 'package:piggybank/domain/model/wallet.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
@@ -30,6 +32,12 @@ class HomePageContent extends StatelessWidget {
   Widget walletList(List<Wallet> wallets) => ListView.builder(
         itemBuilder: (context, index) => ListTile(
           title: Text(wallets[index].title),
+          onTap: () {
+            GoRouter.of(context).pushNamed(
+              PAGES.walletDetail.screenName,
+              extra: wallets[index],
+            );
+          },
         ),
         itemCount: wallets.length,
         shrinkWrap: true,

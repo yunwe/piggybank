@@ -7,7 +7,9 @@ import 'package:piggybank/domain/channels/user_channel.dart';
 import 'package:piggybank/domain/channels/wallets_channel.dart';
 import 'package:piggybank/domain/repository/auth_repository.dart';
 import 'package:piggybank/domain/repository/wallet_repository.dart';
+import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
+import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
@@ -63,6 +65,24 @@ initCreateWalletModule() {
   if (!GetIt.I.isRegistered<CreateWalletUseCase>()) {
     injector.registerLazySingleton<CreateWalletUseCase>(
       () => CreateWalletUseCase(
+        injector<WalletRepository>(),
+      ),
+    );
+  }
+}
+
+initDetailWalletModule() {
+  if (!GetIt.I.isRegistered<ArchiveWalletUseCase>()) {
+    injector.registerLazySingleton<ArchiveWalletUseCase>(
+      () => ArchiveWalletUseCase(
+        injector<WalletRepository>(),
+      ),
+    );
+  }
+
+  if (!GetIt.I.isRegistered<DeleteWalletUseCase>()) {
+    injector.registerLazySingleton<DeleteWalletUseCase>(
+      () => DeleteWalletUseCase(
         injector<WalletRepository>(),
       ),
     );
