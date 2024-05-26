@@ -10,13 +10,13 @@ class ArchiveWalletUseCase implements BaseUseCase<ArchiveWalletUseCaseInput, voi
   ArchiveWalletUseCase(this._repository);
 
   @override
-  Future<Either<Failure, void>> execute(ArchiveWalletUseCaseInput input) async {
+  Future<Either<Failure, Wallet>> execute(ArchiveWalletUseCaseInput input) async {
     try {
-      await _repository.update(
+      Wallet newWallet = await _repository.update(
         wallet: input.wallet,
         isArchived: true,
       );
-      return const Right(null);
+      return Right(newWallet);
     } on BaseException catch (failure) {
       return Left(failure.toFailure);
     } catch (error) {

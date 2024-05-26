@@ -34,7 +34,7 @@ class FirebaseWalletRepository implements WalletRepository {
       throw const ConnectionFailure();
     }
     try {
-      final ref = await _db.collection(_collection).add(
+      await _db.collection(_collection).add(
             WalletMapper.toDocument(
               userId: userId,
               title: title,
@@ -53,7 +53,7 @@ class FirebaseWalletRepository implements WalletRepository {
   }
 
   @override
-  Future<void> update({
+  Future<Wallet> update({
     required Wallet wallet,
     bool isArchived = false,
     double? amount,
@@ -64,9 +64,12 @@ class FirebaseWalletRepository implements WalletRepository {
     }
     try {
       Map<String, dynamic> query = {};
+
+      DateTime? archivedAt;
       if (isArchived) {
+        archivedAt = DateTime.now();
         query[IS_ARCHIVED] = true;
-        query[ARCHIVED_AT] = DateTime.now().millisecondsSinceEpoch;
+        query[ARCHIVED_AT] = archivedAt.millisecondsSinceEpoch;
       }
 
       if (amount != null) {
@@ -74,7 +77,12 @@ class FirebaseWalletRepository implements WalletRepository {
       }
 
       await _db.collection(_collection).doc(wallet.id).update(query);
-      await list(wallet.ownerId);
+
+      return wallet.copyWith(
+        isArchived: isArchived,
+        archivedDate: archivedAt,
+        amount: amount,
+      );
     } catch (e) {
       if (e is FirebaseException) {
         throw FirestoreFailure(e.message ?? 'Unknown failure occured.');

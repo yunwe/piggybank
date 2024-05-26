@@ -26,6 +26,24 @@ class Wallet extends Equatable {
     this.archivedDate,
   });
 
+  Wallet copyWith({
+    bool? isArchived,
+    DateTime? archivedDate,
+    double? amount,
+  }) {
+    return Wallet(
+      id: id,
+      ownerId: ownerId,
+      title: title,
+      startDate: startDate,
+      amount: amount ?? this.amount,
+      targetAmount: targetAmount,
+      targetEndDate: targetEndDate,
+      isArchived: isArchived ?? this.isArchived,
+      archivedDate: archivedDate ?? this.archivedDate,
+    );
+  }
+
   @override
   List<Object?> get props => [id, amount, isArchived];
 }

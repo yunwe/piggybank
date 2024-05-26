@@ -13,7 +13,7 @@ abstract class WalletRepository {
     DateTime? targetEndDate,
   });
 
-  Future<void> update({
+  Future<Wallet> update({
     required Wallet wallet,
     bool isArchived = false,
     double? amount,
