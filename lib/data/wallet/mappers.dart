@@ -18,12 +18,11 @@ const DELETED_AT = 'deleted_at';
 class WalletMapper {
   /// Maps a [firebase_auth.User] into a [User].
   static Wallet fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
-    print('Converting ${snapshot.id}');
-
     Map<String, dynamic> data = snapshot.data();
 
     return Wallet(
       id: snapshot.id,
+      ownerId: data[USER_ID],
       title: data[TITLE],
       amount: _toDouble(data[AMOUNT]),
       startDate: _toDateTime(data[CREATED_AT]),

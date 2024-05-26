@@ -13,11 +13,13 @@ abstract class WalletRepository {
     DateTime? targetEndDate,
   });
 
-  Future<void> update();
+  Future<void> update({
+    required Wallet wallet,
+    bool isArchived = false,
+    double? amount,
+  });
 
-  Future<void> delete({required String id});
+  Future<void> delete({required Wallet wallet});
 
   Future<void> list(String userId);
-
-  Future<Wallet> get({required String id});
 }

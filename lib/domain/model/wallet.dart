@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Wallet extends Equatable {
   final String id;
+  final String ownerId;
   final String title;
   final double amount;
 
@@ -15,6 +16,7 @@ class Wallet extends Equatable {
 
   const Wallet({
     required this.id,
+    required this.ownerId,
     required this.title,
     required this.startDate,
     required this.amount,

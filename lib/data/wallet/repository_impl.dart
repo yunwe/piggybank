@@ -53,41 +53,28 @@ class FirebaseWalletRepository implements WalletRepository {
   }
 
   @override
-  Future<void> delete({required String id}) {
-    // TODO: implement delete
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Wallet> get({required String id}) {
-    // TODO: implement get
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> list(String userId) async {
+  Future<void> update({
+    required Wallet wallet,
+    bool isArchived = false,
+    double? amount,
+  }) async {
     bool isConnected = await networkInfo.isConnected;
     if (!isConnected) {
-      print('ConnectionFailure');
-
       throw const ConnectionFailure();
     }
     try {
-      print('Retrieve from firestore');
-
-      //Retrieve from firestore
-      final snapShot = await _db.collection(_collection).where("user_id", isEqualTo: userId).get();
-
-      //Convert to Wallet Objects
-      List<Wallet> result = [];
-      for (var docSnapshot in snapShot.docs) {
-        result.add(WalletMapper.fromDocument(docSnapshot));
+      Map<String, dynamic> query = {};
+      if (isArchived) {
+        query[IS_ARCHIVED] = true;
+        query[ARCHIVED_AT] = DateTime.now().millisecondsSinceEpoch;
       }
 
-      print('Success');
-      print(result.length);
-      //Add to stream
-      _streamController.sink.add(result);
+      if (amount != null) {
+        query[AMOUNT] = amount;
+      }
+
+      await _db.collection(_collection).doc(wallet.id).update(query);
+      await list(wallet.ownerId);
     } catch (e) {
       if (e is FirebaseException) {
         throw FirestoreFailure(e.message ?? 'Unknown failure occured.');
@@ -98,9 +85,52 @@ class FirebaseWalletRepository implements WalletRepository {
   }
 
   @override
-  Future<void> update() {
-    // TODO: implement update
-    throw UnimplementedError();
+  Future<void> delete({required Wallet wallet}) async {
+    bool isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      throw const ConnectionFailure();
+    }
+    try {
+      Map<String, dynamic> query = {
+        IS_DELETED: true,
+        DELETED_AT: DateTime.now().millisecondsSinceEpoch,
+      };
+
+      await _db.collection(_collection).doc(wallet.id).update(query);
+      await list(wallet.ownerId);
+    } catch (e) {
+      if (e is FirebaseException) {
+        throw FirestoreFailure(e.message ?? 'Unknown failure occured.');
+      } else {
+        throw const FirestoreFailure();
+      }
+    }
+  }
+
+  @override
+  Future<void> list(String userId) async {
+    bool isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      throw const ConnectionFailure();
+    }
+    try {
+      //Retrieve from firestore
+      final snapShot = await _db.collection(_collection).where(USER_ID, isEqualTo: userId).get(); //TODO: filter deleted docs
+
+      //Convert to Wallet Objects
+      List<Wallet> result = [];
+      for (var docSnapshot in snapShot.docs) {
+        result.add(WalletMapper.fromDocument(docSnapshot));
+      }
+      //Add to stream
+      _streamController.sink.add(result);
+    } catch (e) {
+      if (e is FirebaseException) {
+        throw FirestoreFailure(e.message ?? 'Unknown failure occured.');
+      } else {
+        throw const FirestoreFailure();
+      }
+    }
   }
 }
 
