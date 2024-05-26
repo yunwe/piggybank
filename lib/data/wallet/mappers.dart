@@ -41,7 +41,7 @@ class WalletMapper {
     return DateTime.fromMillisecondsSinceEpoch(value);
   }
 
-  static DateTime? _toNullableDateTime(dynamic? value) {
+  static DateTime? _toNullableDateTime(dynamic value) {
     if (value == null) {
       return null;
     }

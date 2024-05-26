@@ -3,7 +3,7 @@ part of 'home_bloc.dart';
 enum HomePageStatus {
   loading,
   result,
-  fail, //TODO:
+  fail,
 }
 
 class HomePageState extends Equatable {
