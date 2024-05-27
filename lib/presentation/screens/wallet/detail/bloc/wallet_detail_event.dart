@@ -7,15 +7,15 @@ sealed class WalletDetailEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class ArchiveRequested extends WalletDetailEvent {
-  const ArchiveRequested();
+final class WalletDetailArchiveRequested extends WalletDetailEvent {
+  const WalletDetailArchiveRequested();
 
   @override
   List<Object?> get props => [];
 }
 
-final class DeleteRequested extends WalletDetailEvent {
-  const DeleteRequested();
+final class WalletDetailDeleteRequested extends WalletDetailEvent {
+  const WalletDetailDeleteRequested();
 
   @override
   List<Object?> get props => [];

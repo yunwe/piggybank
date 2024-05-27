@@ -16,15 +16,15 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
   })  : _archiveUseCase = archiveUseCase,
         _deleteUseCase = deleteUseCase,
         super(WalletDetialState.pure(wallet)) {
-    on<ArchiveRequested>(_onArchiveRequested);
-    on<DeleteRequested>(_onDeleteRequested);
+    on<WalletDetailArchiveRequested>(_onArchiveRequested);
+    on<WalletDetailDeleteRequested>(_onDeleteRequested);
   }
 
   final ArchiveWalletUseCase _archiveUseCase;
   final DeleteWalletUseCase _deleteUseCase;
 
   void _onArchiveRequested(
-    ArchiveRequested event,
+    WalletDetailArchiveRequested event,
     Emitter<WalletDetialState> emit,
   ) async {
     emit(WalletDetialState.processing(state.wallet));
@@ -41,7 +41,7 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
   }
 
   void _onDeleteRequested(
-    DeleteRequested event,
+    WalletDetailDeleteRequested event,
     Emitter<WalletDetialState> emit,
   ) async {
     emit(WalletDetialState.processing(state.wallet));

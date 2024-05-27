@@ -7,6 +7,7 @@ import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
 import 'package:piggybank/presentation/controller/wallets/wallets_bloc.dart';
+import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/home/home.dart';
 import 'package:piggybank/presentation/screens/auth/login/login.dart';
 import 'package:piggybank/presentation/screens/auth/register/register.dart';
@@ -36,17 +37,7 @@ class AppRouter {
 
               initListWalletModule();
               context.read<WalletsBloc>().add(WalletListRequested(userId: state.user.id));
-              return MultiBlocProvider(
-                providers: [
-                  BlocProvider<AppBloc>.value(
-                    value: context.read<AppBloc>(),
-                  ),
-                  BlocProvider<WalletsBloc>.value(
-                    value: context.read<WalletsBloc>(),
-                  )
-                ],
-                child: const HomePage(),
-              );
+              return const HomePage();
             },
           );
         },
@@ -56,10 +47,7 @@ class AppRouter {
         name: PAGES.walletNew.screenName,
         builder: (context, state) {
           initCreateWalletModule();
-          return BlocProvider.value(
-            value: context.read<AppBloc>(),
-            child: const NewWalletPage(),
-          );
+          return const NewWalletPage();
         },
       ),
       GoRoute(
@@ -67,14 +55,41 @@ class AppRouter {
         name: PAGES.walletDetail.screenName,
         builder: (context, state) {
           initDetailWalletModule();
-          context.read<WalletsBloc>();
-          return BlocProvider(
-            create: (context) => WalletDetailBloc(
-              wallet: state.extra as Wallet,
-              archiveUseCase: injector<ArchiveWalletUseCase>(),
-              deleteUseCase: injector<DeleteWalletUseCase>(),
-            ),
-            child: const DetailPage(),
+          String walletId = state.pathParameters['id'] ?? '-';
+
+          return BlocBuilder<WalletsBloc, WalletsState>(
+            builder: (context, state) {
+              if (state.status == WalletsStatus.loading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              Wallet? wallet;
+              for (final data in state.wallets) {
+                if (data.id == walletId) {
+                  wallet = data;
+                  break;
+                }
+              }
+              if (wallet == null) {
+                return ShowError(
+                  failure: const Failure('No Wallet Found.'),
+                  label: 'Back to Home',
+                  onPressed: () {
+                    router.goNamed(PAGES.walletList.screenName);
+                  },
+                );
+              }
+
+              return BlocProvider(
+                create: (context) => WalletDetailBloc(
+                  wallet: wallet!,
+                  archiveUseCase: injector<ArchiveWalletUseCase>(),
+                  deleteUseCase: injector<DeleteWalletUseCase>(),
+                ),
+                child: const DetailPage(),
+              );
+            },
           );
         },
       ),

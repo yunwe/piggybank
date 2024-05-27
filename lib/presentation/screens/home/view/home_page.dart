@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget {
           onTap: () {
             GoRouter.of(context).pushNamed(
               PAGES.walletDetail.screenName,
-              extra: wallets[index],
+              pathParameters: {"id": wallets[index].id},
             );
           },
         ),

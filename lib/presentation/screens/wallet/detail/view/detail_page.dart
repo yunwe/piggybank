@@ -117,7 +117,7 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
             AppStrings.titleConfirmArchive,
             AppStrings.contentConfirmArchive,
             () {
-              context.read<WalletDetailBloc>().add(const ArchiveRequested());
+              context.read<WalletDetailBloc>().add(const WalletDetailArchiveRequested());
               Navigator.of(context).pop();
             },
           );
@@ -133,7 +133,7 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
             AppStrings.titleConfirmDelete,
             AppStrings.contentConfirmDelete,
             () {
-              context.read<WalletDetailBloc>().add(const DeleteRequested());
+              context.read<WalletDetailBloc>().add(const WalletDetailDeleteRequested());
               Navigator.of(context).pop();
             },
           );
