@@ -27,19 +27,8 @@ class AppRouter {
         path: PAGES.walletList.screenPath,
         name: PAGES.walletList.screenName,
         builder: (context, state) {
-          return BlocBuilder<AppBloc, AppState>(
-            builder: (context, state) {
-              if (state.user.isEmpty) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              initListWalletModule();
-              context.read<WalletsBloc>().add(WalletListRequested(userId: state.user.id));
-              return const HomePage();
-            },
-          );
+          initListWalletModule();
+          return const HomePage();
         },
       ),
       GoRoute(
@@ -55,42 +44,7 @@ class AppRouter {
         name: PAGES.walletDetail.screenName,
         builder: (context, state) {
           initDetailWalletModule();
-          String walletId = state.pathParameters['id'] ?? '-';
-
-          return BlocBuilder<WalletsBloc, WalletsState>(
-            builder: (context, state) {
-              if (state.status == WalletsStatus.loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              Wallet? wallet;
-              for (final data in state.wallets) {
-                if (data.id == walletId) {
-                  wallet = data;
-                  break;
-                }
-              }
-              if (wallet == null) {
-                return ShowError(
-                  failure: const Failure('No Wallet Found.'),
-                  label: 'Back to Home',
-                  onPressed: () {
-                    router.goNamed(PAGES.walletList.screenName);
-                  },
-                );
-              }
-
-              return BlocProvider(
-                create: (context) => WalletDetailBloc(
-                  wallet: wallet!,
-                  archiveUseCase: injector<ArchiveWalletUseCase>(),
-                  deleteUseCase: injector<DeleteWalletUseCase>(),
-                ),
-                child: const DetailPage(),
-              );
-            },
-          );
+          return DetailPage(walletId: state.pathParameters['id'] ?? '-');
         },
       ),
       GoRoute(

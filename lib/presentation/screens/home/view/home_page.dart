@@ -27,39 +27,39 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<WalletsBloc, WalletsState>(
+      body: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
-          switch (state.status) {
-            case WalletsStatus.result:
-              return walletList(state.wallets);
-            case WalletsStatus.fail:
-              return buildError(state.failure!);
-            case WalletsStatus.loading:
-            default:
-              return const Center(child: CircularProgressIndicator());
+          if (state.user.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
+
+          context.read<WalletsBloc>().add(WalletListRequested(userId: state.user.id));
+          return const _Content();
         },
       ),
-      // child: Column(
-      //   mainAxisSize: MainAxisSize.min,
-      //   children: [
-      //     Text(state.user.email ?? '-'),
+    );
+  }
+}
 
-      //     ElevatedButton(
-      //       onPressed: () {
-      //         GoRouter.of(context).push(PAGES.walletNew.screenPath);
-      //       },
-      //       child: const Text(AppStrings.titleCreate),
-      //     ),
-      //     ElevatedButton(
-      //       onPressed: () {
-      //         ListWalletUseCaseInput input = ListWalletUseCaseInput(state.user.id);
-      //         injector<ListWalletUseCase>().execute(input);
-      //       },
-      //       child: const Text('Get List'),
-      //     ),
-      //   ],
-      // ),
+class _Content extends StatelessWidget {
+  const _Content();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<WalletsBloc, WalletsState>(
+      builder: (context, state) {
+        switch (state.status) {
+          case WalletsStatus.result:
+            return walletList(state.wallets);
+          case WalletsStatus.fail:
+            return buildError(state.failure!);
+          case WalletsStatus.loading:
+          default:
+            return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 
