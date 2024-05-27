@@ -60,4 +60,8 @@ class AppStrings {
 
   static const String labelRetry = 'Retry';
   static const String textNoAuth = 'No Authentication.';
+
+  static const String titleError = 'Error';
+  static const String labelBackToHome = 'Back to Home';
+  static const String messageWalletDeleted = '\'%1\$\' is successfully deleted.';
 }

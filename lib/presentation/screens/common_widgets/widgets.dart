@@ -7,3 +7,4 @@ export 'date_picker.dart';
 export 'label_switch.dart';
 export 'spacing.dart';
 export 'show_error.dart';
+export 'full_page_loading.dart';
