@@ -32,8 +32,6 @@ extension AppPageExtension on PAGES {
         return "/register";
       case PAGES.forgotPassword:
         return "/recover";
-      case PAGES.error:
-        return "/error";
 
       default:
         return "/";

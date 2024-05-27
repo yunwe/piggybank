@@ -77,31 +77,26 @@ class HomePage extends StatelessWidget {
         shrinkWrap: true,
       );
 
-  Widget buildError(Failure failure) => BlocBuilder<AppBloc, AppState>(builder: (context, state) {
-        if (state.user.isEmpty) {
-          return showError(const Failure(AppStrings.textNoAuth), AppStrings.labelLogin, () {
+  Widget buildError(Failure failure) {
+    return BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+      if (state.user.isEmpty) {
+        return ShowError(
+          failure: const Failure(AppStrings.textNoAuth),
+          label: AppStrings.labelLogin,
+          onPressed: () {
             context.goNamed(PAGES.signin.screenName);
-          });
-        }
-        return showError(failure, AppStrings.labelRetry, () {
+          },
+        );
+      }
+      return ShowError(
+        failure: failure,
+        label: AppStrings.labelRetry,
+        onPressed: () {
           context.read<WalletsBloc>().add(
                 WalletListRequested(userId: state.user.id),
               );
-        });
-      });
-
-  Widget showError(Failure failure, String buttonLabel, void Function() onButtonPressed) => Padding(
-        padding: const EdgeInsets.all(AppPadding.p20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(failure.message),
-            const Spacing.h20(),
-            ElevatedButton(
-              onPressed: onButtonPressed,
-              child: Text(buttonLabel),
-            ),
-          ],
-        ),
+        },
       );
+    });
+  }
 }

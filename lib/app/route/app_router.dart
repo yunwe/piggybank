@@ -1,16 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:piggybank/app/di.dart';
-import 'package:piggybank/domain/channels/wallets_channel.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
-import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
 import 'package:piggybank/presentation/controller/wallets/wallets_bloc.dart';
-import 'package:piggybank/presentation/screens/error/error.dart';
 import 'package:piggybank/presentation/screens/home/home.dart';
 import 'package:piggybank/presentation/screens/auth/login/login.dart';
 import 'package:piggybank/presentation/screens/auth/register/register.dart';
@@ -97,11 +93,6 @@ class AppRouter {
           initSignupModule();
           return const RegisterPage();
         },
-      ),
-      GoRoute(
-        path: PAGES.error.screenPath,
-        name: PAGES.error.screenName,
-        builder: (context, state) => const ErrorPage(),
       ),
       GoRoute(
         path: PAGES.onboarding.screenPath,
