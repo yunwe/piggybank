@@ -18,6 +18,7 @@ class CreateWalletUseCase implements BaseUseCase<CreateWalletUseCaseInput, void>
         targetAmount: input.targetAmount,
         targetEndDate: input.targetDate,
       );
+      _repository.list(input.userId);
       return const Right(null);
     } on BaseException catch (failure) {
       return Left(failure.toFailure);

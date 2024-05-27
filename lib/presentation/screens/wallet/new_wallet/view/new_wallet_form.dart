@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:piggybank/app/route/app_router.dart';
+import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
@@ -18,6 +20,9 @@ class NewWalletForm extends StatelessWidget {
             ..showSnackBar(
               SnackBar(content: Text(state.failure.message)),
             );
+        }
+        if (state.status.isSuccess) {
+          AppRouter.router.goNamed(PAGES.walletList.screenName);
         }
       },
       child: formContent(context),
