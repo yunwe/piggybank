@@ -3,6 +3,7 @@ import 'package:piggybank/app/route/app_router.dart';
 import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
+import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/home/view/home_page_appbar.dart';
 
 class HomePageContent extends StatelessWidget {
@@ -15,7 +16,24 @@ class HomePageContent extends StatelessWidget {
     return Scaffold(
       appBar: const HomePageAppbar(),
       backgroundColor: MyColors.primary,
-      body: ListView.builder(
+      body: wallets.isNotEmpty ? content : empty,
+    );
+  }
+
+  Widget get empty => Center(
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text(AppStrings.messageCreateWallet),
+          const Spacing.h20(),
+          ElevatedButton(
+            onPressed: () {
+              AppRouter.router.pushNamed(PAGES.walletNew.screenName);
+            },
+            child: const Text(AppStrings.labelCreate),
+          ),
+        ]),
+      );
+
+  Widget get content => ListView.builder(
         itemBuilder: (context, index) => ListTile(
           title: Text(wallets[index].title),
           onTap: () {
@@ -27,7 +45,5 @@ class HomePageContent extends StatelessWidget {
         ),
         itemCount: wallets.length,
         shrinkWrap: true,
-      ),
-    );
-  }
+      );
 }

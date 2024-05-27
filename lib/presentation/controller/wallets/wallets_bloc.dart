@@ -37,7 +37,6 @@ class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
 
   void _onWalletListRequested(WalletListRequested event, Emitter<WalletsState> emit) async {
     ListWalletUseCaseInput input = ListWalletUseCaseInput(event.userId);
-    print('_onWalletListRequested');
     emit(const WalletsState.loading());
 
     Either<Failure, void> value = await _listWalletUseCase.execute(input);
