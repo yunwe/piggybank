@@ -42,7 +42,6 @@ class FirebaseWalletRepository implements WalletRepository {
               targetEndDate: targetEndDate,
             ),
           );
-      print('add success');
     } catch (e) {
       if (e is FirebaseException) {
         throw FirestoreFailure(e.message ?? 'Unknown failure occured.');
@@ -123,7 +122,17 @@ class FirebaseWalletRepository implements WalletRepository {
     }
     try {
       //Retrieve from firestore
-      final snapShot = await _db.collection(_collection).where(USER_ID, isEqualTo: userId).get(); //TODO: filter deleted docs
+      final snapShot = await _db
+          .collection(_collection)
+          .where(
+            USER_ID,
+            isEqualTo: userId,
+          )
+          .where(
+            IS_DELETED,
+            isEqualTo: false,
+          )
+          .get();
 
       //Convert to Wallet Objects
       List<Wallet> result = [];
