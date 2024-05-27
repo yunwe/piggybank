@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:piggybank/app/di.dart';
+import 'package:piggybank/domain/channels/wallets_channel.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
+import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
+import 'package:piggybank/presentation/controller/wallets/wallets_bloc.dart';
 import 'package:piggybank/presentation/screens/error/error.dart';
 import 'package:piggybank/presentation/screens/home/home.dart';
 import 'package:piggybank/presentation/screens/auth/login/login.dart';
@@ -23,15 +26,36 @@ class AppRouter {
     initialLocation: PAGES.onboarding.screenPath,
     routes: [
       GoRoute(
-          path: PAGES.walletList.screenPath,
-          name: PAGES.walletList.screenName,
-          builder: (context, state) {
-            initListWalletModule();
-            return BlocProvider.value(
-              value: context.read<AppBloc>(),
-              child: const HomePage(),
-            );
-          }),
+        path: PAGES.walletList.screenPath,
+        name: PAGES.walletList.screenName,
+        builder: (context, state) {
+          return BlocBuilder<AppBloc, AppState>(
+            builder: (context, state) {
+              if (state.user.isEmpty) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              initListWalletModule();
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider<AppBloc>.value(
+                    value: context.read<AppBloc>(),
+                  ),
+                  BlocProvider<WalletsBloc>(
+                    create: (context) => WalletsBloc(
+                      userId: state.user.id,
+                      walletsChannel: injector<WalletsChannel>(),
+                      listWalletUseCase: injector<ListWalletUseCase>(),
+                    ),
+                  ),
+                ],
+                child: const HomePage(),
+              );
+            },
+          );
+        },
+      ),
       GoRoute(
         path: PAGES.walletNew.screenPath,
         name: PAGES.walletNew.screenName,

@@ -7,18 +7,18 @@ import 'package:piggybank/domain/channels/wallets_channel.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 
-part 'home_event.dart';
-part 'home_state.dart';
+part 'wallets_state.dart';
+part 'wallets_event.dart';
 
-class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  HomePageBloc({
+class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
+  WalletsBloc({
     required this.userId,
     required WalletsChannel walletsChannel,
     required ListWalletUseCase listWalletUseCase,
   })  : _walletsChannel = walletsChannel,
         _listWalletUseCase = listWalletUseCase,
         super(
-          const HomePageState.loading(),
+          const WalletsState.loading(),
         ) {
     on<WalletListChanged>(_onWalletsUpdated);
     on<WalletListRequested>(_onWalletListRequested);
@@ -34,18 +34,18 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   final ListWalletUseCase _listWalletUseCase;
 
-  void _onWalletsUpdated(WalletListChanged event, Emitter<HomePageState> emit) {
-    emit(HomePageState.result(event.wallets));
+  void _onWalletsUpdated(WalletListChanged event, Emitter<WalletsState> emit) {
+    emit(WalletsState.result(event.wallets));
   }
 
-  void _onWalletListRequested(WalletListRequested event, Emitter<HomePageState> emit) async {
+  void _onWalletListRequested(WalletListRequested event, Emitter<WalletsState> emit) async {
     ListWalletUseCaseInput input = ListWalletUseCaseInput(userId);
 
-    emit(const HomePageState.loading());
+    emit(const WalletsState.loading());
 
     Either<Failure, void> value = await _listWalletUseCase.execute(input);
     if (value.isLeft) {
-      emit(HomePageState.error(value.left));
+      emit(WalletsState.error(value.left));
     }
   }
 
