@@ -97,41 +97,11 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
                   }
                 },
                 icon: const Icon(Icons.more_vert),
-                tooltip: 'Show menu',
               );
             },
             menuChildren: [
-              if (!state.wallet.isArchived)
-                MenuItemButton(
-                  onPressed: () {
-                    _showConfirmation(
-                      context,
-                      AppStrings.titleConfirmArchive,
-                      AppStrings.contentConfirmArchive,
-                      () {
-                        context.read<WalletDetailBloc>().add(const ArchiveRequested());
-                        Navigator.of(context).pop();
-                      },
-                    );
-                  },
-                  leadingIcon: const Icon(Icons.archive),
-                  child: const Text('Archive'),
-                ),
-              MenuItemButton(
-                onPressed: () {
-                  _showConfirmation(
-                    context,
-                    AppStrings.titleConfirmDelete,
-                    AppStrings.contentConfirmDelete,
-                    () {
-                      context.read<WalletDetailBloc>().add(const DeleteRequested());
-                      Navigator.of(context).pop();
-                    },
-                  );
-                },
-                leadingIcon: const Icon(Icons.delete_forever),
-                child: const Text('Delete'),
-              ),
+              if (!state.wallet.isArchived) _archiveMenuButton(context),
+              _deleteMenuButton(context),
             ],
           ),
         ],
@@ -139,6 +109,38 @@ class _Appbar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
+
+  Widget _archiveMenuButton(BuildContext context) => MenuItemButton(
+        onPressed: () {
+          _showConfirmation(
+            context,
+            AppStrings.titleConfirmArchive,
+            AppStrings.contentConfirmArchive,
+            () {
+              context.read<WalletDetailBloc>().add(const ArchiveRequested());
+              Navigator.of(context).pop();
+            },
+          );
+        },
+        leadingIcon: const Icon(Icons.archive),
+        child: const Text(AppStrings.labelArchive),
+      );
+
+  Widget _deleteMenuButton(BuildContext context) => MenuItemButton(
+        onPressed: () {
+          _showConfirmation(
+            context,
+            AppStrings.titleConfirmDelete,
+            AppStrings.contentConfirmDelete,
+            () {
+              context.read<WalletDetailBloc>().add(const DeleteRequested());
+              Navigator.of(context).pop();
+            },
+          );
+        },
+        leadingIcon: const Icon(Icons.delete_forever),
+        child: const Text(AppStrings.labelDelete),
+      );
 
   @override
   Size get preferredSize => AppBar().preferredSize;

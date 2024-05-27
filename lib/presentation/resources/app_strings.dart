@@ -55,4 +55,6 @@ class AppStrings {
       'But, you can still view it in the archived list.';
   static const String titleConfirmDelete = 'Delete';
   static const String contentConfirmDelete = 'Deleted wallet can no longer be accessible';
+  static const String labelArchive = 'Archive';
+  static const String labelDelete = 'Delete';
 }
