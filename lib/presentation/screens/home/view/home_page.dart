@@ -33,12 +33,10 @@ class HomePage extends StatelessWidget {
             case WalletsStatus.result:
               return walletList(state.wallets);
             case WalletsStatus.fail:
-              return showError(state.failure!, () {
-                context.read<WalletsBloc>().add(const WalletListRequested());
-              });
+              return buildError(state.failure!);
             case WalletsStatus.loading:
             default:
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
           }
         },
       ),
@@ -79,7 +77,20 @@ class HomePage extends StatelessWidget {
         shrinkWrap: true,
       );
 
-  Widget showError(Failure failure, void Function() retry) => Padding(
+  Widget buildError(Failure failure) => BlocBuilder<AppBloc, AppState>(builder: (context, state) {
+        if (state.user.isEmpty) {
+          return showError(const Failure(AppStrings.textNoAuth), AppStrings.labelLogin, () {
+            context.goNamed(PAGES.signin.screenName);
+          });
+        }
+        return showError(failure, AppStrings.labelRetry, () {
+          context.read<WalletsBloc>().add(
+                WalletListRequested(userId: state.user.id),
+              );
+        });
+      });
+
+  Widget showError(Failure failure, String buttonLabel, void Function() onButtonPressed) => Padding(
         padding: const EdgeInsets.all(AppPadding.p20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -87,8 +98,8 @@ class HomePage extends StatelessWidget {
             Text(failure.message),
             const Spacing.h20(),
             ElevatedButton(
-              onPressed: retry,
-              child: const Text('Retry'),
+              onPressed: onButtonPressed,
+              child: Text(buttonLabel),
             ),
           ],
         ),

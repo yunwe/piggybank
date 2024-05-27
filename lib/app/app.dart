@@ -4,8 +4,11 @@ import 'package:piggybank/app/di.dart';
 import 'package:piggybank/app/route/app_router.dart';
 import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/domain/channels/user_channel.dart';
+import 'package:piggybank/domain/channels/wallets_channel.dart';
+import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
+import 'package:piggybank/presentation/controller/wallets/wallets_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 
 class App extends StatelessWidget {
@@ -15,11 +18,21 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppBloc(
-        userChannel: injector<UserChannel>(),
-        logoutUseCase: injector<LogoutUseCase>(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AppBloc(
+            userChannel: injector<UserChannel>(),
+            logoutUseCase: injector<LogoutUseCase>(),
+          ),
+        ),
+        BlocProvider<WalletsBloc>(
+          create: (context) => WalletsBloc(
+            walletsChannel: injector<WalletsChannel>(),
+            listWalletUseCase: injector<ListWalletUseCase>(),
+          ),
+        ),
+      ],
       child: const AppView(),
     );
   }

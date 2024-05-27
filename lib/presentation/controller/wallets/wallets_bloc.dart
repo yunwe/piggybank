@@ -12,7 +12,6 @@ part 'wallets_event.dart';
 
 class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
   WalletsBloc({
-    required this.userId,
     required WalletsChannel walletsChannel,
     required ListWalletUseCase listWalletUseCase,
   })  : _walletsChannel = walletsChannel,
@@ -25,10 +24,8 @@ class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
     _walletsSubscription = _walletsChannel.wallets.listen(
       (wallets) => add(WalletListChanged(wallets)),
     );
-    add(const WalletListRequested());
   }
 
-  final String userId;
   final WalletsChannel _walletsChannel;
   late final StreamSubscription<List<Wallet>> _walletsSubscription;
 
@@ -39,7 +36,7 @@ class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
   }
 
   void _onWalletListRequested(WalletListRequested event, Emitter<WalletsState> emit) async {
-    ListWalletUseCaseInput input = ListWalletUseCaseInput(userId);
+    ListWalletUseCaseInput input = ListWalletUseCaseInput(event.userId);
 
     emit(const WalletsState.loading());
 

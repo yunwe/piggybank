@@ -57,4 +57,7 @@ class AppStrings {
   static const String contentConfirmDelete = 'Deleted wallet can no longer be accessible';
   static const String labelArchive = 'Archive';
   static const String labelDelete = 'Delete';
+
+  static const String labelRetry = 'Retry';
+  static const String textNoAuth = 'No Authentication.';
 }

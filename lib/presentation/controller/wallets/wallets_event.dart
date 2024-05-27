@@ -11,5 +11,7 @@ final class WalletListChanged extends WalletsEvent {
 }
 
 final class WalletListRequested extends WalletsEvent {
-  const WalletListRequested();
+  const WalletListRequested({required this.userId});
+
+  final String userId;
 }

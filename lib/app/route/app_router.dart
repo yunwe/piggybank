@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -36,19 +37,17 @@ class AppRouter {
                   child: CircularProgressIndicator(),
                 );
               }
+
               initListWalletModule();
+              context.read<WalletsBloc>().add(WalletListRequested(userId: state.user.id));
               return MultiBlocProvider(
                 providers: [
                   BlocProvider<AppBloc>.value(
                     value: context.read<AppBloc>(),
                   ),
-                  BlocProvider<WalletsBloc>(
-                    create: (context) => WalletsBloc(
-                      userId: state.user.id,
-                      walletsChannel: injector<WalletsChannel>(),
-                      listWalletUseCase: injector<ListWalletUseCase>(),
-                    ),
-                  ),
+                  BlocProvider<WalletsBloc>.value(
+                    value: context.read<WalletsBloc>(),
+                  )
                 ],
                 child: const HomePage(),
               );
@@ -72,7 +71,7 @@ class AppRouter {
         name: PAGES.walletDetail.screenName,
         builder: (context, state) {
           initDetailWalletModule();
-
+          context.read<WalletsBloc>();
           return BlocProvider(
             create: (context) => WalletDetailBloc(
               wallet: state.extra as Wallet,
