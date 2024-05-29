@@ -5,6 +5,7 @@ class Transaction extends Equatable {
   final String walletId;
   final DateTime createdTime;
   final double amount;
+  final double updatedBalance;
   final String? remarks;
 
   const Transaction({
@@ -12,9 +13,10 @@ class Transaction extends Equatable {
     required this.walletId,
     required this.createdTime,
     required this.amount,
+    required this.updatedBalance,
     this.remarks = '',
   });
 
   @override
-  List<Object?> get props => [id, walletId, createdTime, amount, remarks];
+  List<Object?> get props => [id, walletId, createdTime, amount, updatedBalance, remarks];
 }

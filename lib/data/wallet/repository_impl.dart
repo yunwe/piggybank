@@ -150,8 +150,3 @@ class FirebaseWalletRepository implements WalletRepository {
     }
   }
 }
-
-/// Thrown during the logout process if a failure occurs.
-class FirestoreFailure extends BaseException {
-  const FirestoreFailure([super.message = 'An unknown exception occurred.']);
-}

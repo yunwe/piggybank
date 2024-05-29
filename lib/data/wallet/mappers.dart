@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:piggybank/data/mixin_dataparser.dart';
 import 'package:piggybank/domain/model/models.dart';
 
 const USER_ID = 'user_id';
@@ -15,7 +16,7 @@ const ARCHIVED_AT = 'archived_at';
 const IS_DELETED = 'is_deleted';
 const DELETED_AT = 'deleted_at';
 
-class WalletMapper {
+class WalletMapper with DataParser {
   /// Maps a [firebase_auth.User] into a [User].
   static Wallet fromDocument(QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
     Map<String, dynamic> data = snapshot.data();
@@ -24,29 +25,13 @@ class WalletMapper {
       id: snapshot.id,
       ownerId: data[USER_ID],
       title: data[TITLE],
-      amount: _toDouble(data[AMOUNT]),
-      startDate: _toDateTime(data[CREATED_AT]),
-      targetAmount: _toDouble(data[TARGET_AMOUNT]),
-      targetEndDate: _toNullableDateTime(data[TARGET_DATE]),
+      amount: DataParser.toDouble(data[AMOUNT]),
+      startDate: DataParser.toDateTime(data[CREATED_AT]),
+      targetAmount: DataParser.toDouble(data[TARGET_AMOUNT]),
+      targetEndDate: DataParser.toNullableDateTime(data[TARGET_DATE]),
       isArchived: data[IS_ARCHIVED],
-      archivedDate: _toNullableDateTime(data[ARCHIVED_AT]),
+      archivedDate: DataParser.toNullableDateTime(data[ARCHIVED_AT]),
     );
-  }
-
-  static double _toDouble(dynamic value) {
-    return double.tryParse(value.toString()) ?? 0;
-  }
-
-  static DateTime _toDateTime(dynamic value) {
-    return DateTime.fromMillisecondsSinceEpoch(value);
-  }
-
-  static DateTime? _toNullableDateTime(dynamic value) {
-    if (value == null) {
-      return null;
-    }
-
-    return _toDateTime(value!);
   }
 
   static Map<String, dynamic> toDocument({
@@ -61,7 +46,7 @@ class WalletMapper {
       AMOUNT: 0.0,
       TARGET_AMOUNT: targetAmount,
       TARGET_DATE: targetEndDate?.millisecondsSinceEpoch,
-      CREATED_AT: DateTime.now().millisecondsSinceEpoch,
+      CREATED_AT: DataParser.currentTimestamp,
       IS_ARCHIVED: false,
       ARCHIVED_AT: null,
       IS_DELETED: false,
