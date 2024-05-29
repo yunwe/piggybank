@@ -4,14 +4,14 @@ sealed class WalletsEvent {
   const WalletsEvent();
 }
 
-final class WalletListChanged extends WalletsEvent {
-  const WalletListChanged(this.wallets);
+final class WalletsChanged extends WalletsEvent {
+  const WalletsChanged(this.wallets);
 
   final List<Wallet> wallets;
 }
 
-final class WalletListRequested extends WalletsEvent {
-  const WalletListRequested({required this.userId});
+final class WalletsRequested extends WalletsEvent {
+  const WalletsRequested({required this.userId});
 
   final String userId;
 }

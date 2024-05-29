@@ -6,6 +6,7 @@ import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/home/view/home_page_content.dart';
 
+//Read Controllers bloc and handle Loading, Error, Content State
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
           return ShowError.noAuth();
         }
 
-        context.read<WalletsBloc>().add(WalletListRequested(userId: appState.user.id));
+        context.read<WalletsBloc>().add(WalletsRequested(userId: appState.user.id));
         return BlocBuilder<WalletsBloc, WalletsState>(
           builder: (context, walletState) {
             switch (walletState.status) {
@@ -29,7 +30,7 @@ class HomePage extends StatelessWidget {
                   label: AppStrings.labelRetry,
                   onPressed: () {
                     context.read<WalletsBloc>().add(
-                          WalletListRequested(userId: appState.user.id),
+                          WalletsRequested(userId: appState.user.id),
                         );
                   },
                 );

@@ -19,10 +19,10 @@ class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
         super(
           const WalletsState.loading(),
         ) {
-    on<WalletListChanged>(_onWalletsUpdated);
-    on<WalletListRequested>(_onWalletListRequested);
+    on<WalletsChanged>(_onWalletsUpdated);
+    on<WalletsRequested>(_onWalletListRequested);
     _walletsSubscription = _walletsChannel.wallets.listen(
-      (wallets) => add(WalletListChanged(wallets)),
+      (wallets) => add(WalletsChanged(wallets)),
     );
   }
 
@@ -31,11 +31,11 @@ class WalletsBloc extends Bloc<WalletsEvent, WalletsState> {
 
   final ListWalletUseCase _listWalletUseCase;
 
-  void _onWalletsUpdated(WalletListChanged event, Emitter<WalletsState> emit) {
+  void _onWalletsUpdated(WalletsChanged event, Emitter<WalletsState> emit) {
     emit(WalletsState.result(event.wallets));
   }
 
-  void _onWalletListRequested(WalletListRequested event, Emitter<WalletsState> emit) async {
+  void _onWalletListRequested(WalletsRequested event, Emitter<WalletsState> emit) async {
     ListWalletUseCaseInput input = ListWalletUseCaseInput(event.userId);
     emit(const WalletsState.loading());
 
