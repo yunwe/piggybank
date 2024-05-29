@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
+import 'package:piggybank/presentation/screens/auth/models/amount.dart';
 import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
 
 part 'new_wallet_event.dart';
@@ -59,7 +60,7 @@ class NewWalletBloc extends Bloc<NewWalletEvent, NewWalletState> {
     NewWalletTargetAmountChanged event,
     Emitter<NewWalletState> emit,
   ) {
-    final targetAmount = WalletTargetAmount.dirty(event.targetAmount);
+    final targetAmount = Amount.dirty(event.targetAmount);
 
     emit(
       state.copyWith(

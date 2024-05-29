@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/di.dart';
 import 'package:piggybank/app/route/app_router.dart';
 import 'package:piggybank/app/route/route_utils.dart';
-import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
 import 'package:piggybank/presentation/controller/wallets/wallets_bloc.dart';

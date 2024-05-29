@@ -4,7 +4,7 @@ final class NewWalletState extends Equatable {
   const NewWalletState({
     this.status = FormzSubmissionStatus.initial,
     this.goalName = const WalletName.pure(),
-    this.targetAmount = const WalletTargetAmount.pure(),
+    this.targetAmount = const Amount.pure(),
     this.targetDate = const WalletTargetDate.pure(),
     this.setTarget = false,
     this.isValid = false,
@@ -13,7 +13,7 @@ final class NewWalletState extends Equatable {
 
   final FormzSubmissionStatus status;
   final WalletName goalName;
-  final WalletTargetAmount targetAmount;
+  final Amount targetAmount;
   final WalletTargetDate targetDate;
   final bool setTarget;
   final bool isValid;
@@ -22,7 +22,7 @@ final class NewWalletState extends Equatable {
   NewWalletState copyWith({
     FormzSubmissionStatus? status,
     WalletName? goalName,
-    WalletTargetAmount? targetAmount,
+    Amount? targetAmount,
     WalletTargetDate? targetDate,
     bool? setTarget,
     bool? isValid,
