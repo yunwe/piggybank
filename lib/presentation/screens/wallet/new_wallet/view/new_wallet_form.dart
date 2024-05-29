@@ -95,6 +95,7 @@ class _WalletTargetAmountInput extends StatelessWidget {
           return MyTextField(
             Icons.attach_money,
             AppStrings.labelTargetAmount,
+            inputType: TextInputType.number,
             key: AppKeys.walletTargetAmount,
             onChanged: (amount) => context.read<NewWalletBloc>().add(
                   NewWalletTargetAmountChanged(targetAmount: amount),

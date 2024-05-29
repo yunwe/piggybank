@@ -9,6 +9,7 @@ class MyTextField extends StatelessWidget {
     this.errorText,
     this.onChanged,
     this.obscureText = false,
+    this.inputType = TextInputType.none,
   });
 
   final IconData icon;
@@ -16,6 +17,7 @@ class MyTextField extends StatelessWidget {
   final String? errorText;
   final void Function(String)? onChanged;
   final bool obscureText;
+  final TextInputType inputType;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class MyTextField extends StatelessWidget {
         fontSize: FontSize.inputFontSize,
         color: Colors.black87,
       ),
+      keyboardType: inputType,
     );
   }
 }

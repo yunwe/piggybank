@@ -6,6 +6,7 @@ import 'package:piggybank/presentation/screens/auth/login/login.dart';
 import 'package:piggybank/presentation/screens/auth/register/register.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
 import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
+import 'package:piggybank/presentation/screens/wallet/transaction/view/transaction_page.dart';
 import 'route_utils.dart';
 
 class AppRouter {
@@ -38,6 +39,14 @@ class AppRouter {
         builder: (context, state) {
           initDetailWalletModule();
           return DetailPage(walletId: state.pathParameters['id'] ?? '-');
+        },
+      ),
+      GoRoute(
+        path: PAGES.walletTransaction.screenPath,
+        name: PAGES.walletTransaction.screenName,
+        builder: (context, state) {
+          initWalletTransactionModule();
+          return TransactionPage(walletId: state.pathParameters['wallet'] ?? '-');
         },
       ),
       GoRoute(

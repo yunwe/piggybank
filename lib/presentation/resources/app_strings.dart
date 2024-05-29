@@ -49,6 +49,8 @@ class AppStrings {
   static const String labelSetTarget = 'Set Target';
   static const String labelTargetAmount = 'Target Amount';
   static const String labelCreate = 'Create Goal';
+  static const String hintAmount = 'Amount';
+  static const String hintRemark = 'Remark';
 
   static const String titleConfirmArchive = 'Archive';
   static const String contentConfirmArchive = 'Archived wallet can no longer be editable.\n'
@@ -68,4 +70,11 @@ class AppStrings {
   static const String messageCreateWallet = 'Create your financial goal.';
 
   static const String noWallet = 'No Wallet Found';
+
+  static const String labelWithdrawl = 'I need to withdraw money.';
+  static const String labelSaving = 'I want to save up.';
+  static const String labelWithdrawlButton = 'Withdrawl';
+  static const String labelSavingButton = 'Save Up';
+
+  static const String titleUpdate = 'Update';
 }

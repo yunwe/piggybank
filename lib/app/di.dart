@@ -2,10 +2,12 @@ import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:piggybank/app/service/network_info.dart';
 import 'package:piggybank/data/auth/repository_impl.dart';
+import 'package:piggybank/data/transaction/repository_impl.dart';
 import 'package:piggybank/data/wallet/repository_impl.dart';
 import 'package:piggybank/domain/channels/user_channel.dart';
 import 'package:piggybank/domain/channels/wallets_channel.dart';
 import 'package:piggybank/domain/repository/auth_repository.dart';
+import 'package:piggybank/domain/repository/transaction_repository.dart';
 import 'package:piggybank/domain/repository/wallet_repository.dart';
 import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
@@ -14,6 +16,7 @@ import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
 import 'package:piggybank/domain/usecase/signup_usercase.dart';
+import 'package:piggybank/domain/usecase/update_amount_usecase.dart';
 import 'package:piggybank/firebase_options.dart';
 
 final injector = GetIt.instance;
@@ -31,6 +34,10 @@ Future<void> initAppModule() async {
   injector.registerLazySingleton<WalletRepository>(
     () => FirebaseWalletRepository(networkInfo: networkInfo),
   );
+  injector.registerLazySingleton<TransactionRepository>(
+    () => FirebaseTransactionRepository(networkInfo: networkInfo),
+  );
+
   injector.registerLazySingleton<UserChannel>(
     () => UserChannel(repository: injector<AuthRepository>()),
   );
@@ -86,6 +93,15 @@ initDetailWalletModule() {
         injector<WalletRepository>(),
       ),
     );
+  }
+}
+
+initWalletTransactionModule() {
+  if (!GetIt.I.isRegistered<UpdateAmountUseCase>()) {
+    injector.registerLazySingleton<UpdateAmountUseCase>(() => UpdateAmountUseCase(
+          transactionRepository: injector<TransactionRepository>(),
+          walletRepository: injector<WalletRepository>(),
+        ));
   }
 }
 

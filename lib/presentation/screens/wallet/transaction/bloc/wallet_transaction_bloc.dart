@@ -12,9 +12,9 @@ part 'wallet_transaction_state.dart';
 class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransactionState> {
   WalletTransactionBloc({
     required UpdateAmountUseCase useCase,
-    required Wallet wallet,
+    required String walletId,
   })  : _useCase = useCase,
-        _wallet = wallet,
+        _walletId = walletId,
         super(const WalletTransactionState()) {
     on<WalletTransactionAmountChanged>(_onAmountChanged);
     on<WalletTransactionRemarkChanged>(_onRemarkChanged);
@@ -23,7 +23,7 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
   }
 
   final UpdateAmountUseCase _useCase;
-  final Wallet _wallet;
+  final String _walletId;
 
   void _onAmountChanged(
     WalletTransactionAmountChanged event,
@@ -64,9 +64,9 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
       final sign = state.isWithdrawl ? -1 : 1;
       UpdateAmountUseCaseInput input = UpdateAmountUseCaseInput(
+        walletId: _walletId,
         amount: double.parse(state.amount.value) * sign,
         remark: state.remark,
-        wallet: _wallet,
       );
       Either<Failure, void> value = await _useCase.execute(input);
       if (value.isLeft) {

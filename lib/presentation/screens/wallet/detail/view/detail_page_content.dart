@@ -75,5 +75,19 @@ class _PageContent extends StatelessWidget {
           padding: const EdgeInsets.all(AppPadding.p20),
           child: Text(wallet.title),
         ),
+        floatingActionButton: wallet.isArchived
+            ? null
+            : FloatingActionButton(
+                onPressed: () {
+                  AppRouter.router.pushNamed(
+                    PAGES.walletTransaction.screenName,
+                    pathParameters: {'wallet': wallet.id},
+                  );
+                },
+                // foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                // backgroundColor: Theme.of(context).colorScheme.primary,
+                shape: const CircleBorder(),
+                child: const Icon(Icons.add),
+              ),
       );
 }

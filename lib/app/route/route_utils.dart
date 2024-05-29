@@ -21,7 +21,7 @@ extension AppPageExtension on PAGES {
       case PAGES.walletNew:
         return "/new";
       case PAGES.walletTransaction:
-        return "/transaction";
+        return "/transaction/:wallet";
       case PAGES.archivedWalletList:
         return "/archived";
       case PAGES.onboarding:
