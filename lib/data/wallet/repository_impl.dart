@@ -21,6 +21,7 @@ class FirebaseWalletRepository implements WalletRepository {
   Stream<List<Wallet>> get wallets => _streamController.stream;
 
   final StreamController<List<Wallet>> _streamController = StreamController<List<Wallet>>();
+  List<Wallet> _cache = [];
 
   @override
   Future<void> create({
@@ -141,6 +142,8 @@ class FirebaseWalletRepository implements WalletRepository {
       }
       //Add to stream
       _streamController.sink.add(result);
+      //Save in cache
+      _cache = result;
     } catch (e) {
       if (e is FirebaseException) {
         throw FirestoreFailure(e.message ?? 'Unknown failure occured.');
@@ -148,5 +151,16 @@ class FirebaseWalletRepository implements WalletRepository {
         throw const FirestoreFailure();
       }
     }
+  }
+
+  @override
+  Wallet? getFromCache(String walletId) {
+    for (final wallet in _cache) {
+      if (wallet.id == walletId) {
+        return wallet;
+      }
+    }
+
+    return null;
   }
 }
