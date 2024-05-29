@@ -20,15 +20,6 @@ class DetailPage extends StatelessWidget {
 
   final String walletId;
 
-  Wallet? findWallet(List<Wallet> wallets) {
-    for (final wallet in wallets) {
-      if (wallet.id == walletId) {
-        return wallet;
-      }
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WalletsBloc, WalletsState>(
@@ -37,31 +28,26 @@ class DetailPage extends StatelessWidget {
           case WalletsStatus.loading:
             return const FullPageLoading();
           case WalletsStatus.fail:
-            return showError(state.failure!);
+            return ShowError.error(
+              state.failure!,
+              label: AppStrings.labelBackToHome,
+              onPressed: () {
+                AppRouter.router.goNamed(PAGES.walletList.screenName);
+              },
+            );
+
           case WalletsStatus.result:
-            Wallet? wallet = findWallet(state.wallets);
-            if (wallet == null) {
-              return showError(const Failure('No Wallet Found.'));
-            }
             return BlocProvider(
               create: (context) => WalletDetailBloc(
-                wallet: wallet,
                 archiveUseCase: injector<ArchiveWalletUseCase>(),
                 deleteUseCase: injector<DeleteWalletUseCase>(),
               ),
-              child: const DetialPageContent(),
+              child: DetialPageContent(
+                walletId: walletId,
+                wallets: state.wallets,
+              ),
             );
         }
-      },
-    );
-  }
-
-  Widget showError(Failure failure) {
-    return ShowError.error(
-      failure,
-      label: AppStrings.labelBackToHome,
-      onPressed: () {
-        AppRouter.router.goNamed(PAGES.walletList.screenName);
       },
     );
   }

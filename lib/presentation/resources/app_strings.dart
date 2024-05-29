@@ -63,7 +63,9 @@ class AppStrings {
 
   static const String titleError = 'Error';
   static const String labelBackToHome = 'Back to Home';
-  static const String messageWalletDeleted = '\'%1\$\' is successfully deleted.';
+  static const String messageWalletArchived = '\'%1\$\' is successfully archived.';
 
   static const String messageCreateWallet = 'Create your financial goal.';
+
+  static const String noWallet = 'No Wallet Found';
 }

@@ -9,10 +9,10 @@ class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WalletDetailBloc, WalletDetialState>(
-      buildWhen: (previous, current) => previous.status != current.status,
+      buildWhen: (previous, current) => previous.status != current.status && current.wallet != null,
       builder: (context, state) => AppBar(
         title: Text(
-          state.wallet.title,
+          state.wallet!.title,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
               ),
@@ -38,7 +38,7 @@ class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
                     );
                   },
                   menuChildren: [
-                    if (!state.wallet.isArchived) _archiveMenuButton(context),
+                    if (!state.wallet!.isArchived) _archiveMenuButton(context),
                     _deleteMenuButton(context),
                   ],
                 ),
