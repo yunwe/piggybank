@@ -16,6 +16,7 @@ class ArchiveWalletUseCase implements BaseUseCase<ArchiveWalletUseCaseInput, voi
         wallet: input.wallet,
         isArchived: true,
       );
+      _repository.list(input.wallet.ownerId);
       return Right(newWallet);
     } on BaseException catch (failure) {
       return Left(failure.toFailure);
