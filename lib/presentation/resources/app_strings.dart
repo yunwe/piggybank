@@ -44,6 +44,7 @@ class AppStrings {
   static const String errorShortWalletname = 'Must be at least 4 characters.';
   static const String errorLongWalletname = 'Must not be more than 30 characters.';
   static const String errorInvalidTargetDate = 'Must be within 3 years.';
+  static const String errorLongRemark = 'Must not be more than 35 characters.';
 
   static const String titleCreate = 'Create New Goal';
   static const String labelSetTarget = 'Set Target';
@@ -77,4 +78,7 @@ class AppStrings {
   static const String labelSavingButton = 'Save Up';
 
   static const String titleUpdate = 'Update';
+  static const String messageExceedingFund = 'Withdrawl amount is exceeding saving fund.';
+  static const String messageWithdrawn = '\'%1\$\' is withdrawn from \'%2\$\'.';
+  static const String messageAddedFund = '\'%1\$\' is added to  \'%2\$\'.';
 }

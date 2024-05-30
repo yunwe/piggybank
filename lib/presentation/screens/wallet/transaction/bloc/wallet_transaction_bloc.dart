@@ -2,11 +2,12 @@ import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:piggybank/app/service/format_string.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/update_amount_usecase.dart';
+import 'package:piggybank/presentation/resources/app_strings.dart';
 import 'package:piggybank/presentation/screens/wallet/model/models.dart';
-import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
 
 part 'wallet_transaction_event.dart';
 part 'wallet_transaction_state.dart';
@@ -90,7 +91,7 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
       if (state.isWithdrawl && transactionAmount > wallet.amount) {
         emit(state.copyWith(
           status: FormzSubmissionStatus.failure,
-          failure: const Failure('Withdrawl amount is exceeding saving fund.'),
+          failure: const Failure(AppStrings.messageExceedingFund),
         ));
       }
 
@@ -107,13 +108,13 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
           failure: value.left,
         ));
       } else {
-        String message =
-            state.isWithdrawl ? '${state.amount.value} is withdrawn from ${wallet.title}.' : '${state.amount.value} is added to ${wallet.title}.';
+        String message = state.isWithdrawl ? AppStrings.messageWithdrawn : AppStrings.messageAddedFund;
+
         emit(state.copyWith(
           status: FormzSubmissionStatus.success,
           amount: const Amount.pure(),
           remark: const Remark.pure(),
-          message: message,
+          message: message.format([state.amount.value, wallet.title]),
         ));
       }
     }
