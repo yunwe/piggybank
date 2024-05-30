@@ -7,58 +7,34 @@ import 'package:piggybank/presentation/screens/wallet/model/models.dart';
 import 'package:piggybank/presentation/screens/wallet/transaction/bloc/wallet_transaction_bloc.dart';
 
 class TransactionForm extends StatelessWidget {
-  const TransactionForm({super.key, required this.walletId});
-
-  final String walletId;
+  const TransactionForm({super.key});
 
   // ignore: non_constant_identifier_names
   static final EMPTY = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
-    context.read<WalletTransactionBloc>().add(WalletTransactionPageInitialized(walletId));
-
-    return BlocListener<WalletTransactionBloc, WalletTransactionState>(
-      listener: (context, state) {
-        if (state.status.isFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(state.failure.message)),
-            );
-        }
-        if (state.status.isSuccess) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(state.message!)),
-            );
-        }
-      },
-      child: content(context),
+    return Scaffold(
+      backgroundColor: MyColors.primary,
+      appBar: AppBar(title: _Title()),
+      body: Padding(
+        padding: const EdgeInsets.all(AppPadding.p20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _AmountInput(),
+            const Spacing.h20(),
+            _RemarkInput(),
+            const Spacing.h20(),
+            _SubmitButton(),
+            const Spacing.h20(),
+            _ModeInput(),
+          ],
+        ),
+      ),
     );
   }
-
-  Widget content(BuildContext context) => Scaffold(
-        backgroundColor: MyColors.primary,
-        appBar: AppBar(title: _Title()),
-        body: Padding(
-          padding: const EdgeInsets.all(AppPadding.p20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _AmountInput(),
-              const Spacing.h20(),
-              _RemarkInput(),
-              const Spacing.h20(),
-              _SubmitButton(),
-              const Spacing.h20(),
-              _ModeInput(),
-            ],
-          ),
-        ),
-      );
 }
 
 class _Title extends StatelessWidget {
