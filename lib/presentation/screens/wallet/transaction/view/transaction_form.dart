@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:piggybank/app/route/app_router.dart';
-import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/wallet/transaction/bloc/wallet_transaction_bloc.dart';
@@ -14,6 +12,8 @@ class TransactionForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<WalletTransactionBloc>().add(WalletTransactionPageInitialized(walletId));
+
     return BlocListener<WalletTransactionBloc, WalletTransactionState>(
       listener: (context, state) {
         if (state.status.isFailure) {
@@ -24,31 +24,53 @@ class TransactionForm extends StatelessWidget {
             );
         }
         if (state.status.isSuccess) {
-          AppRouter.router.goNamed(PAGES.walletDetail.screenName);
-
-          AppRouter.router.pushNamed(
-            PAGES.walletDetail.screenName,
-            pathParameters: {"id": walletId},
-          );
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(content: Text(state.message!)),
+            );
         }
       },
-      child: formContent(context),
+      child: content(context),
     );
   }
 
-  Widget formContent(BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _AmountInput(),
-          const Spacing.h20(),
-          _RemarkInput(),
-          const Spacing.h20(),
-          _SubmitButton(),
-          const Spacing.h20(),
-          _ModeInput(),
-        ],
+  Widget content(BuildContext context) => Scaffold(
+        backgroundColor: MyColors.primary,
+        appBar: AppBar(title: _Title()),
+        body: Padding(
+          padding: const EdgeInsets.all(AppPadding.p20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _AmountInput(),
+              const Spacing.h20(),
+              _RemarkInput(),
+              const Spacing.h20(),
+              _SubmitButton(),
+              const Spacing.h20(),
+              _ModeInput(),
+            ],
+          ),
+        ),
       );
+}
+
+class _Title extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<WalletTransactionBloc, WalletTransactionState>(
+        buildWhen: (previous, current) => previous.wallet != current.wallet,
+        builder: (context, state) {
+          if (state.wallet == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Text(state.wallet!.title);
+        });
+  }
 }
 
 class _AmountInput extends StatelessWidget {
@@ -73,9 +95,18 @@ class _AmountInput extends StatelessWidget {
 class _RemarkInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MyTextField(
-      Icons.edit_note_rounded,
-      AppStrings.hintRemark,
+    return TextFormField(
+      decoration: const InputDecoration(
+        hintText: AppStrings.hintRemark,
+        prefixIcon: Icon(
+          Icons.short_text,
+          size: AppSize.iconSize,
+        ),
+      ),
+      style: const TextStyle(
+        fontSize: FontSize.inputFontSize,
+        color: Colors.black87,
+      ),
       onChanged: (remark) => context.read<WalletTransactionBloc>().add(
             WalletTransactionRemarkChanged(remark),
           ),
@@ -112,13 +143,13 @@ class _SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WalletTransactionBloc, WalletTransactionState>(
-      buildWhen: (previous, current) => previous.isWithdrawl != current.isWithdrawl,
       builder: (context, state) {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
             : MyButton(
                 onPressed: state.isValid
                     ? () {
+                        FocusManager.instance.primaryFocus?.unfocus();
                         context.read<WalletTransactionBloc>().add(const WalletTransactionSubmitted());
                       }
                     : null,

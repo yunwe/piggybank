@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
+import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/update_amount_usecase.dart';
 import 'package:piggybank/presentation/screens/auth/models/amount.dart';
 
@@ -11,19 +12,33 @@ part 'wallet_transaction_state.dart';
 
 class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransactionState> {
   WalletTransactionBloc({
-    required UpdateAmountUseCase useCase,
-    required String walletId,
-  })  : _useCase = useCase,
-        _walletId = walletId,
+    required UpdateAmountUseCase updateUseCase,
+    required GetWalletUseCase getUseCase,
+  })  : _getUseCase = getUseCase,
+        _updateUseCase = updateUseCase,
         super(const WalletTransactionState()) {
+    on<WalletTransactionPageInitialized>(_onPageInitialized);
     on<WalletTransactionAmountChanged>(_onAmountChanged);
     on<WalletTransactionRemarkChanged>(_onRemarkChanged);
     on<WalletTransactionModeChanged>(_onModeChanged);
     on<WalletTransactionSubmitted>(_onSubmitted);
   }
 
-  final UpdateAmountUseCase _useCase;
-  final String _walletId;
+  final UpdateAmountUseCase _updateUseCase;
+  final GetWalletUseCase _getUseCase;
+
+  void _onPageInitialized(
+    WalletTransactionPageInitialized event,
+    Emitter<WalletTransactionState> emit,
+  ) async {
+    Either<Failure, Wallet?> value = await _getUseCase.execute(GetWalletUseCaseInput(event.walletId));
+
+    if (value.isLeft) {
+      emit(state.copyWith(failure: value.left));
+    } else {
+      return emit(WalletTransactionState(wallet: value.right));
+    }
+  }
 
   void _onAmountChanged(
     WalletTransactionAmountChanged event,
@@ -60,22 +75,42 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
     WalletTransactionSubmitted event,
     Emitter<WalletTransactionState> emit,
   ) async {
+    if (state.wallet == null) {
+      return;
+    }
+
+    Wallet wallet = state.wallet!;
+
     if (state.isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+
+      double transactionAmount = double.parse(state.amount.value);
+      if (state.isWithdrawl && transactionAmount > wallet.amount) {
+        emit(state.copyWith(
+          status: FormzSubmissionStatus.failure,
+          failure: const Failure('Withdrawl amount is exceeding saving fund.'),
+        ));
+      }
+
       final sign = state.isWithdrawl ? -1 : 1;
       UpdateAmountUseCaseInput input = UpdateAmountUseCaseInput(
-        walletId: _walletId,
-        amount: double.parse(state.amount.value) * sign,
+        walletId: wallet.id,
+        amount: transactionAmount * sign,
         remark: state.remark,
       );
-      Either<Failure, void> value = await _useCase.execute(input);
+      Either<Failure, void> value = await _updateUseCase.execute(input);
       if (value.isLeft) {
         emit(state.copyWith(
           status: FormzSubmissionStatus.failure,
           failure: value.left,
         ));
       } else {
-        emit(state.copyWith(status: FormzSubmissionStatus.success));
+        String message =
+            state.isWithdrawl ? '${state.amount.value} is withdrawn from ${wallet.title}.' : '${state.amount.value} is added to ${wallet.title}.';
+        emit(state.copyWith(
+          status: FormzSubmissionStatus.success,
+          message: message,
+        ));
       }
     }
   }

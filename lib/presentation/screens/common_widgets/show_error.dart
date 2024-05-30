@@ -21,6 +21,15 @@ class ShowError extends StatelessWidget {
           },
         );
 
+  ShowError.noWallet()
+      : this._(
+          failure: const Failure(AppStrings.noWallet),
+          label: AppStrings.labelBackToHome,
+          onPressed: () {
+            AppRouter.router.goNamed(PAGES.walletList.screenName);
+          },
+        );
+
   const ShowError.error(Failure failure, {required label, required onPressed})
       : this._(
           failure: failure,

@@ -47,10 +47,9 @@ class AppRouter {
         builder: (context, state) {
           initWalletTransactionModule();
           String id = state.pathParameters['wallet'] ?? '-';
-          String title = state.extra as String;
+
           return TransactionPage(
             walletId: id,
-            title: title,
           );
         },
       ),
