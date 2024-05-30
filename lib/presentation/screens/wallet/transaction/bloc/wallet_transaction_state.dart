@@ -5,7 +5,7 @@ final class WalletTransactionState extends Equatable {
     this.wallet,
     this.status = FormzSubmissionStatus.initial,
     this.amount = const Amount.pure(),
-    this.remark,
+    this.remark = const Remark.pure(),
     this.isWithdrawl = false,
     this.isValid = false,
     this.failure = Failure.empty,
@@ -15,7 +15,7 @@ final class WalletTransactionState extends Equatable {
   final Wallet? wallet;
   final FormzSubmissionStatus status;
   final Amount amount;
-  final String? remark;
+  final Remark remark;
   final bool isWithdrawl;
   final bool isValid;
   final Failure failure;
@@ -24,7 +24,7 @@ final class WalletTransactionState extends Equatable {
   WalletTransactionState copyWith({
     FormzSubmissionStatus? status,
     Amount? amount,
-    String? remark,
+    Remark? remark,
     bool? isWithdrawl,
     bool? isValid,
     Failure? failure,
