@@ -46,7 +46,12 @@ class AppRouter {
         name: PAGES.walletTransaction.screenName,
         builder: (context, state) {
           initWalletTransactionModule();
-          return TransactionPage(walletId: state.pathParameters['wallet'] ?? '-');
+          String id = state.pathParameters['wallet'] ?? '-';
+          String title = state.extra as String;
+          return TransactionPage(
+            walletId: id,
+            title: title,
+          );
         },
       ),
       GoRoute(

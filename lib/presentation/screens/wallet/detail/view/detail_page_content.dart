@@ -81,6 +81,7 @@ class _PageContent extends StatelessWidget {
                   AppRouter.router.pushNamed(
                     PAGES.walletTransaction.screenName,
                     pathParameters: {'wallet': wallet.id},
+                    extra: wallet.title,
                   );
                 },
                 // foregroundColor: Theme.of(context).colorScheme.onPrimary,

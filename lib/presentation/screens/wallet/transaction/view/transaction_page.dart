@@ -7,17 +7,20 @@ import 'package:piggybank/presentation/screens/wallet/transaction/bloc/wallet_tr
 import 'package:piggybank/presentation/screens/wallet/transaction/view/transaction_form.dart';
 
 class TransactionPage extends StatelessWidget {
-  const TransactionPage({super.key, required this.walletId});
+  const TransactionPage({
+    super.key,
+    required this.walletId,
+    required this.title,
+  });
 
   final String walletId;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: MyColors.primary,
-      appBar: AppBar(
-        title: const Text(AppStrings.titleUpdate),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: Padding(
         padding: const EdgeInsets.all(AppPadding.p20),
         child: form(context),
