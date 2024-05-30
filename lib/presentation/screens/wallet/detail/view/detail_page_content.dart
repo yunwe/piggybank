@@ -9,14 +9,13 @@ import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/view/detail_page_appbar.dart';
 
 class DetialPageContent extends StatelessWidget {
-  const DetialPageContent({super.key, required this.walletId, required this.wallets});
+  const DetialPageContent({super.key, required this.walletId});
 
-  final List<Wallet> wallets;
   final String walletId;
 
   @override
   Widget build(BuildContext context) {
-    context.read<WalletDetailBloc>().add(WalletDetailPageInitialzed(wallets: wallets, walletId: walletId));
+    context.read<WalletDetailBloc>().add(WalletDetailPageInitialzed(walletId: walletId));
 
     return BlocListener<WalletDetailBloc, WalletDetialState>(
       listenWhen: (previous, current) => previous.status != current.status,

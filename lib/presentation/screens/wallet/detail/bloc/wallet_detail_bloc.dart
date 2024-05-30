@@ -5,6 +5,7 @@ import 'package:piggybank/app/service/format_string.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
+import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 
 part 'wallet_detail_event.dart';
@@ -12,9 +13,11 @@ part 'wallet_detail_state.dart';
 
 class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
   WalletDetailBloc({
+    required GetWalletUseCase getWalletUseCase,
     required ArchiveWalletUseCase archiveUseCase,
     required DeleteWalletUseCase deleteUseCase,
-  })  : _archiveUseCase = archiveUseCase,
+  })  : _getWalletUseCase = getWalletUseCase,
+        _archiveUseCase = archiveUseCase,
         _deleteUseCase = deleteUseCase,
         super(const WalletDetialState(status: DetailPageStatus.processing)) {
     on<WalletDetailArchiveRequested>(_onArchiveRequested);
@@ -22,6 +25,7 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
     on<WalletDetailPageInitialzed>(_onPageInitialzed);
   }
 
+  final GetWalletUseCase _getWalletUseCase;
   final ArchiveWalletUseCase _archiveUseCase;
   final DeleteWalletUseCase _deleteUseCase;
 
@@ -30,15 +34,13 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
     Emitter<WalletDetialState> emit,
   ) async {
     emit(const WalletDetialState(status: DetailPageStatus.processing));
+    Either<Failure, Wallet?> value = await _getWalletUseCase.execute(GetWalletUseCaseInput(event.walletId));
 
-    for (final wallet in event.wallets) {
-      if (wallet.id == event.walletId) {
-        return emit(WalletDetialState(status: DetailPageStatus.pure, wallet: wallet));
-      }
+    if (value.isLeft) {
+      emit(state.copyWith(status: DetailPageStatus.fail, failure: value.left));
+    } else {
+      return emit(WalletDetialState(status: DetailPageStatus.pure, wallet: value.right));
     }
-
-    //No Wallet found
-    return emit(const WalletDetialState(status: DetailPageStatus.pure, wallet: null));
   }
 
   void _onArchiveRequested(

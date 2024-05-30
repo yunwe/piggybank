@@ -8,13 +8,12 @@ sealed class WalletDetailEvent extends Equatable {
 }
 
 final class WalletDetailPageInitialzed extends WalletDetailEvent {
-  const WalletDetailPageInitialzed({required this.wallets, required this.walletId});
+  const WalletDetailPageInitialzed({required this.walletId});
 
-  final List<Wallet> wallets;
   final String walletId;
 
   @override
-  List<Object> get props => [walletId, wallets];
+  List<Object> get props => [walletId];
 }
 
 final class WalletDetailArchiveRequested extends WalletDetailEvent {
