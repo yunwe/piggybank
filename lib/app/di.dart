@@ -13,6 +13,7 @@ import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
+import 'package:piggybank/domain/usecase/list_transaction_usecase.dart';
 import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
@@ -84,6 +85,14 @@ initDetailWalletModule() {
     injector.registerLazySingleton<GetWalletUseCase>(
       () => GetWalletUseCase(
         injector<WalletRepository>(),
+      ),
+    );
+  }
+
+  if (!GetIt.I.isRegistered<ListTransactionUseCase>()) {
+    injector.registerLazySingleton<ListTransactionUseCase>(
+      () => ListTransactionUseCase(
+        injector<TransactionRepository>(),
       ),
     );
   }

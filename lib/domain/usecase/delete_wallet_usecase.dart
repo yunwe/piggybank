@@ -15,6 +15,7 @@ class DeleteWalletUseCase implements BaseUseCase<DeleteWalletUseCaseInput, void>
       await _repository.delete(
         wallet: input.wallet,
       );
+      _repository.list(input.wallet.ownerId);
       return const Right(null);
     } on BaseException catch (failure) {
       return Left(failure.toFailure);

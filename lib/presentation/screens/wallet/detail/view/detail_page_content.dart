@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/route/app_router.dart';
 import 'package:piggybank/app/route/route_utils.dart';
+import 'package:piggybank/app/service/format_date.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
@@ -9,42 +10,7 @@ import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/view/detail_page_appbar.dart';
 
 class DetialPageContent extends StatelessWidget {
-  const DetialPageContent({super.key, required this.walletId});
-
-  final String walletId;
-
-  @override
-  Widget build(BuildContext context) {
-    context.read<WalletDetailBloc>().add(WalletDetailPageInitialzed(walletId: walletId));
-
-    return BlocListener<WalletDetailBloc, WalletDetialState>(
-      listenWhen: (previous, current) => previous.status != current.status,
-      listener: (context, state) {
-        if (state.status == DetailPageStatus.fail) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(state.failure!.message)),
-            );
-        }
-        if (state.message != null) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(state.message!)),
-            );
-        }
-        if (state.status == DetailPageStatus.deleted) {
-          AppRouter.router.goNamed(PAGES.walletList.screenName);
-        }
-      },
-      child: const _PageContent(),
-    );
-  }
-}
-
-class _PageContent extends StatelessWidget {
-  const _PageContent();
+  const DetialPageContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +23,20 @@ class _PageContent extends StatelessWidget {
         return ShowError.noWallet();
       }
 
-      return content(state.wallet!);
+      return content(state.wallet!, state.transactions);
     });
   }
 
-  Widget content(Wallet wallet) => Scaffold(
+  Widget content(Wallet wallet, List<Transaction> transactions) => Scaffold(
         backgroundColor: MyColors.primary,
         appBar: const DetailPageAppbar(),
-        body: Padding(
-          padding: const EdgeInsets.all(AppPadding.p20),
-          child: Text(wallet.title),
+        body: Column(
+          children: [
+            _WalletInfo(wallet),
+            Expanded(
+              child: _TransactionsList(transactions),
+            )
+          ],
         ),
         floatingActionButton: wallet.isArchived
             ? null
@@ -77,10 +47,116 @@ class _PageContent extends StatelessWidget {
                     pathParameters: {'wallet': wallet.id},
                   );
                 },
-                // foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                // backgroundColor: Theme.of(context).colorScheme.primary,
                 shape: const CircleBorder(),
                 child: const Icon(Icons.add),
               ),
+      );
+}
+
+class _WalletInfo extends StatelessWidget {
+  final Wallet wallet;
+
+  const _WalletInfo(this.wallet);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppPadding.p20,
+        vertical: AppPadding.p28,
+      ),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('\$${wallet.amount}'),
+            const Text(AppStrings.labelTotal),
+          ],
+        ),
+      ),
+
+      //  Text(wallet.title),
+    );
+  }
+}
+
+class _TransactionsList extends StatelessWidget {
+  final List<Transaction> transactions;
+
+  const _TransactionsList(this.transactions);
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemBuilder: (context, index) => _TransactionItem(transactions[index]),
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+      itemCount: transactions.length,
+      shrinkWrap: true,
+    );
+  }
+}
+
+class _TransactionItem extends StatelessWidget {
+  final Transaction transaction;
+
+  const _TransactionItem(this.transaction);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            block(
+              transaction.amount.toString(),
+              transaction.createdTime.format(),
+            ),
+            block(
+              transaction.updatedBalance.toString(),
+              'Balance',
+            ),
+            if (transaction.amount < 0)
+              const Icon(Icons.arrow_drop_down, color: Colors.red)
+            else
+              const Icon(Icons.arrow_drop_up, color: Colors.green),
+          ],
+        ),
+        if (transaction.remarks != null) remark(transaction.remarks!),
+        const Spacing.h12(),
+      ],
+    );
+  }
+
+  Widget block(String l1, String l2) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l1,
+            // style: Theme.of(ctx).textTheme.bodyMedium!.copyWith(
+            //       color: Theme.of(ctx).colorScheme.onBackground,
+            //     ),
+          ),
+          Text(
+            l2,
+            // style: Theme.of(ctx).textTheme.bodySmall!.copyWith(
+            //       color: Theme.of(ctx).colorScheme.onBackground,
+            //     ),
+          ),
+        ],
+      );
+
+  Widget remark(String remark) => Row(
+        children: [
+          const Icon(
+            Icons.info_outline,
+            size: 16, //TODO:
+          ),
+          const Spacing.w5(),
+          Text(
+            remark,
+            // style: Theme.of(ctx).textTheme.bodySmall!.copyWith(
+            //       color: Theme.of(ctx).colorScheme.onBackground,
+            //     ),
+          ),
+        ],
       );
 }

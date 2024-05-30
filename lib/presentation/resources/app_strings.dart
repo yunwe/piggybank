@@ -81,4 +81,5 @@ class AppStrings {
   static const String messageExceedingFund = 'Withdrawl amount is exceeding saving fund.';
   static const String messageWithdrawn = '\'%1\$\' is withdrawn from \'%2\$\'.';
   static const String messageAddedFund = '\'%1\$\' is added to  \'%2\$\'.';
+  static const String labelTotal = 'Total Saved';
 }

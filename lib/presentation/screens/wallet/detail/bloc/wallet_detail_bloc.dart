@@ -6,6 +6,7 @@ import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
+import 'package:piggybank/domain/usecase/list_transaction_usecase.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 
 part 'wallet_detail_event.dart';
@@ -14,9 +15,11 @@ part 'wallet_detail_state.dart';
 class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
   WalletDetailBloc({
     required GetWalletUseCase getWalletUseCase,
+    required ListTransactionUseCase listTransactionUseCase,
     required ArchiveWalletUseCase archiveUseCase,
     required DeleteWalletUseCase deleteUseCase,
   })  : _getWalletUseCase = getWalletUseCase,
+        _listTransactionUseCase = listTransactionUseCase,
         _archiveUseCase = archiveUseCase,
         _deleteUseCase = deleteUseCase,
         super(const WalletDetialState(status: DetailPageStatus.processing)) {
@@ -26,6 +29,7 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
   }
 
   final GetWalletUseCase _getWalletUseCase;
+  final ListTransactionUseCase _listTransactionUseCase;
   final ArchiveWalletUseCase _archiveUseCase;
   final DeleteWalletUseCase _deleteUseCase;
 
@@ -34,13 +38,28 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
     Emitter<WalletDetialState> emit,
   ) async {
     emit(const WalletDetialState(status: DetailPageStatus.processing));
-    Either<Failure, Wallet?> value = await _getWalletUseCase.execute(GetWalletUseCaseInput(event.walletId));
 
-    if (value.isLeft) {
-      emit(state.copyWith(status: DetailPageStatus.fail, failure: value.left));
-    } else {
-      return emit(WalletDetialState(status: DetailPageStatus.pure, wallet: value.right));
+    //Get Wallet
+    Either<Failure, Wallet?> walletValue = await _getWalletUseCase.execute(GetWalletUseCaseInput(event.walletId));
+    if (walletValue.isLeft) {
+      return emit(state.copyWith(status: DetailPageStatus.fail, failure: walletValue.left));
     }
+
+    //Get Transactions
+    Either<Failure, List<Transaction>> transactionsValue = await _listTransactionUseCase.execute(ListTransactionUseCaseInput(event.walletId));
+    if (walletValue.isLeft) {
+      return emit(state.copyWith(status: DetailPageStatus.fail, failure: transactionsValue.left));
+    }
+
+    List<Transaction> transactions = transactionsValue.right;
+    transactions.sort((a, b) => b.createdTime.compareTo(a.createdTime));
+
+    //Success State
+    return emit(WalletDetialState(
+      status: DetailPageStatus.pure,
+      wallet: walletValue.right,
+      transactions: transactions,
+    ));
   }
 
   void _onArchiveRequested(
