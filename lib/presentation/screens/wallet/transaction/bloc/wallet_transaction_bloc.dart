@@ -5,7 +5,8 @@ import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/update_amount_usecase.dart';
-import 'package:piggybank/presentation/screens/auth/models/amount.dart';
+import 'package:piggybank/presentation/screens/wallet/model/models.dart';
+import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
 
 part 'wallet_transaction_event.dart';
 part 'wallet_transaction_state.dart';
@@ -57,8 +58,9 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
     WalletTransactionRemarkChanged event,
     Emitter<WalletTransactionState> emit,
   ) {
+    final remark = Remark.dirty(event.remark);
     emit(
-      state.copyWith(remark: event.remark),
+      state.copyWith(remark: remark),
     );
   }
 
@@ -96,7 +98,7 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
       UpdateAmountUseCaseInput input = UpdateAmountUseCaseInput(
         walletId: wallet.id,
         amount: transactionAmount * sign,
-        remark: state.remark,
+        remark: state.remark.value,
       );
       Either<Failure, void> value = await _updateUseCase.execute(input);
       if (value.isLeft) {
@@ -109,6 +111,8 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
             state.isWithdrawl ? '${state.amount.value} is withdrawn from ${wallet.title}.' : '${state.amount.value} is added to ${wallet.title}.';
         emit(state.copyWith(
           status: FormzSubmissionStatus.success,
+          amount: const Amount.pure(),
+          remark: const Remark.pure(),
           message: message,
         ));
       }

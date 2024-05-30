@@ -3,12 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
+import 'package:piggybank/presentation/screens/wallet/model/models.dart';
 import 'package:piggybank/presentation/screens/wallet/transaction/bloc/wallet_transaction_bloc.dart';
 
 class TransactionForm extends StatelessWidget {
   const TransactionForm({super.key, required this.walletId});
 
   final String walletId;
+
+  // ignore: non_constant_identifier_names
+  static final EMPTY = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +86,7 @@ class _AmountInput extends StatelessWidget {
           return MyTextField(
             Icons.attach_money,
             AppStrings.hintAmount,
+            controller: state.amount == const Amount.pure() ? TransactionForm.EMPTY : null,
             inputType: TextInputType.number,
             onChanged: (amount) => context.read<WalletTransactionBloc>().add(
                   WalletTransactionAmountChanged(amount),
@@ -95,22 +100,19 @@ class _AmountInput extends StatelessWidget {
 class _RemarkInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: const InputDecoration(
-        hintText: AppStrings.hintRemark,
-        prefixIcon: Icon(
-          Icons.short_text,
-          size: AppSize.iconSize,
-        ),
-      ),
-      style: const TextStyle(
-        fontSize: FontSize.inputFontSize,
-        color: Colors.black87,
-      ),
-      onChanged: (remark) => context.read<WalletTransactionBloc>().add(
-            WalletTransactionRemarkChanged(remark),
-          ),
-    );
+    return BlocBuilder<WalletTransactionBloc, WalletTransactionState>(
+        buildWhen: (previous, current) => previous.remark != current.remark,
+        builder: (context, state) {
+          return MyTextField(
+            Icons.short_text,
+            AppStrings.hintRemark,
+            controller: state.remark == const Remark.pure() ? TransactionForm.EMPTY : null,
+            onChanged: (remark) => context.read<WalletTransactionBloc>().add(
+                  WalletTransactionRemarkChanged(remark),
+                ),
+            errorText: state.remark.displayError?.text(),
+          );
+        });
   }
 }
 
