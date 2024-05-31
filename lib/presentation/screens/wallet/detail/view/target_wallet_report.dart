@@ -90,7 +90,7 @@ class _ActivePeriod extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(AppStrings.activeFor.format([report.activePeriod])),
+                      Text(AppStrings.endIn.format([report.endIn])),
                       Text(report.endDate.format()),
                     ],
                   ),

@@ -11,21 +11,7 @@ class Report {
 
   String get activePeriod {
     final duration = wallet.isArchived ? wallet.archivedDate!.difference(wallet.startDate).inDays : _activeDays;
-
-    //Days
-    if (duration < 30) {
-      return duration <= 1 ? '1 day' : '$duration days';
-    }
-
-    //Month
-    if (duration < 365) {
-      final month = (duration / 30).floor();
-      return month == 1 ? '1 month+' : '$month months+';
-    }
-
-    //Year
-    final year = (duration / 365).floor();
-    return year == 1 ? '1 year+' : '$year years+';
+    return _parseDays(duration);
   }
 
   double get currentAmount => wallet.amount;
@@ -41,6 +27,24 @@ class Report {
       return 1;
     }
     return days;
+  }
+
+  String _parseDays(int day) {
+    //Days
+    if (day < 30) {
+      return day <= 1 ? '1 day' : '$day days';
+    }
+
+    //Month
+    if (day < 365) {
+      final month = (day / 31).floor();
+      return month == 1 ? '1 month' : '$month months';
+    }
+
+    //Year
+    final year = (day / 365).floor();
+    final extraMonth = ((day % 365) / 31).ceil();
+    return year == 1 ? '1 year $extraMonth months.' : '$year years $extraMonth months.';
   }
 }
 
@@ -66,5 +70,10 @@ class TargetReport extends Report {
 
   double get amountSaving {
     return currentAmount / (_activeDays / 30).ceil();
+  }
+
+  String get endIn {
+    final duration = wallet.targetEndDate!.difference(wallet.startDate).inDays - _activeDays;
+    return _parseDays(duration);
   }
 }
