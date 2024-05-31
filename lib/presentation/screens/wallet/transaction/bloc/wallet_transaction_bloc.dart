@@ -96,10 +96,12 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
       }
 
       final sign = state.isWithdrawl ? -1 : 1;
+      String? remark = state.remark.value.trim();
+      remark = remark == '' ? null : remark;
       UpdateAmountUseCaseInput input = UpdateAmountUseCaseInput(
         walletId: wallet.id,
         amount: transactionAmount * sign,
-        remark: state.remark.value,
+        remark: remark,
       );
       Either<Failure, void> value = await _updateUseCase.execute(input);
       if (value.isLeft) {

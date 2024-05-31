@@ -93,4 +93,5 @@ class AppStrings {
   static const String labelCurrent = 'Current : \$%1\$';
   static const String labelSPM = 'Amount To Save Per Month';
   static const String labelHistory = 'History';
+  static const String noHistory = 'No transaction.';
 }

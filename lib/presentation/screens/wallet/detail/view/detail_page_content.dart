@@ -86,19 +86,21 @@ class _TransactionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(AppStrings.labelHistory),
-          const Spacing.h8(),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (context, index) => _TransactionItem(transactions[index]),
-              itemCount: transactions.length,
+      child: transactions.isEmpty
+          ? const Center(child: Text(AppStrings.noHistory))
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(AppStrings.labelHistory),
+                const Spacing.h8(),
+                Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) => _TransactionItem(transactions[index]),
+                    itemCount: transactions.length,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -128,7 +130,7 @@ class _TransactionItem extends StatelessWidget {
               const Icon(Icons.arrow_drop_up, color: Colors.green),
           ],
         ),
-        if (transaction.remarks != null) remark(transaction.remarks!),
+        if (transaction.remarks != null && transaction.remarks!.trim() != '') remark(transaction.remarks!),
         const Spacing.h12(),
       ],
     );
