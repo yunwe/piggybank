@@ -20,7 +20,12 @@ class AppSize {
   static const double opacity = 0.5;
   static const double formEntityWidth = 280; //Todo: Delete after fixing register.dart, forgetpassword.dart
   static const double formEntityHeight = 46;
+
+  static const double bulletinSize = 22;
+
+  static const double iconSizeXS = 16;
   static const double iconSize = 28;
+  static const double iconSizeL = 50;
 }
 
 class AppKeys {

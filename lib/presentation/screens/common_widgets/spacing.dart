@@ -14,6 +14,8 @@ class Spacing extends StatelessWidget {
 
   const Spacing.w5() : this._(0, 5);
 
+  const Spacing.w15() : this._(0, 15);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

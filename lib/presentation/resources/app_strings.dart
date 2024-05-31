@@ -82,4 +82,15 @@ class AppStrings {
   static const String messageWithdrawn = '\'%1\$\' is withdrawn from \'%2\$\'.';
   static const String messageAddedFund = '\'%1\$\' is added to  \'%2\$\'.';
   static const String labelTotal = 'Total Saved';
+  static const String labelBalance = 'Balance';
+
+  //Report
+  static const String startedOn = 'Started on \'%1\$\'.';
+  static const String activeFor = 'Active for %1\$.';
+  static const String avgSaving = 'Saving \$%1\$ per month in average.';
+  static const String labelStartDate = 'Start Date : %1\$';
+  static const String labelGoal = 'Goal : \$%1\$';
+  static const String labelCurrent = 'Current : \$%1\$';
+  static const String labelSPM = 'Amount To Save Per Month';
+  static const String labelHistory = 'History';
 }

@@ -8,6 +8,8 @@ import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/view/detail_page_appbar.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/view/target_wallet_report.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/view/wallet_report.dart';
 
 class DetialPageContent extends StatelessWidget {
   const DetialPageContent({super.key});
@@ -33,6 +35,7 @@ class DetialPageContent extends StatelessWidget {
         body: Column(
           children: [
             _WalletInfo(wallet),
+            wallet.targetEndDate == null ? WalletReport(wallet: wallet) : TargetWalletReport(wallet: wallet),
             Expanded(
               child: _TransactionsList(transactions),
             )
@@ -61,10 +64,7 @@ class _WalletInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppPadding.p20,
-        vertical: AppPadding.p28,
-      ),
+      padding: const EdgeInsets.only(top: AppPadding.p20),
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -74,8 +74,6 @@ class _WalletInfo extends StatelessWidget {
           ],
         ),
       ),
-
-      //  Text(wallet.title),
     );
   }
 }
@@ -86,11 +84,21 @@ class _TransactionsList extends StatelessWidget {
   const _TransactionsList(this.transactions);
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) => _TransactionItem(transactions[index]),
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-      itemCount: transactions.length,
-      shrinkWrap: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(AppStrings.labelHistory),
+          const Spacing.h8(),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, index) => _TransactionItem(transactions[index]),
+              itemCount: transactions.length,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -112,7 +120,7 @@ class _TransactionItem extends StatelessWidget {
             ),
             block(
               transaction.updatedBalance.toString(),
-              'Balance',
+              AppStrings.labelBalance,
             ),
             if (transaction.amount < 0)
               const Icon(Icons.arrow_drop_down, color: Colors.red)
@@ -148,7 +156,7 @@ class _TransactionItem extends StatelessWidget {
         children: [
           const Icon(
             Icons.info_outline,
-            size: 16, //TODO:
+            size: AppSize.iconSizeXS,
           ),
           const Spacing.w5(),
           Text(
