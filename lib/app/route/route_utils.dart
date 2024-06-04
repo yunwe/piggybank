@@ -49,7 +49,7 @@ extension AppPageExtension on PAGES {
       case PAGES.walletTransaction:
         return "TRANSACTION";
       case PAGES.archivedWalletList:
-        return "ARCHIVED-LIST";
+        return "ARCHIVED";
       case PAGES.onboarding:
         return "ONBOARDING";
       case PAGES.signin:

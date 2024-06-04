@@ -52,10 +52,6 @@ class DetialPageContent extends StatelessWidget {
             ),
             const Spacing.h12(),
             VisualReport(wallet: wallet, transactions: transactions),
-            //TransactionBarChart(),
-            // Expanded(
-            //   child: _TransactionsList(transactions),
-            // )
           ],
         ),
         floatingActionButton: wallet.isArchived

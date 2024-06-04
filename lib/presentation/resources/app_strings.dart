@@ -16,6 +16,7 @@ class AppStrings {
   static const String hintConfirmPw = "Confirm Password";
   static const String hintEmail = "Email";
   static const String labelLogin = "Login";
+  static const String labelLogout = "Log Out";
   static const String labelSignup = "Sign up";
   static const String labelReset = "Send a reset email.";
   static const String errorInvalidPassword = 'Password must be at least 8 characters and contain at least one letter and number';
@@ -35,6 +36,14 @@ class AppStrings {
   static const String onBoardingSubtitle3 = 'Reach your financial milestones and secure your future';
 
   static const String skip = 'Skip';
+
+  //Home
+  static const String titleDrawer = 'Saving Up!';
+  static const String archive = 'Archived Goals';
+  static const String rateUs = 'Rate the App';
+  static const String removeAd = 'Rate the App';
+
+  static const String noArchive = 'No archived goal.';
 
   //Wallet
   static const String errorEmptyInput = 'This must not be empty';

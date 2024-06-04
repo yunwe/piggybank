@@ -5,24 +5,24 @@ import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/home/bloc/home_page_bloc.dart';
-import 'package:piggybank/presentation/screens/home/view/home_page_appbar.dart';
-import 'package:piggybank/presentation/screens/home/view/home_page_drawer.dart';
+import 'package:piggybank/presentation/screens/wallet/archive/bloc/archive_page_bloc.dart';
 
 //
-class HomePageContent extends StatelessWidget {
-  const HomePageContent({super.key, required this.wallets});
+class ArchivePageContent extends StatelessWidget {
+  const ArchivePageContent({super.key, required this.wallets});
 
   final List<Wallet> wallets;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const HomePageAppbar(),
+      appBar: AppBar(
+        title: const Text(AppStrings.archive),
+      ),
       backgroundColor: MyColors.primary,
-      drawer: const HomePageDrawer(),
-      body: BlocProvider<HomePageBloc>(
-        create: (context) => HomePageBloc(),
+      //drawer: const HomePageDrawer(),
+      body: BlocProvider<ArchivePageBloc>(
+        create: (context) => ArchivePageBloc(),
         child: _PageContent(wallets: wallets),
       ),
     );
@@ -36,9 +36,9 @@ class _PageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<HomePageBloc>().add(HomePageWalletsChanged(wallets));
+    context.read<ArchivePageBloc>().add(ArchivePageWalletsChanged(wallets));
 
-    return BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
+    return BlocBuilder<ArchivePageBloc, ArchivePageState>(builder: (context, state) {
       List<Wallet> filteredWallets = state.wallets;
 
       return filteredWallets.isEmpty
@@ -61,13 +61,13 @@ class _PageContent extends StatelessWidget {
 
   Widget get empty => Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          const Text(AppStrings.messageCreateWallet),
+          const Text(AppStrings.noArchive),
           const Spacing.h20(),
           ElevatedButton(
             onPressed: () {
-              AppRouter.router.pushNamed(PAGES.walletNew.screenName);
+              AppRouter.router.goNamed(PAGES.walletList.screenName);
             },
-            child: const Text(AppStrings.labelCreate),
+            child: const Text(AppStrings.labelBackToHome),
           ),
         ]),
       );

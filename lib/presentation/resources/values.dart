@@ -26,6 +26,8 @@ class AppSize {
   static const double iconSizeXS = 16;
   static const double iconSize = 28;
   static const double iconSizeL = 50;
+
+  static const double elevation = 4;
 }
 
 class AppKeys {

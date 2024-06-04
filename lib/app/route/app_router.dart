@@ -4,9 +4,10 @@ import 'package:piggybank/app/di.dart';
 import 'package:piggybank/presentation/screens/home/home.dart';
 import 'package:piggybank/presentation/screens/auth/login/login.dart';
 import 'package:piggybank/presentation/screens/auth/register/register.dart';
+import 'package:piggybank/presentation/screens/wallet/archive/archive.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
 import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
-import 'package:piggybank/presentation/screens/wallet/transaction/view/transaction_page.dart';
+import 'package:piggybank/presentation/screens/wallet/transaction/transaction.dart';
 import 'route_utils.dart';
 
 class AppRouter {
@@ -51,6 +52,13 @@ class AppRouter {
           return TransactionPage(
             walletId: id,
           );
+        },
+      ),
+      GoRoute(
+        path: PAGES.archivedWalletList.screenPath,
+        name: PAGES.archivedWalletList.screenName,
+        builder: (context, state) {
+          return const ArchivePage();
         },
       ),
       GoRoute(
