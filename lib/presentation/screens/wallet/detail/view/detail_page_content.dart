@@ -4,7 +4,6 @@ import 'package:piggybank/app/route/app_router.dart';
 import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/app/service/format_date.dart';
 import 'package:piggybank/domain/model/models.dart';
-import 'package:piggybank/presentation/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
@@ -27,17 +26,31 @@ class DetialPageContent extends StatelessWidget {
         return ShowError.noWallet();
       }
 
-      return content(state.wallet!, state.transactions);
+      return content(context, state.wallet!, state.transactions);
     });
   }
 
-  Widget content(Wallet wallet, List<Transaction> transactions) => Scaffold(
+  Widget content(BuildContext context, Wallet wallet, List<Transaction> transactions) => Scaffold(
         backgroundColor: MyColors.primary,
         appBar: const DetailPageAppbar(),
         body: Column(
           children: [
             _WalletInfo(wallet),
             wallet.targetEndDate == null ? WalletReport(wallet: wallet) : TargetWalletReport(wallet: wallet),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(AppStrings.titleMonthlyReport),
+                  GestureDetector(
+                    onTap: () => _showTransactions(context, transactions),
+                    child: const Text(AppStrings.viewDetail),
+                  )
+                ],
+              ),
+            ),
+            const Spacing.h12(),
             VisualReport(wallet: wallet, transactions: transactions),
             //TransactionBarChart(),
             // Expanded(
@@ -58,6 +71,15 @@ class DetialPageContent extends StatelessWidget {
                 child: const Icon(Icons.add),
               ),
       );
+
+  void _showTransactions(BuildContext context, List<Transaction> transactions) {
+    showModalBottomSheet(
+        context: context,
+        backgroundColor: MyColors.primary,
+        builder: (BuildContext context) {
+          return _TransactionsList(transactions);
+        });
+  }
 }
 
 class _WalletInfo extends StatelessWidget {
@@ -89,7 +111,7 @@ class _TransactionsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+      padding: const EdgeInsets.all(AppPadding.p28),
       child: transactions.isEmpty
           ? const Center(child: Text(AppStrings.noHistory))
           : Column(
