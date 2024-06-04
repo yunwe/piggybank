@@ -23,10 +23,6 @@ class TargetWalletReport extends StatelessWidget {
           _TargetAmount(report),
           const Spacing.h20(),
           _ActivePeriod(report),
-          const Spacing.h20(),
-          const Text(AppStrings.labelSPM),
-          Text(AppStrings.labelGoal.format([report.amountToSave.toStringAsFixed(2)])),
-          Text(AppStrings.labelCurrent.format([report.amountSaving.toStringAsFixed(2)])),
         ],
       ),
     );

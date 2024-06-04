@@ -29,12 +29,6 @@ class WalletReport extends StatelessWidget {
             icon: Icons.directions_run,
             text: AppStrings.activeFor.format([report.activePeriod]),
           ),
-          const Spacing.h8(),
-          if (report.currentAmount > 0)
-            _IconText(
-              icon: Icons.savings_outlined,
-              text: AppStrings.avgSaving.format([report.averageSaving.toStringAsFixed(2)]),
-            ),
         ],
       ),
     );

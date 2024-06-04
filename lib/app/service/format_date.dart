@@ -1,3 +1,5 @@
+import 'dart:core';
+
 const monthNames = [
   'JAN',
   'FEB',
@@ -41,5 +43,19 @@ extension DateDifferennce on DateTime {
       return DateTime(resYear, resMonth % 12);
     }
     return DateTime(year, resMonth);
+  }
+
+  int monthDifference(DateTime date2) {
+    DateTime min, max;
+    if (date2.millisecondsSinceEpoch > millisecondsSinceEpoch) {
+      max = date2;
+      min = this;
+    } else {
+      max = this;
+      min = date2;
+    }
+
+    int yearDiff = max.year - min.year;
+    return ((max.month + (yearDiff * 12)) - min.month);
   }
 }

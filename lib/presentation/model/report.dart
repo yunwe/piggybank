@@ -1,3 +1,4 @@
+import 'package:piggybank/app/service/format_date.dart';
 import 'package:piggybank/domain/model/models.dart';
 
 class Report {
@@ -17,12 +18,16 @@ class Report {
   double get currentAmount => wallet.amount;
 
   double get averageSaving {
-    int month = (_activeDays / 30).ceil();
+    int month = DateTime.now().monthDifference(wallet.startDate) + 1;
     return currentAmount / month;
   }
 
   int get _activeDays {
-    int days = DateTime.now().difference(wallet.startDate).inDays;
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime startDay = DateTime(wallet.startDate.year, wallet.startDate.month, wallet.startDate.day);
+
+    int days = today.difference(startDay).inDays;
     if (days == 0) {
       return 1;
     }
@@ -44,7 +49,7 @@ class Report {
     //Year
     final year = (day / 365).floor();
     final extraMonth = ((day % 365) / 31).ceil();
-    return year == 1 ? '1 year $extraMonth months.' : '$year years $extraMonth months.';
+    return year == 1 ? '1 year $extraMonth months' : '$year years $extraMonth months';
   }
 }
 
@@ -56,8 +61,7 @@ class TargetReport extends Report {
   double get targetAmount => wallet.targetAmount!;
 
   double get dayAchievement {
-    final target = wallet.targetEndDate!.difference(wallet.startDate).inDays;
-    return _activeDays / target;
+    return _activeDays / _duration.inDays;
   }
 
   double get amountAchievement {
@@ -65,15 +69,17 @@ class TargetReport extends Report {
   }
 
   double get amountToSave {
-    return targetAmount / (_activeDays / 30).ceil();
-  }
-
-  double get amountSaving {
-    return currentAmount / (_activeDays / 30).ceil();
+    return targetAmount / (_duration.inDays / 30);
   }
 
   String get endIn {
-    final duration = wallet.targetEndDate!.difference(wallet.startDate).inDays - _activeDays;
-    return _parseDays(duration);
+    int days = _duration.inDays;
+    return _parseDays(days - _activeDays);
+  }
+
+  Duration get _duration {
+    DateTime startDate = DateTime(wallet.startDate.year, wallet.startDate.month, wallet.startDate.day);
+    DateTime endDate = wallet.targetEndDate!;
+    return endDate.difference(startDate);
   }
 }

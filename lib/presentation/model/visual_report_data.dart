@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
-import 'dart:math' as mathf;
+
+import 'dart:math';
+
 import 'package:piggybank/app/service/format_date.dart';
 import 'package:piggybank/domain/model/models.dart';
 
@@ -7,12 +9,19 @@ const MILLION = 1000000;
 const TEN_THOUSAND = 10000;
 const THOUSAND = 1000;
 
+const MONTHS_IN_YEAR = 12;
+
 class VisualReportData {
+  static const int _COL = 6;
+  static const int MAX_ROW = 6;
+  static const intervals = [1, 2, 5];
+
   final Wallet wallet;
   final List<Transaction> transactions;
 
   late final List<RodData> dataList;
-  late final double maxAmount;
+  late final double maxY;
+  late final double interval;
   late final int multiplier;
   late final String? unit;
 
@@ -43,17 +52,39 @@ class VisualReportData {
 
     //Set Data
     dataList = multiplier == 1 ? rawList : rawList.map((e) => RodData(e.title, e.saving / multiplier, e.withdrawl / multiplier)).toList();
-    maxAmount = max / multiplier;
+
+    //Find interval, maxY to have equal interval in all segments in barchar
+    //if we don't provide maxY, the top-most segment will have the smaller segment
+    var tempMaxY = (max / multiplier).ceil();
+    final totalDigit = tempMaxY.toString().length;
+    var power = 0;
+    if (totalDigit > 2) {
+      power = totalDigit - 2;
+      tempMaxY = (tempMaxY / (pow(10, power))).ceil();
+      if (tempMaxY > intervals.last * MAX_ROW) {
+        power += 1;
+        tempMaxY = (tempMaxY / (pow(10, power))).ceil();
+      }
+    }
+
+    for (var num in intervals) {
+      double potentialRow = tempMaxY / num;
+      if (potentialRow <= MAX_ROW) {
+        interval = num * pow(10, power).toDouble();
+        maxY = potentialRow.ceil() * interval;
+        break;
+      }
+    }
   }
 
   List<RodData> _process() {
     DateTime now = DateTime.now();
     int yearDiff = now.year - wallet.startDate.year;
-    int monthDiff = ((yearDiff * 12) + now.month) - wallet.startDate.month;
-    DateTime startDate = monthDiff >= 6 ? now.previousMonth(month: 6) : wallet.startDate;
+    int monthDiff = ((yearDiff * MONTHS_IN_YEAR) + now.month) - wallet.startDate.month;
+    DateTime startDate = monthDiff >= _COL ? now.previousMonth(month: _COL) : wallet.startDate;
 
     List<RodData> list = [];
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < _COL; i++) {
       DateTime reportMonth = startDate.addMonth(i);
       var summairze = _summarize(reportMonth.month, reportMonth.year);
       list.add(RodData(monthNames[reportMonth.month - 1], summairze.$1, summairze.$2));

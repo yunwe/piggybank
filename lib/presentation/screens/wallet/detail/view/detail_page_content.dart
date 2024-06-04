@@ -38,7 +38,7 @@ class DetialPageContent extends StatelessWidget {
           children: [
             _WalletInfo(wallet),
             wallet.targetEndDate == null ? WalletReport(wallet: wallet) : TargetWalletReport(wallet: wallet),
-            VisualReport(data: VisualReportData(wallet: wallet, transactions: transactions)),
+            VisualReport(wallet: wallet, transactions: transactions),
             //TransactionBarChart(),
             // Expanded(
             //   child: _TransactionsList(transactions),

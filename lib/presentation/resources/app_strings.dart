@@ -88,11 +88,10 @@ class AppStrings {
   static const String startedOn = 'Started on \'%1\$\'.';
   static const String activeFor = 'Active for %1\$.';
   static const String endIn = 'End in %1\$.';
-  static const String avgSaving = 'Saving \$%1\$ per month in average.';
+  static const String avgSaving = 'Average Saving : \$%1\$';
   static const String labelStartDate = 'Start Date : %1\$';
-  static const String labelGoal = 'Goal : \$%1\$';
-  static const String labelCurrent = 'Current : \$%1\$';
-  static const String labelSPM = 'Amount To Save Per Month';
+  static const String labelGoal = 'Amount To Save : \$%1\$';
+  static const String labelCurrent = 'Current Saving : \$%1\$';
   static const String labelHistory = 'History';
   static const String noHistory = 'No transaction.';
 }
