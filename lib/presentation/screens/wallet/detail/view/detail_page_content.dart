@@ -4,11 +4,13 @@ import 'package:piggybank/app/route/app_router.dart';
 import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/app/service/format_date.dart';
 import 'package:piggybank/domain/model/models.dart';
+import 'package:piggybank/presentation/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/view/detail_page_appbar.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/view/target_wallet_report.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/view/visual_report.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/view/wallet_report.dart';
 
 class DetialPageContent extends StatelessWidget {
@@ -36,9 +38,11 @@ class DetialPageContent extends StatelessWidget {
           children: [
             _WalletInfo(wallet),
             wallet.targetEndDate == null ? WalletReport(wallet: wallet) : TargetWalletReport(wallet: wallet),
-            Expanded(
-              child: _TransactionsList(transactions),
-            )
+            VisualReport(data: VisualReportData(wallet: wallet, transactions: transactions)),
+            //TransactionBarChart(),
+            // Expanded(
+            //   child: _TransactionsList(transactions),
+            // )
           ],
         ),
         floatingActionButton: wallet.isArchived

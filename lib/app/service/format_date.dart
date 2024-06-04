@@ -21,3 +21,25 @@ extension DateFormatting on DateTime {
     return "$day $month $year";
   }
 }
+
+extension DateDifferennce on DateTime {
+  DateTime previousMonth({int month = 1}) {
+    int resMonth = this.month - month;
+
+    if (resMonth <= 0) {
+      return DateTime(year - 1, resMonth + 12);
+    }
+
+    return DateTime(year, resMonth);
+  }
+
+  DateTime addMonth([int month = 1]) {
+    int resMonth = this.month + month;
+
+    if (resMonth > 12) {
+      int resYear = year + (resMonth / 12).floor();
+      return DateTime(resYear, resMonth % 12);
+    }
+    return DateTime(year, resMonth);
+  }
+}
