@@ -95,6 +95,7 @@ class AppStrings {
 
   //Report
   static const String startedOn = 'Started on \'%1\$\'.';
+  static const String archivedOn = 'Archived on \'%1\$\'.';
   static const String activeFor = 'Active for %1\$.';
   static const String endIn = 'End in %1\$.';
   static const String avgSaving = 'Average Saving : \$%1\$';
@@ -105,4 +106,9 @@ class AppStrings {
   static const String noHistory = 'No transaction.';
   static const String titleMonthlyReport = 'Monthly Report';
   static const String viewDetail = 'View Detial';
+  static const String savingPeriod = 'Saving period was %1\$.';
+  static const String avgSavingPerM = 'Average saving per month was \$%1\$.';
+  static const String succeed = 'You have achieved your target.';
+  static const String savedPercent = 'Saved %1\$% of your target.';
+  static const String targetAmt = 'Target amount was \$%1\$.';
 }

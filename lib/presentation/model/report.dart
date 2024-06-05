@@ -18,7 +18,8 @@ class Report {
   double get currentAmount => wallet.amount;
 
   double get averageSaving {
-    int month = DateTime.now().monthDifference(wallet.startDate) + 1;
+    DateTime end = wallet.isArchived ? wallet.archivedDate! : DateTime.now();
+    int month = end.monthDifference(wallet.startDate) + 1;
     return currentAmount / month;
   }
 

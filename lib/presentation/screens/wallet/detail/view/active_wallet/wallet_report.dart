@@ -5,6 +5,7 @@ import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/view/common_widgets/widgets.dart';
 
 //Widget, not a Screen
 class WalletReport extends StatelessWidget {
@@ -20,38 +21,17 @@ class WalletReport extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _IconText(
+          ReprotIconText(
             icon: Icons.calendar_today,
-            text: AppStrings.startedOn.format([report.startDate.format()]),
+            title: AppStrings.startedOn.format([report.startDate.format()]),
           ),
           const Spacing.h8(),
-          _IconText(
+          ReprotIconText(
             icon: Icons.directions_run,
-            text: AppStrings.activeFor.format([report.activePeriod]),
+            title: AppStrings.activeFor.format([report.activePeriod]),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _IconText extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const _IconText({required this.icon, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: AppSize.bulletinSize,
-        ),
-        const Spacing.w5(),
-        Text(text),
-      ],
     );
   }
 }

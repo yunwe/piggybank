@@ -4,7 +4,7 @@ import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/wallet/detail/view/common_widgets/common_widgets.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/view/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/view/active_wallet/view.dart';
 
 class PageContent extends StatelessWidget {
