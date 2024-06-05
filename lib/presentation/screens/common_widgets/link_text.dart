@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:piggybank/app/route/route_utils.dart';
+import 'package:piggybank/app/route/route.dart';
 
 class LinkText extends StatelessWidget {
   final String text;

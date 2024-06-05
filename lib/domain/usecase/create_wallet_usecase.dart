@@ -1,5 +1,5 @@
 import 'package:either_dart/either.dart';
-import 'package:piggybank/domain/model/failure.dart';
+import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/repository/exceptions.dart';
 import 'package:piggybank/domain/repository/wallet_repository.dart';
 import 'package:piggybank/domain/usecase/base_usecase.dart';

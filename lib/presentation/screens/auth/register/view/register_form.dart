@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/auth/register/register.dart';
+import '../bloc/register_bloc.dart';
 
 class RegisterForm extends StatelessWidget {
   const RegisterForm({super.key});

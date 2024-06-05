@@ -4,7 +4,7 @@ import 'package:piggybank/domain/repository/exceptions.dart';
 import 'package:piggybank/domain/repository/transaction_repository.dart';
 import 'package:piggybank/domain/repository/wallet_repository.dart';
 import 'package:piggybank/domain/usecase/base_usecase.dart';
-import 'package:piggybank/presentation/resources/app_strings.dart';
+import 'package:piggybank/presentation/resources/resources.dart';
 
 class UpdateAmountUseCase implements BaseUseCase<UpdateAmountUseCaseInput, void> {
   final WalletRepository walletRepository;

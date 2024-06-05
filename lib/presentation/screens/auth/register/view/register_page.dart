@@ -5,7 +5,8 @@ import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/domain/usecase/signup_usercase.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/auth/register/register.dart';
+import '../bloc/register_bloc.dart';
+import 'view.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});

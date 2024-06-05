@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/di.dart';
-import 'package:piggybank/app/route/route_utils.dart';
+import 'package:piggybank/app/route/route.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
-import 'package:piggybank/presentation/resources/app_strings.dart';
-import 'package:piggybank/presentation/resources/colors.dart';
+import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/auth/login/login.dart';
+import '../bloc/login_bloc.dart';
+import 'view.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

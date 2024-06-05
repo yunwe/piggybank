@@ -1,4 +1,4 @@
-import '../model/models.dart';
+import 'package:piggybank/domain/model/models.dart';
 
 abstract class BaseException implements Exception {
   /// The associated error message.

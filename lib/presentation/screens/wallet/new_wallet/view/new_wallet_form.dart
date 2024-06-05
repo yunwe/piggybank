@@ -5,7 +5,7 @@ import 'package:piggybank/app/route/app_router.dart';
 import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/wallet/new_wallet/new_wallet.dart';
+import '../bloc/new_wallet_bloc.dart';
 
 class NewWalletForm extends StatelessWidget {
   const NewWalletForm({super.key});

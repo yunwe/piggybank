@@ -4,7 +4,7 @@ import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
 import 'package:piggybank/presentation/controller/wallets/wallets_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/wallet/archive/view/archive_page_content.dart';
+import 'view.dart';
 
 //Read Controllers bloc and handle Loading, Error, Content State
 class ArchivePage extends StatelessWidget {

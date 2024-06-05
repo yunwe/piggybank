@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:piggybank/presentation/resources/values.dart';
+import 'package:piggybank/presentation/resources/resources.dart';
 
 class FormContainerWidget extends StatelessWidget {
   const FormContainerWidget({super.key, required this.content});

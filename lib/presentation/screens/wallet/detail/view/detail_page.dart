@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/di.dart';
-import 'package:piggybank/app/route/app_router.dart';
-import 'package:piggybank/app/route/route_utils.dart';
-import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
-import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
-import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
-import 'package:piggybank/domain/usecase/list_transaction_usecase.dart';
+import 'package:piggybank/app/route/route.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
-import 'package:piggybank/presentation/screens/wallet/detail/view/active_wallet/view.dart' as active;
-import 'package:piggybank/presentation/screens/wallet/detail/view/archived_wallet/view.dart' as archived;
+import '../bloc/wallet_detail_bloc.dart';
+import 'active_wallet/view.dart' as active;
+import 'archived_wallet/view.dart' as archived;
 
 class DetailPage extends StatelessWidget {
   const DetailPage({
@@ -24,10 +19,10 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => WalletDetailBloc(
-        getWalletUseCase: injector<GetWalletUseCase>(),
-        listTransactionUseCase: injector<ListTransactionUseCase>(),
-        archiveUseCase: injector<ArchiveWalletUseCase>(),
-        deleteUseCase: injector<DeleteWalletUseCase>(),
+        getWalletUseCase: injector(),
+        listTransactionUseCase: injector(),
+        archiveUseCase: injector(),
+        deleteUseCase: injector(),
       ),
       child: _Page(walletId),
     );

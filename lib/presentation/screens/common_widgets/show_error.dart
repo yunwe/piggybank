@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:piggybank/app/route/app_router.dart';
-import 'package:piggybank/app/route/route_utils.dart';
+import 'package:piggybank/app/route/route.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';

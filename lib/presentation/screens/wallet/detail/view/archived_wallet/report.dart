@@ -5,7 +5,7 @@ import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/wallet/detail/view/common_widgets/widgets.dart';
+import '../common_widgets/widgets.dart';
 
 //Widget, not a Screen
 class ArchiveWalletReport extends StatelessWidget {

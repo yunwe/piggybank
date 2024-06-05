@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:piggybank/app/service/network_info.dart';
-import 'package:piggybank/data/wallet/mappers.dart';
-import 'package:piggybank/domain/model/wallet.dart';
+import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/repository/exceptions.dart';
 import 'package:piggybank/domain/repository/wallet_repository.dart';
+import 'mappers.dart';
 
 class FirebaseWalletRepository implements WalletRepository {
   FirebaseWalletRepository({

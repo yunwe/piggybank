@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:piggybank/app/route/app_router.dart';
-import 'package:piggybank/app/route/route_utils.dart';
+import 'package:piggybank/app/route/route.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/home/bloc/home_page_bloc.dart';
-import 'package:piggybank/presentation/screens/home/view/home_page_appbar.dart';
-import 'package:piggybank/presentation/screens/home/view/home_page_drawer.dart';
+import '../bloc/home_page_bloc.dart';
+import 'view.dart';
 
 //
 class HomePageContent extends StatelessWidget {

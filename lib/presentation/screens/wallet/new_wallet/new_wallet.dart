@@ -1,2 +1,1 @@
-export 'view/view.dart';
-export 'bloc/new_wallet_bloc.dart';
+export 'view/new_wallet_page.dart';

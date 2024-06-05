@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
-import 'package:piggybank/presentation/screens/wallet/detail/view/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/wallet/detail/view/archived_wallet/view.dart';
+import '../common_widgets/widgets.dart';
+import 'view.dart';
 
 class PageContent extends StatelessWidget {
   const PageContent({

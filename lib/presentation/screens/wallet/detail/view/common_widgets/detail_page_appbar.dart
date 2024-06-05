@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
-import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
+import '../../bloc/wallet_detail_bloc.dart';
 
 class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
   const DetailPageAppbar({super.key});

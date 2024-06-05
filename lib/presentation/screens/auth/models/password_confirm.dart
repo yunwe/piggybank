@@ -1,5 +1,5 @@
 import 'package:formz/formz.dart';
-import 'package:piggybank/presentation/resources/app_strings.dart';
+import 'package:piggybank/presentation/resources/resources.dart';
 
 enum ConfirmPasswordValidationError {
   invalid,
@@ -15,14 +15,12 @@ enum ConfirmPasswordValidationError {
   }
 }
 
-class ConfirmPassword
-    extends FormzInput<String, ConfirmPasswordValidationError> {
+class ConfirmPassword extends FormzInput<String, ConfirmPasswordValidationError> {
   final String password;
 
   const ConfirmPassword.pure({this.password = ''}) : super.pure('');
 
-  const ConfirmPassword.dirty({required this.password, String value = ''})
-      : super.dirty(value);
+  const ConfirmPassword.dirty({required this.password, String value = ''}) : super.dirty(value);
 
   @override
   ConfirmPasswordValidationError? validator(String value) {

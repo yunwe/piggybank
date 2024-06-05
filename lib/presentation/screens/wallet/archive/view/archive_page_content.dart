@@ -5,7 +5,7 @@ import 'package:piggybank/app/route/route_utils.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import 'package:piggybank/presentation/screens/wallet/archive/bloc/archive_page_bloc.dart';
+import '../bloc/archive_page_bloc.dart';
 
 //
 class ArchivePageContent extends StatelessWidget {
