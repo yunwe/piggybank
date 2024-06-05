@@ -16,9 +16,7 @@ Color getColor(Set<MaterialState> states) {
 
 ThemeData getApplicationTheme() {
   return ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: MyColors.primary,
-    ),
+    colorScheme: MyColors.colorScheme,
     dividerTheme: const DividerThemeData(
       indent: AppPadding.p28,
       endIndent: AppPadding.p28,
@@ -49,8 +47,8 @@ ThemeData getApplicationTheme() {
     ),
     textTheme: Typography.whiteHelsinki.copyWith(
       bodySmall: const TextStyle(color: Colors.white),
-      titleLarge: TextStyle(
-        color: MyColors.lightGrey,
+      titleLarge: const TextStyle(
+        color: Colors.white70,
         fontSize: 26,
       ),
     ),
@@ -58,6 +56,19 @@ ThemeData getApplicationTheme() {
       fillColor: MaterialStateProperty.resolveWith(getColor),
       checkColor: MaterialStatePropertyAll(MyColors.primary),
       side: MaterialStateBorderSide.resolveWith((states) => BorderSide.none),
+    ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        fontSize: 18,
+        color: MyColors.onPrimary,
+        fontWeight: FontWeight.bold,
+      ),
+      iconTheme: IconThemeData(
+        color: MyColors.onPrimary,
+      ),
     ),
   );
 }

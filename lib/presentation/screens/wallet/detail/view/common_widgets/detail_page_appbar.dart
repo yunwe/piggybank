@@ -10,23 +10,19 @@ class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WalletDetailBloc, WalletDetialState>(
-      buildWhen: (previous, current) => previous.status != current.status && current.wallet != null,
+      buildWhen: (previous, current) =>
+          previous.status != current.status && current.wallet != null,
       builder: (context, state) => AppBar(
         title: Text(
           state.wallet!.title,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
         ),
-        centerTitle: true,
-        // iconTheme: const IconThemeData(color: Colors.black),
-        // actionsIconTheme: const IconThemeData(color: Colors.black),
-        elevation: 0.0,
         actions: [
           state.status == DetailPageStatus.processing
-              ? const IconButton(onPressed: null, icon: CircularProgressIndicator())
+              ? const IconButton(
+                  onPressed: null, icon: CircularProgressIndicator())
               : MenuAnchor(
-                  builder: (BuildContext context, MenuController controller, Widget? child) {
+                  builder: (BuildContext context, MenuController controller,
+                      Widget? child) {
                     return IconButton(
                       onPressed: () {
                         if (controller.isOpen) {
@@ -56,7 +52,9 @@ class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
             AppStrings.titleConfirmArchive,
             AppStrings.contentConfirmArchive,
             () {
-              context.read<WalletDetailBloc>().add(const WalletDetailArchiveRequested());
+              context
+                  .read<WalletDetailBloc>()
+                  .add(const WalletDetailArchiveRequested());
               Navigator.of(context).pop();
             },
           );
@@ -72,7 +70,9 @@ class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
             AppStrings.titleConfirmDelete,
             AppStrings.contentConfirmDelete,
             () {
-              context.read<WalletDetailBloc>().add(const WalletDetailDeleteRequested());
+              context
+                  .read<WalletDetailBloc>()
+                  .add(const WalletDetailDeleteRequested());
               Navigator.of(context).pop();
             },
           );
