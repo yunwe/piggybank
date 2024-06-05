@@ -7,7 +7,10 @@ import 'package:piggybank/domain/usecase/archive_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/delete_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/list_transaction_usecase.dart';
+import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import 'package:piggybank/presentation/screens/wallet/detail/detail.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/view/active_wallet/view.dart' as active;
+import 'package:piggybank/presentation/screens/wallet/detail/view/archived_wallet/view.dart' as archived;
 
 class DetailPage extends StatelessWidget {
   const DetailPage({
@@ -61,7 +64,23 @@ class _Page extends StatelessWidget {
           AppRouter.router.goNamed(PAGES.walletList.screenName);
         }
       },
-      child: const DetialPageContent(),
+      child: BlocBuilder<WalletDetailBloc, WalletDetialState>(
+        builder: (context, state) {
+          if (state.wallet == null) {
+            if (state.status == DetailPageStatus.processing) {
+              return const FullPageLoading();
+            }
+
+            return ShowError.noWallet();
+          }
+
+          if (state.wallet!.isArchived) {
+            return archived.PageContent(wallet: state.wallet!, transactions: state.transactions);
+          } else {
+            return active.PageContent(wallet: state.wallet!, transactions: state.transactions);
+          }
+        },
+      ),
     );
   }
 }
