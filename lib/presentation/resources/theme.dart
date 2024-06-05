@@ -17,11 +17,11 @@ Color getColor(Set<MaterialState> states) {
 ThemeData getApplicationTheme() {
   return ThemeData(
     colorScheme: MyColors.colorScheme,
-    dividerTheme: const DividerThemeData(
+    dividerTheme: DividerThemeData(
       indent: AppPadding.p28,
       endIndent: AppPadding.p28,
       thickness: 2,
-      color: Colors.white,
+      color: Colors.white.withOpacity(AppSize.opacity),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -37,24 +37,25 @@ ThemeData getApplicationTheme() {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white70,
+        foregroundColor: MyColors.onPrimary,
         backgroundColor: MyColors.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.borderRadius),
         ),
-        textStyle: const TextStyle(fontSize: 18),
+        textStyle: const TextStyle(fontSize: FontSize.medium),
       ),
     ),
     textTheme: Typography.whiteHelsinki.copyWith(
-      bodySmall: const TextStyle(color: Colors.white),
-      titleLarge: const TextStyle(
-        color: Colors.white70,
-        fontSize: 26,
+      bodySmall: TextStyle(color: MyColors.onWhite),
+      titleLarge: TextStyle(
+        color: MyColors.onPrimary,
+        fontSize: FontSize.extraLarge,
+        fontWeight: FontWeight.bold,
       ),
     ),
     checkboxTheme: CheckboxThemeData(
       fillColor: MaterialStateProperty.resolveWith(getColor),
-      checkColor: MaterialStatePropertyAll(MyColors.primary),
+      checkColor: MaterialStatePropertyAll(MyColors.onWhite),
       side: MaterialStateBorderSide.resolveWith((states) => BorderSide.none),
     ),
     appBarTheme: AppBarTheme(
@@ -62,7 +63,7 @@ ThemeData getApplicationTheme() {
       elevation: 0,
       centerTitle: true,
       titleTextStyle: TextStyle(
-        fontSize: 18,
+        fontSize: FontSize.large,
         color: MyColors.onPrimary,
         fontWeight: FontWeight.bold,
       ),

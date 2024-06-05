@@ -37,7 +37,8 @@ class DatePicker extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.5,
           child: TextFormField(
-            controller: TextEditingController()..text = selectedDate == null ? '' : selectedDate!.format(),
+            controller: TextEditingController()
+              ..text = selectedDate == null ? '' : selectedDate!.format(),
             decoration: InputDecoration(
               hintText: AppStrings.selectDate,
               errorText: error,
@@ -47,7 +48,7 @@ class DatePicker extends StatelessWidget {
               ),
             ),
             style: const TextStyle(
-              fontSize: FontSize.inputFontSize,
+              fontSize: FontSize.medium,
               color: Colors.black87,
             ),
             readOnly: true,

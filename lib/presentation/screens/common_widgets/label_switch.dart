@@ -20,7 +20,7 @@ class LabelSwitch extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontSize: FontSize.inputFontSize,
+            fontSize: FontSize.medium,
             color: Colors.black87,
           ),
         ),

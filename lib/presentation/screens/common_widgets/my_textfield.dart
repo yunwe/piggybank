@@ -34,7 +34,7 @@ class MyTextField extends StatelessWidget {
       ),
       obscureText: obscureText,
       style: const TextStyle(
-        fontSize: FontSize.inputFontSize,
+        fontSize: FontSize.medium,
         color: Colors.black87,
       ),
       keyboardType: inputType,
