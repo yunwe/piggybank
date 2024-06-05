@@ -27,6 +27,7 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
     on<WalletDetailDeleteRequested>(_onDeleteRequested);
     on<WalletDetailPageInitialzed>(_onPageInitialzed);
     on<WalletDetailTargetDateReached>(_onTargetDateReached);
+    on<WalletDetailTargetAmountReached>(_onTargetAmountReached);
   }
 
   final GetWalletUseCase _getWalletUseCase;
@@ -114,5 +115,21 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
     }
 
     emit(state.copyWith(status: DetailPageStatus.targetReached, message: AppStrings.targetDateReached));
+  }
+
+  void _onTargetAmountReached(
+    WalletDetailTargetAmountReached event,
+    Emitter<WalletDetialState> emit,
+  ) async {
+    if (state.wallet == null) {
+      return;
+    }
+
+    emit(
+      state.copyWith(
+        status: DetailPageStatus.targetReached,
+        message: AppStrings.targetAmountReached.format([state.wallet!.title]),
+      ),
+    );
   }
 }

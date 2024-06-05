@@ -38,7 +38,8 @@ final class WalletDetailTargetDateReached extends WalletDetailEvent {
 }
 
 final class WalletDetailTargetAmountReached extends WalletDetailEvent {
-  const WalletDetailTargetAmountReached({required this.walletId});
+  const WalletDetailTargetAmountReached();
 
-  final String walletId;
+  @override
+  List<Object?> get props => [];
 }

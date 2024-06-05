@@ -88,9 +88,11 @@ class _Page extends StatelessWidget {
 
         Wallet wallet = state.wallet!;
         //Check if the wallet's target date has reached
-        if (state.status == DetailPageStatus.pure) {
-          if (!wallet.isArchived && wallet.isTargetDateReached) {
+        if (state.status == DetailPageStatus.pure && !wallet.isArchived) {
+          if (wallet.isTargetDateReached) {
             context.read<WalletDetailBloc>().add(const WalletDetailTargetDateReached());
+          } else if (wallet.isTargetAmountReached) {
+            context.read<WalletDetailBloc>().add(const WalletDetailTargetAmountReached());
           }
         }
 

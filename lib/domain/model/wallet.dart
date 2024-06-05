@@ -56,4 +56,12 @@ extension WalletExtension on Wallet {
 
     return targetEndDate!.millisecondsSinceEpoch <= DateTime.now().millisecondsSinceEpoch;
   }
+
+  bool get isTargetAmountReached {
+    if (targetEndDate == null || targetAmount == null) {
+      return false;
+    }
+
+    return targetAmount! <= amount;
+  }
 }
