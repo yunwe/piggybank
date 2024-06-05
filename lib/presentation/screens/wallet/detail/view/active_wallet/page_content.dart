@@ -9,10 +9,12 @@ import 'view.dart';
 class PageContent extends StatelessWidget {
   const PageContent({
     super.key,
+    required this.isProcessing,
     required this.wallet,
     required this.transactions,
   });
 
+  final bool isProcessing;
   final Wallet wallet;
   final List<Transaction> transactions;
 
@@ -21,25 +23,30 @@ class PageContent extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.primary,
       appBar: const DetailPageAppbar(),
-      body: Column(
+      body: Stack(
         children: [
-          WalletAmout(wallet),
-          wallet.targetEndDate == null ? WalletReport(wallet: wallet) : TargetWalletReport(wallet: wallet),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(AppStrings.titleMonthlyReport),
-                GestureDetector(
-                  onTap: () => TransactionsList.show(context, transactions),
-                  child: const Text(AppStrings.viewDetail),
-                )
-              ],
-            ),
+          Column(
+            children: [
+              WalletAmout(wallet),
+              wallet.targetEndDate == null ? WalletReport(wallet: wallet) : TargetWalletReport(wallet: wallet),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(AppStrings.titleMonthlyReport),
+                    GestureDetector(
+                      onTap: () => TransactionsList.show(context, transactions),
+                      child: const Text(AppStrings.viewDetail),
+                    )
+                  ],
+                ),
+              ),
+              const Spacing.h12(),
+              VisualReport(wallet: wallet, transactions: transactions),
+            ],
           ),
-          const Spacing.h12(),
-          VisualReport(wallet: wallet, transactions: transactions),
+          isProcessing ? const Positioned(child: Loading()) : const SizedBox(),
         ],
       ),
       floatingActionButton: FloatingActionButton(

@@ -29,3 +29,16 @@ final class WalletDetailDeleteRequested extends WalletDetailEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class WalletDetailTargetDateReached extends WalletDetailEvent {
+  const WalletDetailTargetDateReached();
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class WalletDetailTargetAmountReached extends WalletDetailEvent {
+  const WalletDetailTargetAmountReached({required this.walletId});
+
+  final String walletId;
+}

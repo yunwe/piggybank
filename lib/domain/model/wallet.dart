@@ -47,3 +47,13 @@ class Wallet extends Equatable {
   @override
   List<Object?> get props => [id, amount, isArchived];
 }
+
+extension WalletExtension on Wallet {
+  bool get isTargetDateReached {
+    if (targetEndDate == null) {
+      return false;
+    }
+
+    return targetEndDate!.millisecondsSinceEpoch <= DateTime.now().millisecondsSinceEpoch;
+  }
+}

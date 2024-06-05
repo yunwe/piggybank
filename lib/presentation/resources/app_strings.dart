@@ -111,4 +111,6 @@ class AppStrings {
   static const String succeed = 'You have achieved your target.';
   static const String savedPercent = 'Saved %1\$% of your target.';
   static const String targetAmt = 'Target amount was \$%1\$.';
+  static const String titleTargetReached = 'Move to Archive';
+  static const String targetDateReached = 'Target date has reached.\n You can no longer add new transactions to this goal.';
 }

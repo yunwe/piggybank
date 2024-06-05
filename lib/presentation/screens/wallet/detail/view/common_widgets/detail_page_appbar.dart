@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
+import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import '../../bloc/wallet_detail_bloc.dart';
 
 class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -50,7 +51,7 @@ class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _archiveMenuButton(BuildContext context) => MenuItemButton(
         onPressed: () {
-          _showConfirmation(
+          MessageBox.showConfirmation(
             context,
             AppStrings.titleConfirmArchive,
             AppStrings.contentConfirmArchive,
@@ -66,7 +67,7 @@ class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _deleteMenuButton(BuildContext context) => MenuItemButton(
         onPressed: () {
-          _showConfirmation(
+          MessageBox.showConfirmation(
             context,
             AppStrings.titleConfirmDelete,
             AppStrings.contentConfirmDelete,
@@ -82,42 +83,4 @@ class DetailPageAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => AppBar().preferredSize;
-}
-
-Future<void> _showConfirmation(BuildContext context, String title, String content, void Function() onProceed) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-        title: Text(title),
-        titleTextStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: Theme.of(context).colorScheme.onTertiaryContainer,
-              fontWeight: FontWeight.bold,
-            ),
-        content: Text(content),
-        contentTextStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Theme.of(context).colorScheme.onTertiaryContainer,
-            ),
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            child: const Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.labelLarge,
-            ),
-            onPressed: onProceed,
-            child: const Text('Proceed'),
-          ),
-        ],
-      );
-    },
-  );
 }

@@ -1,6 +1,12 @@
 part of 'wallet_detail_bloc.dart';
 
-enum DetailPageStatus { processing, pure, fail, deleted }
+enum DetailPageStatus {
+  processing,
+  pure,
+  fail,
+  deleted,
+  targetReached,
+}
 
 class WalletDetialState extends Equatable {
   const WalletDetialState({
