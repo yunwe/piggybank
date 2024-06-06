@@ -15,31 +15,41 @@ class ArchiveWalletReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Report report = Report(wallet: wallet);
-    return Padding(
-      padding: const EdgeInsets.all(AppPadding.p20),
-      child: Column(
+    return FormContainerWidget(
+      outterPadding: AppPadding.p20,
+      innerPadding: 0,
+      backgroundColor: MyColors.khakiD1,
+      content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ..._buildTargetReport(wallet),
           ReprotIconText(
             icon: Icons.calendar_today,
-            title: AppStrings.archivedOn.format([wallet.archivedDate!.format()]),
+            title:
+                AppStrings.archivedOn.format([wallet.archivedDate!.format()]),
           ),
-          const Spacing.h8(),
+          divider,
           ReprotIconText(
             icon: Icons.directions_run,
             title: AppStrings.savingPeriod.format([report.activePeriod]),
           ),
-          const Spacing.h8(),
+          divider,
           ReprotIconText(
             icon: Icons.attach_money,
-            title: AppStrings.avgSavingPerM.format([report.averageSaving.toStringAsFixed(2)]),
+            title: AppStrings.avgSavingPerM
+                .format([report.averageSaving.toStringAsFixed(2)]),
           ),
         ],
       ),
     );
   }
+
+  Widget get divider => const Divider(
+        thickness: 2,
+        indent: 0,
+        endIndent: 0,
+      );
 
   List<Widget> _buildTargetReport(Wallet wallet) {
     if (wallet.targetEndDate == null) return [];
@@ -51,16 +61,18 @@ class ArchiveWalletReport extends StatelessWidget {
           icon: Icons.verified,
           title: AppStrings.succeed,
         ),
-        const Spacing.h8(),
+        divider,
       ];
     }
     return [
       ReprotIconText(
         icon: Icons.sentiment_very_dissatisfied,
-        title: AppStrings.savedPercent.format([report.amountAchievement.toStringAsFixed(2)]),
-        subTitle: AppStrings.targetAmt.format([report.targetAmount.toStringAsFixed(0)]),
+        title: AppStrings.savedPercent
+            .format([report.amountAchievement.toStringAsFixed(2)]),
+        subTitle: AppStrings.targetAmt
+            .format([report.targetAmount.toStringAsFixed(0)]),
       ),
-      const Spacing.h8(),
+      divider,
     ];
   }
 }

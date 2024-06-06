@@ -48,6 +48,7 @@ ThemeData getApplicationTheme() {
     textTheme: Typography.whiteHelsinki.copyWith(
       bodySmall: TextStyle(color: MyColors.textColor),
       bodyMedium: TextStyle(color: MyColors.textColor),
+      titleMedium: TextStyle(color: MyColors.textColor),
       titleLarge: TextStyle(
         color: MyColors.onPrimary,
         fontSize: FontSize.extraLarge,

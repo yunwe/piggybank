@@ -16,30 +16,37 @@ class ReprotIconText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(
-          icon,
-          size: AppSize.bulletinSize,
-          color: MyColors.textColor,
-        ),
-        const Spacing.w5(),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: MyColors.hotPink),
-            ),
-            if (subTitle != null) Text(subTitle!),
-          ],
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppPadding.p20,
+        vertical: AppPadding.p8,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            icon,
+            size: AppSize.iconSizeS,
+            color: MyColors.textColor,
+          ),
+          const Spacing.w15(),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              if (subTitle != null)
+                Text(
+                  subTitle!,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -116,7 +116,7 @@ class AppStrings {
   static const String labelHistory = 'History';
   static const String noHistory = 'No transaction.';
   static const String titleMonthlyReport = 'Monthly Report';
-  static const String viewDetail = 'View Detial';
+  static const String viewDetail = 'View Detail';
   static const String savingPeriod = 'Saving period was %1\$.';
   static const String avgSavingPerM = 'Average saving per month was \$%1\$.';
   static const String succeed = 'You have achieved your target.';

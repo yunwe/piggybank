@@ -59,8 +59,10 @@ class VisualReport extends StatelessWidget {
         );
     if (wallet.targetEndDate == null) {
       final report = Report(wallet: wallet);
-      return Text(AppStrings.avgSaving
-          .format([report.averageSaving.toStringAsFixed(2)]));
+      return Text(
+        AppStrings.avgSaving.format([report.averageSaving.toStringAsFixed(2)]),
+        style: smallBold,
+      );
     }
 
     TargetReport report = TargetReport(wallet: wallet);

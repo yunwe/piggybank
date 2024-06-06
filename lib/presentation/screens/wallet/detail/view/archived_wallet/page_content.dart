@@ -20,18 +20,27 @@ class PageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.primary,
+      backgroundColor: MyColors.khaki,
       appBar: const DetailPageAppbar(),
       body: Stack(
         children: [
           Column(
             children: [
               WalletAmout(wallet),
-              ArchiveWalletReport(wallet: wallet),
-              ElevatedButton(
-                onPressed: () => TransactionsList.show(context, transactions),
-                child: const Text(AppStrings.viewDetail),
+              const Spacing.h20(),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton.icon(
+                  onPressed: () => TransactionsList.show(context, transactions),
+                  icon: Icon(
+                    Icons.read_more,
+                    color: MyColors.textColor,
+                  ),
+                  label: Text(AppStrings.viewDetail,
+                      style: Theme.of(context).textTheme.bodyMedium),
+                ),
               ),
+              ArchiveWalletReport(wallet: wallet),
             ],
           ),
           isProcessing ? const Positioned(child: Loading()) : const SizedBox(),

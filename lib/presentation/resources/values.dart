@@ -22,12 +22,10 @@ class AppSize {
       280; //Todo: Delete after fixing register.dart, forgetpassword.dart
   static const double formEntityHeight = 46;
 
-  static const double bulletinSize = 22;
-
   static const double iconSizeXS = 16;
   static const double iconSizeS = 22;
   static const double iconSize = 28;
-  static const double iconSizeL = 50;
+  static const double iconSizeL = 35;
 
   static const double elevation = 4;
 }
