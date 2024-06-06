@@ -26,6 +26,7 @@ class LoginForm extends StatelessWidget {
   }
 
   Widget formContent(BuildContext context) => FormContainerWidget(
+        backgroundColor: Colors.white.withOpacity(AppSize.opacity),
         content: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -102,7 +103,7 @@ class _LoginButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
-            : MyButton(
+            : MyButton.primary(
                 key: AppKeys.loginSubmit,
                 onPressed: state.isValid
                     ? () {

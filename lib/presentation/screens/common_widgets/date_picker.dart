@@ -58,6 +58,10 @@ class DatePicker extends StatelessWidget {
         const Spacing.w15(),
         ElevatedButton(
           onPressed: () => _openDatePicer(context),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: MyColors.khaki,
+            foregroundColor: MyColors.textColor,
+          ),
           child: const Text(AppStrings.selectDate),
         ),
       ],

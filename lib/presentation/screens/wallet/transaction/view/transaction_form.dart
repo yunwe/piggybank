@@ -11,20 +11,35 @@ class TransactionForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.primary,
+      backgroundColor: MyColors.khaki,
       appBar: AppBar(title: _Title()),
       body: Padding(
-        padding: const EdgeInsets.all(AppPadding.p20),
+        padding: const EdgeInsets.only(top: AppPadding.p20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
-            _AmountInput(),
-            const Spacing.h20(),
-            _RemarkInput(),
-            const Spacing.h20(),
-            _SubmitButton(),
-            const Spacing.h20(),
+            FormContainerWidget(
+              outterPadding: AppPadding.p8,
+              innerPadding: AppPadding.p20,
+              backgroundColor: MyColors.khakiD1,
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _AmountInput(),
+                  const Spacing.h20(),
+                  _RemarkInput(),
+                  const Spacing.h20(),
+                  _SubmitButton(),
+                ],
+              ),
+            ),
+            const Spacing.h8(),
+            Divider(
+              color: MyColors.khakiD1,
+              endIndent: AppPadding.p8,
+              indent: AppPadding.p8,
+              thickness: 2,
+            ),
             _ModeInput(),
           ],
         ),
@@ -90,21 +105,26 @@ class _ModeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WalletTransactionBloc, WalletTransactionState>(
-        buildWhen: (previous, current) => previous.isWithdrawl != current.isWithdrawl,
+        buildWhen: (previous, current) =>
+            previous.isWithdrawl != current.isWithdrawl,
         builder: (context, state) {
-          return TextButton(
+          return TextButton.icon(
             onPressed: () {
               context.read<WalletTransactionBloc>().add(
                     WalletTransactionModeChanged(!state.isWithdrawl),
                   );
             },
-            child: Text(
-              state.isWithdrawl ? AppStrings.labelSaving : AppStrings.labelWithdrawl,
-              // style: TextStyle(
-              //   color: Theme.of(context).colorScheme.onPrimaryContainer,
-              //   decoration: TextDecoration.underline,
-              //   decorationColor: Theme.of(context).colorScheme.onPrimaryContainer,
-              // ),
+            icon: Icon(
+              state.isWithdrawl ? Icons.savings : Icons.heart_broken_outlined,
+              color: MyColors.khakiD2,
+            ),
+            label: Text(
+              state.isWithdrawl
+                  ? AppStrings.labelSaving
+                  : AppStrings.labelWithdrawl,
+              style: TextStyle(
+                color: MyColors.khakiD2,
+              ),
             ),
           );
         });
@@ -118,14 +138,18 @@ class _SubmitButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
-            : MyButton(
+            : MyButton.khaki(
                 onPressed: state.isValid
                     ? () {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        context.read<WalletTransactionBloc>().add(const WalletTransactionSubmitted());
+                        context
+                            .read<WalletTransactionBloc>()
+                            .add(const WalletTransactionSubmitted());
                       }
                     : null,
-                label: state.isWithdrawl ? AppStrings.labelWithdrawlButton : AppStrings.labelSavingButton,
+                label: state.isWithdrawl
+                    ? AppStrings.labelWithdrawlButton
+                    : AppStrings.labelSavingButton,
               );
       },
     );

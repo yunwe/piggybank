@@ -25,6 +25,7 @@ class RegisterForm extends StatelessWidget {
   }
 
   Widget formContent(BuildContext context) => FormContainerWidget(
+        backgroundColor: Colors.white.withOpacity(AppSize.opacity),
         content: SizedBox(
           width: AppSize.formEntityWidth,
           child: Column(
@@ -92,7 +93,9 @@ class _ConfirmPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterBloc, RegisterState>(
-      buildWhen: (previous, current) => previous.password != current.password || previous.confirmation != current.confirmation,
+      buildWhen: (previous, current) =>
+          previous.password != current.password ||
+          previous.confirmation != current.confirmation,
       builder: (context, state) {
         return MyTextField(
           Icons.lock,
@@ -116,7 +119,7 @@ class _RegisterButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
-            : MyButton(
+            : MyButton.primary(
                 key: AppKeys.registerSubmit,
                 onPressed: state.isValid
                     ? () {

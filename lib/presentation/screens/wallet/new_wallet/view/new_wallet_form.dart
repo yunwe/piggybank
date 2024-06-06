@@ -34,7 +34,7 @@ class NewWalletForm extends StatelessWidget {
         child: FormContainerWidget(
           outterPadding: AppPadding.p8,
           innerPadding: AppPadding.p20,
-          backgroundColor: MyColors.primaryL1,
+          backgroundColor: MyColors.khakiD1,
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -88,8 +88,8 @@ class _WalletSetTargetInput extends StatelessWidget {
                   NewWalletSetTargetChanged(setTarget: isOn),
                 ),
             textColor: MyColors.textColor,
-            activeColor: MyColors.khakiPrimary,
-            inactiveColor: MyColors.khaki,
+            activeColor: MyColors.khakiD2,
+            inactiveColor: MyColors.khakiD1,
           );
         });
   }
@@ -150,7 +150,7 @@ class _SubmitButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
-            : MyButton(
+            : MyButton.khaki(
                 key: AppKeys.walletCreateSubmit,
                 onPressed: state.isValid
                     ? () {

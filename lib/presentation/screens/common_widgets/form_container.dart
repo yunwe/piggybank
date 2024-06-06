@@ -24,7 +24,7 @@ class FormContainerWidget extends StatelessWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(AppSize.borderRadius),
           ),
-          color: backgroundColor.withOpacity(AppSize.opacity),
+          color: backgroundColor,
         ),
         padding: EdgeInsets.all(innerPadding),
         child: SingleChildScrollView(

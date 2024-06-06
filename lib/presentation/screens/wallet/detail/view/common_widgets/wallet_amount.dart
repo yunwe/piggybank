@@ -27,7 +27,7 @@ class WalletAmout extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleSmall!
-                  .copyWith(color: MyColors.darkBlue),
+                  .copyWith(color: MyColors.khakiD2),
             ),
           ],
         ),

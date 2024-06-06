@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MyColors {
-  static Color primary = HexColor.fromHex('#D0BFFF');
-  static Color primaryL1 = HexColor.fromHex('#DFCCFB');
-  static Color primaryD1 = HexColor.fromHex('#BEADFA');
-  static Color primaryInverse = HexColor.fromHex('#FFF3DA');
+  static Color primary = HexColor.fromHex('#E5D4FF');
+  static Color primaryL1 = HexColor.fromHex('#F1EAFF');
+  static Color primaryD1 = HexColor.fromHex('#DCBFFF');
+  static Color primaryD2 = HexColor.fromHex('#D0A2F7');
 
   static Color khaki = HexColor.fromHex('#FFFBF5');
   static Color khakiD1 = HexColor.fromHex('#F7EFE5');
+  static Color khakiD2 = HexColor.fromHex('#DAC0A3');
   static Color khakiPrimary = HexColor.fromHex('#C3ACD0');
 
   static Color onPrimary = HexColor.fromHex("#433e5e");

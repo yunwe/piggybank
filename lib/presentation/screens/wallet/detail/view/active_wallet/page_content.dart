@@ -38,6 +38,7 @@ class PageContent extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: MyColors.khakiD1,
         onPressed: () {
           AppRouter.router.pushNamed(
             PAGES.walletTransaction.screenName,
