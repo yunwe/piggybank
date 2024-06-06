@@ -8,7 +8,7 @@ class MyButton extends StatelessWidget {
     required this.label,
     required this.backgroundColor,
     required this.textColor,
-    this.width = double.infinity,
+    required this.fullWidth,
   });
 
   factory MyButton.primary({Key? key, required onPressed, required label}) {
@@ -18,6 +18,19 @@ class MyButton extends StatelessWidget {
       label: label,
       backgroundColor: MyColors.primary,
       textColor: MyColors.onPrimary,
+      fullWidth: true,
+    );
+  }
+
+  factory MyButton.khakiPrimary(
+      {Key? key, required onPressed, required label}) {
+    return MyButton._(
+      key: key,
+      onPressed: onPressed,
+      label: label,
+      backgroundColor: MyColors.khakiPrimary,
+      textColor: MyColors.khakiD1,
+      fullWidth: true,
     );
   }
 
@@ -26,31 +39,30 @@ class MyButton extends StatelessWidget {
       key: key,
       onPressed: onPressed,
       label: label,
-      backgroundColor: MyColors.khakiPrimary,
-      textColor: MyColors.khakiD1,
+      backgroundColor: MyColors.khakiD1,
+      textColor: MyColors.khakiPrimary,
+      fullWidth: false,
     );
   }
 
   final void Function()? onPressed;
   final String label;
-  final double width;
+  final bool fullWidth;
 
   final Color backgroundColor;
   final Color textColor;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      child: ElevatedButton(
-        key: key,
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
-          foregroundColor: textColor,
-        ),
-        child: Text(label),
+    ElevatedButton button = ElevatedButton(
+      key: key,
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: backgroundColor,
+        foregroundColor: textColor,
       ),
+      child: Text(label),
     );
+    return fullWidth ? SizedBox(width: double.infinity, child: button) : button;
   }
 }

@@ -150,7 +150,7 @@ class _SubmitButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
-            : MyButton.khaki(
+            : MyButton.khakiPrimary(
                 key: AppKeys.walletCreateSubmit,
                 onPressed: state.isValid
                     ? () {

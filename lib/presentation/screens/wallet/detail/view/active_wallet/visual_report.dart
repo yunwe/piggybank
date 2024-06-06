@@ -16,6 +16,10 @@ class VisualReport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (transactions.isEmpty) {
+      return const Expanded(child: Center(child: Text(AppStrings.noHistory)));
+    }
+
     final VisualReportData data =
         VisualReportData(wallet: wallet, transactions: transactions);
 

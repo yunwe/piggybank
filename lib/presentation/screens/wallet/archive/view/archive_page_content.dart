@@ -19,8 +19,7 @@ class ArchivePageContent extends StatelessWidget {
       appBar: AppBar(
         title: const Text(AppStrings.archive),
       ),
-      backgroundColor: MyColors.primary,
-      //drawer: const HomePageDrawer(),
+      backgroundColor: MyColors.khaki,
       body: BlocProvider<ArchivePageBloc>(
         create: (context) => ArchivePageBloc(),
         child: _PageContent(wallets: wallets),
@@ -38,7 +37,8 @@ class _PageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ArchivePageBloc>().add(ArchivePageWalletsChanged(wallets));
 
-    return BlocBuilder<ArchivePageBloc, ArchivePageState>(builder: (context, state) {
+    return BlocBuilder<ArchivePageBloc, ArchivePageState>(
+        builder: (context, state) {
       List<Wallet> filteredWallets = state.wallets;
 
       return filteredWallets.isEmpty
@@ -63,12 +63,12 @@ class _PageContent extends StatelessWidget {
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           const Text(AppStrings.noArchive),
           const Spacing.h20(),
-          ElevatedButton(
+          MyButton.khaki(
             onPressed: () {
               AppRouter.router.goNamed(PAGES.walletList.screenName);
             },
-            child: const Text(AppStrings.labelBackToHome),
-          ),
+            label: AppStrings.labelBackToHome,
+          )
         ]),
       );
 }

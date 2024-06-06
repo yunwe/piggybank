@@ -138,7 +138,7 @@ class _SubmitButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isInProgress
             ? const CircularProgressIndicator()
-            : MyButton.khaki(
+            : MyButton.khakiPrimary(
                 onPressed: state.isValid
                     ? () {
                         FocusManager.instance.primaryFocus?.unfocus();
