@@ -44,15 +44,8 @@ class _PageContent extends StatelessWidget {
       return filteredWallets.isEmpty
           ? empty
           : ListView.builder(
-              itemBuilder: (context, index) => ListTile(
-                title: Text(filteredWallets[index].title),
-                onTap: () {
-                  AppRouter.router.pushNamed(
-                    PAGES.walletDetail.screenName,
-                    pathParameters: {"id": filteredWallets[index].id},
-                  );
-                },
-              ),
+              padding: const EdgeInsets.all(AppPadding.p20),
+              itemBuilder: (context, index) => _Item(filteredWallets[index]),
               itemCount: filteredWallets.length,
               shrinkWrap: true,
             );
@@ -71,4 +64,29 @@ class _PageContent extends StatelessWidget {
           )
         ]),
       );
+}
+
+class _Item extends StatelessWidget {
+  final Wallet wallet;
+
+  const _Item(this.wallet);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: MyColors.khaki,
+      child: ListTile(
+        leading: const Icon(Icons.satellite),
+        title: Text(wallet.title),
+        subtitle: Text('Asdfklasjdflkasdjf'),
+        trailing: Icon(Icons.satellite),
+        onTap: () {
+          AppRouter.router.pushNamed(
+            PAGES.walletDetail.screenName,
+            pathParameters: {"id": wallet.id},
+          );
+        },
+      ),
+    );
+  }
 }

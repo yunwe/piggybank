@@ -40,7 +40,7 @@ class MyButton extends StatelessWidget {
       onPressed: onPressed,
       label: label,
       backgroundColor: MyColors.khakiD1,
-      textColor: MyColors.khakiPrimary,
+      textColor: MyColors.textColor,
       fullWidth: false,
     );
   }
