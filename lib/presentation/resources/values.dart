@@ -25,6 +25,7 @@ class AppSize {
   static const double bulletinSize = 22;
 
   static const double iconSizeXS = 16;
+  static const double iconSizeS = 22;
   static const double iconSize = 28;
   static const double iconSizeL = 50;
 

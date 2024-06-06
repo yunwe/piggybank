@@ -15,8 +15,20 @@ class WalletAmout extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('\$${wallet.amount}'),
-            const Text(AppStrings.labelTotal),
+            Text(
+              '\$${wallet.amount}',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: MyColors.hotPink),
+            ),
+            Text(
+              AppStrings.labelTotal,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .copyWith(color: MyColors.darkBlue),
+            ),
           ],
         ),
       ),

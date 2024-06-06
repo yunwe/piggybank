@@ -21,28 +21,16 @@ class PageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.primary,
+      backgroundColor: MyColors.khaki,
       appBar: const DetailPageAppbar(),
       body: Stack(
         children: [
           Column(
             children: [
               WalletAmout(wallet),
-              wallet.targetEndDate == null ? WalletReport(wallet: wallet) : TargetWalletReport(wallet: wallet),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(AppStrings.titleMonthlyReport),
-                    GestureDetector(
-                      onTap: () => TransactionsList.show(context, transactions),
-                      child: const Text(AppStrings.viewDetail),
-                    )
-                  ],
-                ),
-              ),
-              const Spacing.h12(),
+              wallet.targetEndDate == null
+                  ? WalletReport(wallet: wallet)
+                  : TargetWalletReport(wallet: wallet),
               VisualReport(wallet: wallet, transactions: transactions),
             ],
           ),

@@ -44,13 +44,19 @@ class _ProgressBar extends StatelessWidget {
         LinearProgressIndicator(
           value: progress,
           minHeight: 15,
-          backgroundColor: Colors.black,
+          backgroundColor: MyColors.khakiD1,
+          color: MyColors.khakiPrimary,
           borderRadius: const BorderRadius.all(
             Radius.circular(5),
           ),
         ),
         Positioned.fill(
-          child: Align(alignment: Alignment.center, child: Text('$percentage%')),
+          child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                '$percentage%',
+                style: Theme.of(context).textTheme.bodySmall,
+              )),
         ),
       ],
     );
@@ -70,12 +76,16 @@ class _ActivePeriod extends StatelessWidget {
       children: [
         Text(
           AppStrings.labelStartDate.format([report.startDate.format()]),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: MyColors.textColor,
+              ),
         ),
         Row(
           children: [
-            const Icon(
+            Icon(
               Icons.calendar_month,
               size: AppSize.iconSize,
+              color: MyColors.textColor,
             ),
             const Spacing.w5(),
             Expanded(
@@ -86,8 +96,19 @@ class _ActivePeriod extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(AppStrings.endIn.format([report.endIn])),
-                      Text(report.endDate.format()),
+                      Text(
+                        AppStrings.endIn.format([report.endIn]),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: MyColors.textColor,
+                              fontStyle: FontStyle.italic,
+                            ),
+                      ),
+                      Text(
+                        report.endDate.format(),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: MyColors.textColor,
+                            ),
+                      ),
                     ],
                   ),
                 ],
@@ -111,12 +132,18 @@ class _TargetAmount extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppStrings.labelGoal.format([report.targetAmount.toStringAsFixed(2)])),
+        Text(
+          AppStrings.labelGoal.format([report.targetAmount.toStringAsFixed(2)]),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: MyColors.textColor,
+              ),
+        ),
         Row(
           children: [
-            const Icon(
+            Icon(
               Icons.attach_money,
               size: AppSize.iconSize,
+              color: MyColors.textColor,
             ),
             Expanded(
               child: _ProgressBar(report.amountAchievement),

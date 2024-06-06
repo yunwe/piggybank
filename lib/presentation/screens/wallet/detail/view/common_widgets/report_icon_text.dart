@@ -22,13 +22,20 @@ class ReprotIconText extends StatelessWidget {
         Icon(
           icon,
           size: AppSize.bulletinSize,
+          color: MyColors.textColor,
         ),
         const Spacing.w5(),
         Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title),
+            Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: MyColors.hotPink),
+            ),
             if (subTitle != null) Text(subTitle!),
           ],
         ),

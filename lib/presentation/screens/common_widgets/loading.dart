@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:piggybank/presentation/resources/resources.dart';
+import 'package:piggybank/presentation/resources/colors.dart';
 
 class Loading extends StatelessWidget {
   const Loading({super.key});
@@ -7,7 +7,7 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: MyColors.darkGrey.withOpacity(0.7),
+      color: MyColors.khakiPrimary.withOpacity(0.7),
       child: const Center(
         child: CircularProgressIndicator(),
       ),

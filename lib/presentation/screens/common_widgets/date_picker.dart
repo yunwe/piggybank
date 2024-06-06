@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:piggybank/app/service/format_date.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
+import 'package:piggybank/presentation/screens/common_widgets/spacing.dart';
 
 class DatePicker extends StatelessWidget {
   const DatePicker({
@@ -34,8 +35,7 @@ class DatePicker extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.5,
+        Expanded(
           child: TextFormField(
             controller: TextEditingController()
               ..text = selectedDate == null ? '' : selectedDate!.format(),
@@ -55,6 +55,7 @@ class DatePicker extends StatelessWidget {
             onTap: () => _openDatePicer(context),
           ),
         ),
+        const Spacing.w15(),
         ElevatedButton(
           onPressed: () => _openDatePicer(context),
           child: const Text(AppStrings.selectDate),

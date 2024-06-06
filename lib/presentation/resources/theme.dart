@@ -46,7 +46,8 @@ ThemeData getApplicationTheme() {
       ),
     ),
     textTheme: Typography.whiteHelsinki.copyWith(
-      bodySmall: TextStyle(color: MyColors.onWhite),
+      bodySmall: TextStyle(color: MyColors.textColor),
+      bodyMedium: TextStyle(color: MyColors.textColor),
       titleLarge: TextStyle(
         color: MyColors.onPrimary,
         fontSize: FontSize.extraLarge,
@@ -60,14 +61,21 @@ ThemeData getApplicationTheme() {
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
-      elevation: 0,
+      elevation: 4,
       centerTitle: true,
       titleTextStyle: TextStyle(
         fontSize: FontSize.large,
-        color: MyColors.onPrimary,
+        color: MyColors.textColor,
         fontWeight: FontWeight.bold,
       ),
       iconTheme: IconThemeData(
+        color: MyColors.textColor,
+      ),
+    ),
+    listTileTheme: ListTileThemeData(
+      iconColor: MyColors.onPrimary,
+      titleTextStyle: TextStyle(
+        fontSize: FontSize.medium,
         color: MyColors.onPrimary,
       ),
     ),

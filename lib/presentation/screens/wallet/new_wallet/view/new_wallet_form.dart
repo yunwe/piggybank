@@ -29,20 +29,28 @@ class NewWalletForm extends StatelessWidget {
     );
   }
 
-  Widget formContent(BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _WalletNameInput(),
-          const Spacing.h20(),
-          _WalletSetTargetInput(),
-          const Spacing.h20(),
-          _WalletTargetAmountInput(),
-          const Spacing.h20(),
-          _WalletTargetDateInput(),
-          const Spacing.h8(),
-          _SubmitButton(),
-        ],
+  Widget formContent(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(top: AppPadding.p20),
+        child: FormContainerWidget(
+          outterPadding: AppPadding.p8,
+          innerPadding: AppPadding.p20,
+          backgroundColor: MyColors.primaryL1,
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _WalletNameInput(),
+              const Spacing.h20(),
+              _WalletSetTargetInput(),
+              const Spacing.h20(),
+              _WalletTargetAmountInput(),
+              const Spacing.h20(),
+              _WalletTargetDateInput(),
+              const Spacing.h8(),
+              _SubmitButton(),
+            ],
+          ),
+        ),
       );
 }
 
@@ -69,7 +77,8 @@ class _WalletSetTargetInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NewWalletBloc, NewWalletState>(
-        buildWhen: (previous, current) => previous.setTarget != current.setTarget,
+        buildWhen: (previous, current) =>
+            previous.setTarget != current.setTarget,
         builder: (context, state) {
           return LabelSwitch(
             key: AppKeys.walletSetTargetToggle,
@@ -78,6 +87,9 @@ class _WalletSetTargetInput extends StatelessWidget {
             onChanged: (isOn) => context.read<NewWalletBloc>().add(
                   NewWalletSetTargetChanged(setTarget: isOn),
                 ),
+            textColor: MyColors.textColor,
+            activeColor: MyColors.khakiPrimary,
+            inactiveColor: MyColors.khaki,
           );
         });
   }
@@ -87,7 +99,9 @@ class _WalletTargetAmountInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NewWalletBloc, NewWalletState>(
-        buildWhen: (previous, current) => previous.setTarget != current.setTarget || previous.targetAmount != current.targetAmount,
+        buildWhen: (previous, current) =>
+            previous.setTarget != current.setTarget ||
+            previous.targetAmount != current.targetAmount,
         builder: (context, state) {
           if (!state.setTarget) {
             return const SizedBox();
@@ -110,7 +124,9 @@ class _WalletTargetDateInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NewWalletBloc, NewWalletState>(
-        buildWhen: (previous, current) => previous.setTarget != current.setTarget || previous.targetDate != current.targetDate,
+        buildWhen: (previous, current) =>
+            previous.setTarget != current.setTarget ||
+            previous.targetDate != current.targetDate,
         builder: (context, state) {
           if (!state.setTarget) {
             return const SizedBox();
@@ -138,7 +154,9 @@ class _SubmitButton extends StatelessWidget {
                 key: AppKeys.walletCreateSubmit,
                 onPressed: state.isValid
                     ? () {
-                        context.read<NewWalletBloc>().add(const NewWalletSubmitted());
+                        context
+                            .read<NewWalletBloc>()
+                            .add(const NewWalletSubmitted());
                       }
                     : null,
                 label: AppStrings.labelCreate,

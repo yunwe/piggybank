@@ -7,9 +7,16 @@ class LabelSwitch extends StatelessWidget {
     required this.label,
     required this.isOn,
     required this.onChanged,
+    this.textColor,
+    this.activeColor,
+    this.inactiveColor,
   });
 
   final String label;
+  final Color? textColor;
+  final Color? activeColor;
+  final Color? inactiveColor;
+
   final bool isOn;
   final void Function(bool) onChanged;
 
@@ -19,15 +26,20 @@ class LabelSwitch extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: FontSize.medium,
-            color: Colors.black87,
+            color: textColor,
           ),
         ),
         const SizedBox(
           width: 10,
         ),
-        Switch(value: isOn, onChanged: onChanged),
+        Switch(
+          value: isOn,
+          onChanged: onChanged,
+          activeColor: activeColor,
+          inactiveTrackColor: inactiveColor,
+        ),
       ],
     );
   }

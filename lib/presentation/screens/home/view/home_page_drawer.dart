@@ -9,7 +9,8 @@ import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 class HomePageDrawer extends StatelessWidget {
   const HomePageDrawer({super.key});
 
-  Widget buildListTile(String title, IconData icon, Function() tapHandler, BuildContext ctx) {
+  Widget buildListTile(
+      String title, IconData icon, Function() tapHandler, BuildContext ctx) {
     return ListTile(
       leading: Icon(
         icon,
@@ -34,14 +35,7 @@ class HomePageDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.secondary,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: MyColors.primary,
             ),
             padding: const EdgeInsets.all(20),
             child: Row(
@@ -109,8 +103,7 @@ class _DrawerItem extends StatelessWidget {
     return ListTile(
       leading: Icon(
         icon,
-        size: AppSize.iconSize,
-        color: MyColors.onPrimary,
+        size: AppSize.iconSizeS,
       ),
       title: Text(label),
       onTap: onTap,

@@ -4,46 +4,78 @@ import 'package:piggybank/app/service/format_string.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
+import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/view/common_widgets/transaction_list.dart';
 
 class VisualReport extends StatelessWidget {
   final Wallet wallet;
   final List<Transaction> transactions;
 
-  const VisualReport({super.key, required this.wallet, required this.transactions});
+  const VisualReport(
+      {super.key, required this.wallet, required this.transactions});
 
   @override
   Widget build(BuildContext context) {
-    final VisualReportData data = VisualReportData(wallet: wallet, transactions: transactions);
+    final VisualReportData data =
+        VisualReportData(wallet: wallet, transactions: transactions);
 
     return Padding(
-      padding: const EdgeInsets.all(AppPadding.p28),
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppStrings.titleMonthlyReport,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                    ),
+              ),
+              IconButton(
+                  onPressed: () => TransactionsList.show(context, transactions),
+                  icon: const Icon(Icons.read_more))
+            ],
+          ),
+          const Spacing.h20(),
           _TransactionBarChart(
             dataList: data.dataList,
             maxY: data.maxY,
             interval: data.interval,
             unit: data.unit,
           ),
-          _shortReport
+          shortReport(context),
         ],
       ),
     );
   }
 
-  Widget get _shortReport {
+  Widget shortReport(BuildContext context) {
+    TextStyle smallBold = Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.5,
+        );
     if (wallet.targetEndDate == null) {
       final report = Report(wallet: wallet);
-      return Text(AppStrings.avgSaving.format([report.averageSaving.toStringAsFixed(2)]));
+      return Text(AppStrings.avgSaving
+          .format([report.averageSaving.toStringAsFixed(2)]));
     }
 
     TargetReport report = TargetReport(wallet: wallet);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(AppStrings.labelGoal.format([report.amountToSave.toStringAsFixed(2)])),
-        Text(AppStrings.labelCurrent.format([report.averageSaving.toStringAsFixed(2)])),
+        Text(
+          AppStrings.labelGoal.format([report.amountToSave.toStringAsFixed(2)]),
+          style: smallBold,
+        ),
+        Text(
+          AppStrings.labelCurrent
+              .format([report.averageSaving.toStringAsFixed(2)]),
+          style: smallBold,
+        ),
       ],
     );
   }
@@ -122,6 +154,9 @@ class _TransactionBarChartState extends State<_TransactionBarChart> {
                   return Text(
                     '${value.toInt().toString()}${widget.unit ?? ''}',
                     textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   );
                 },
               ),
@@ -134,7 +169,13 @@ class _TransactionBarChartState extends State<_TransactionBarChart> {
                   final index = value.toInt();
                   return SideTitleWidget(
                     axisSide: meta.axisSide,
-                    child: Text(widget.dataList[index].title),
+                    child: Text(
+                      widget.dataList[index].title,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                    ),
                   );
                 },
               ),
@@ -190,7 +231,9 @@ class _TransactionBarChartState extends State<_TransactionBarChart> {
               },
             ),
             touchCallback: (event, response) {
-              if (event.isInterestedForInteractions && response != null && response.spot != null) {
+              if (event.isInterestedForInteractions &&
+                  response != null &&
+                  response.spot != null) {
                 setState(() {
                   touchedGroupIndex = response.spot!.touchedBarGroupIndex;
                 });

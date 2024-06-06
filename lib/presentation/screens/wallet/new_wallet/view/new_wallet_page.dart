@@ -13,14 +13,11 @@ class NewWalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.primary,
+      backgroundColor: MyColors.khaki,
       appBar: AppBar(
         title: const Text(AppStrings.titleCreate),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(AppPadding.p20),
-        child: form(context),
-      ),
+      body: form(context),
     );
   }
 
