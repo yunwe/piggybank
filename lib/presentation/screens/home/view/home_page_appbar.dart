@@ -9,6 +9,8 @@ class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text(AppStrings.titleHome),
+      elevation: 0,
+      backgroundColor: MyColors.primary,
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.add),

@@ -55,9 +55,9 @@ class ShowError extends StatelessWidget {
             children: [
               Text(failure.message),
               const Spacing.h20(),
-              ElevatedButton(
+              MyButton.khaki(
                 onPressed: onPressed,
-                child: Text(label),
+                label: label,
               ),
             ],
           ),

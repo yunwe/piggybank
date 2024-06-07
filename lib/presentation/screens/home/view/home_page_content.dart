@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/route/route.dart';
-import 'package:piggybank/app/service/format_date.dart';
 import 'package:piggybank/app/service/format_string.dart';
 import 'package:piggybank/domain/model/models.dart';
-import 'package:piggybank/presentation/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
-import 'package:piggybank/presentation/screens/common_widgets/percentage_icon.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import '../bloc/home_page_bloc.dart';
 import 'view.dart';
@@ -21,7 +18,7 @@ class HomePageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const HomePageAppbar(),
-      backgroundColor: MyColors.primary,
+      backgroundColor: MyColors.khaki,
       drawer: const HomePageDrawer(),
       body: BlocProvider<HomePageBloc>(
         create: (context) => HomePageBloc(),
@@ -45,11 +42,52 @@ class _PageContent extends StatelessWidget {
 
       return filteredWallets.isEmpty
           ? empty
-          : ListView.builder(
-              padding: const EdgeInsets.all(AppPadding.p20),
-              itemBuilder: (context, index) => _Item(filteredWallets[index]),
-              itemCount: filteredWallets.length,
-              shrinkWrap: true,
+          : Column(
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 45),
+                      decoration: BoxDecoration(
+                        color: MyColors.primary,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
+                      ),
+                      child: const Center(child: _TotalSaving(10000000)),
+                    ),
+                    Positioned(
+                      bottom: -30,
+                      left: 10,
+                      right: 10,
+                      child: _Report(),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 60,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: AppPadding.p8),
+                    child: Text(
+                      'Current Goals',
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: MyColors.darkBlue,
+                          ),
+                    ),
+                  ),
+                ),
+                ListView.builder(
+                  padding: const EdgeInsets.all(AppPadding.p8),
+                  itemBuilder: (context, index) => HomePageItem(filteredWallets[index]),
+                  itemCount: filteredWallets.length,
+                  shrinkWrap: true,
+                ),
+              ],
             );
     });
   }
@@ -68,67 +106,76 @@ class _PageContent extends StatelessWidget {
       );
 }
 
-class _Item extends StatelessWidget {
-  final Wallet wallet;
+class _TotalSaving extends StatelessWidget {
+  final double amount;
 
-  const _Item(this.wallet);
+  const _TotalSaving(this.amount);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      child: ListTile(
-        leading: icon(wallet),
-        title: Text(
-          wallet.title,
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: MyColors.darkBlue,
-              ),
+    return Column(
+      children: [
+        Text(
+          '\$${amount.formatCurrency()}',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(color: MyColors.hotPink),
         ),
-        subtitle: infoRow(wallet),
-        onTap: () {
-          AppRouter.router.pushNamed(
-            PAGES.walletDetail.screenName,
-            pathParameters: {"id": wallet.id},
-          );
-        },
+        Text(
+          AppStrings.labelTotal,
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(color: MyColors.darkBlue),
+        ),
+      ],
+    );
+  }
+}
+
+class _Report extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20, vertical: AppPadding.p8),
+      decoration: BoxDecoration(
+        color: MyColors.khaki,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: MyColors.khakiD2.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          block(context, 'Goals', '3'),
+          block(
+            context,
+            'This Month',
+            '\$${(9000.0).formatCurrency()}',
+          ),
+          block(context, 'Last Month', '\$${(890.0).formatCurrency()}'),
+        ],
       ),
     );
   }
 
-  Widget icon(Wallet wallet) {
-    if (wallet.targetEndDate != null) {
-      TargetReport report = TargetReport(wallet: wallet);
-      return PercentageIcon(report.amountAchievement);
-    }
-
-    return ColorIcon.fromType(ColorIconType.saving);
-  }
-
-  Widget infoRow(Wallet wallet) {
-    if (wallet.targetEndDate != null) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget block(BuildContext context, String label, String vlaue) => Column(
         children: [
-          info(Icons.attach_money, wallet.amount.formatCurrency()),
-          info(Icons.calendar_today, wallet.targetEndDate!.formatMonth()),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: MyColors.khakiD2,
+                ),
+          ),
+          Text(
+            vlaue,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: MyColors.darkBlue,
+                ),
+          ),
         ],
       );
-    }
-
-    return info(Icons.attach_money, wallet.amount.formatCurrency());
-  }
-
-  Widget info(IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: AppSize.iconSizeXS,
-        ),
-        const Spacing.w5(),
-        Text(text),
-      ],
-    );
-  }
 }

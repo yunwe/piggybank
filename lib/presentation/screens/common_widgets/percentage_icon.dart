@@ -13,7 +13,7 @@ class PercentageIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.green.withOpacity(0.2),
+        color: MyColors.khakiD2.withOpacity(0.2),
         borderRadius: const BorderRadius.all(
           Radius.circular(10),
         ),
@@ -29,7 +29,6 @@ class PercentageIcon extends StatelessWidget {
                 backgroundColor: MyColors.khakiD2,
                 color: Colors.green,
                 value: percentage,
-                semanticsLabel: 'Circular progress indicator',
               ),
               Center(
                 child: Text(
