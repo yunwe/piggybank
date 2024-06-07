@@ -91,7 +91,6 @@ class _Item extends StatelessWidget {
             info(Icons.calendar_today, wallet.archivedDate!.formatMonth()),
           ],
         ),
-        //  trailing: Icon(Icons.satellite),
         onTap: () {
           AppRouter.router.pushNamed(
             PAGES.walletDetail.screenName,
