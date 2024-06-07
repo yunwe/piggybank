@@ -11,7 +11,7 @@ class MyButton extends StatelessWidget {
     required this.fullWidth,
   });
 
-  factory MyButton.primary({Key? key, required onPressed, required label}) {
+  factory MyButton.primary({Key? key, void Function()? onPressed, required String label}) {
     return MyButton._(
       key: key,
       onPressed: onPressed,
@@ -22,8 +22,7 @@ class MyButton extends StatelessWidget {
     );
   }
 
-  factory MyButton.khakiPrimary(
-      {Key? key, required onPressed, required label}) {
+  factory MyButton.khakiPrimary({Key? key, void Function()? onPressed, required String label}) {
     return MyButton._(
       key: key,
       onPressed: onPressed,
@@ -34,7 +33,7 @@ class MyButton extends StatelessWidget {
     );
   }
 
-  factory MyButton.khaki({Key? key, required onPressed, required label}) {
+  factory MyButton.khaki({Key? key, void Function()? onPressed, required String label}) {
     return MyButton._(
       key: key,
       onPressed: onPressed,
