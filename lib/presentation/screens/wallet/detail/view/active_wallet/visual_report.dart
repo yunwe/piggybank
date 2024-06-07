@@ -11,8 +11,7 @@ class VisualReport extends StatelessWidget {
   final Wallet wallet;
   final List<Transaction> transactions;
 
-  const VisualReport(
-      {super.key, required this.wallet, required this.transactions});
+  const VisualReport({super.key, required this.wallet, required this.transactions});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +19,7 @@ class VisualReport extends StatelessWidget {
       return const Expanded(child: Center(child: Text(AppStrings.noHistory)));
     }
 
-    final VisualReportData data =
-        VisualReportData(wallet: wallet, transactions: transactions);
+    final VisualReportData data = VisualReportData(wallet: wallet, transactions: transactions);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
@@ -38,9 +36,7 @@ class VisualReport extends StatelessWidget {
                       letterSpacing: 0.5,
                     ),
               ),
-              IconButton(
-                  onPressed: () => TransactionsList.show(context, transactions),
-                  icon: const Icon(Icons.read_more))
+              IconButton(onPressed: () => TransactionsList.show(context, transactions), icon: const Icon(Icons.read_more))
             ],
           ),
           const Spacing.h20(),
@@ -74,12 +70,11 @@ class VisualReport extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          AppStrings.labelGoal.format([report.amountToSave.toStringAsFixed(2)]),
+          AppStrings.labelAmountToSave.format([report.amountToSave.toStringAsFixed(2)]),
           style: smallBold,
         ),
         Text(
-          AppStrings.labelCurrent
-              .format([report.averageSaving.toStringAsFixed(2)]),
+          AppStrings.labelCurrent.format([report.averageSaving.toStringAsFixed(2)]),
           style: smallBold,
         ),
       ],
@@ -237,9 +232,7 @@ class _TransactionBarChartState extends State<_TransactionBarChart> {
               },
             ),
             touchCallback: (event, response) {
-              if (event.isInterestedForInteractions &&
-                  response != null &&
-                  response.spot != null) {
+              if (event.isInterestedForInteractions && response != null && response.spot != null) {
                 setState(() {
                   touchedGroupIndex = response.spot!.touchedBarGroupIndex;
                 });

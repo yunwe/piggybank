@@ -44,28 +44,7 @@ class _PageContent extends StatelessWidget {
           ? empty
           : Column(
               children: [
-                Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 45),
-                      decoration: BoxDecoration(
-                        color: MyColors.primary,
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                        ),
-                      ),
-                      child: const Center(child: _TotalSaving(10000000)),
-                    ),
-                    Positioned(
-                      bottom: -30,
-                      left: 10,
-                      right: 10,
-                      child: _Report(),
-                    ),
-                  ],
-                ),
+                _Header(),
                 const SizedBox(
                   height: 60,
                 ),
@@ -74,7 +53,7 @@ class _PageContent extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: AppPadding.p8),
                     child: Text(
-                      'Current Goals',
+                      AppStrings.titleCurrent,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: MyColors.darkBlue,
                           ),
@@ -106,13 +85,36 @@ class _PageContent extends StatelessWidget {
       );
 }
 
-class _TotalSaving extends StatelessWidget {
-  final double amount;
-
-  const _TotalSaving(this.amount);
+class _Header extends StatelessWidget {
+  static const double _corner = 10;
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(bottom: 45),
+          decoration: BoxDecoration(
+            color: MyColors.primary,
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(_corner),
+              bottomRight: Radius.circular(_corner),
+            ),
+          ),
+          child: Center(child: _totalSaving(context, 10000000)),
+        ),
+        Positioned(
+          bottom: -30,
+          left: _corner,
+          right: _corner,
+          child: _report(context),
+        ),
+      ],
+    );
+  }
+
+  Widget _totalSaving(BuildContext context, double amount) {
     return Column(
       children: [
         Text(
@@ -126,43 +128,44 @@ class _TotalSaving extends StatelessWidget {
       ],
     );
   }
-}
 
-class _Report extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  Widget _report(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppPadding.p20, vertical: AppPadding.p8),
       decoration: BoxDecoration(
         color: MyColors.khaki,
         borderRadius: const BorderRadius.all(
-          Radius.circular(10),
+          Radius.circular(_corner),
         ),
         boxShadow: [
           BoxShadow(
             color: MyColors.khakiD2.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 4,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          block(context, 'Goals', '3'),
-          block(
+          _block(context, AppStrings.labelGoals, '3'),
+          _block(
             context,
-            'This Month',
+            AppStrings.labelThisMonth,
             '\$${(9000.0).formatCurrency()}',
           ),
-          block(context, 'Last Month', '\$${(890.0).formatCurrency()}'),
+          _block(
+            context,
+            AppStrings.labelLastMonth,
+            '\$${(890.0).formatCurrency()}',
+          ),
         ],
       ),
     );
   }
 
-  Widget block(BuildContext context, String label, String vlaue) => Column(
+  Widget _block(BuildContext context, String label, String vlaue) => Column(
         children: [
           Text(
             label,

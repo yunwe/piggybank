@@ -133,7 +133,7 @@ class _TargetAmount extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppStrings.labelGoal.format([report.targetAmount.toStringAsFixed(2)]),
+          AppStrings.labelAmountToSave.format([report.targetAmount.toStringAsFixed(2)]),
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 color: MyColors.textColor,
               ),
