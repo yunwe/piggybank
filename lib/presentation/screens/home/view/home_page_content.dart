@@ -42,15 +42,8 @@ class _PageContent extends StatelessWidget {
       return filteredWallets.isEmpty
           ? empty
           : ListView.builder(
-              itemBuilder: (context, index) => ListTile(
-                title: Text(filteredWallets[index].title),
-                onTap: () {
-                  AppRouter.router.pushNamed(
-                    PAGES.walletDetail.screenName,
-                    pathParameters: {"id": filteredWallets[index].id},
-                  );
-                },
-              ),
+              padding: const EdgeInsets.all(AppPadding.p20),
+              itemBuilder: (context, index) => _Item(filteredWallets[index]),
               itemCount: filteredWallets.length,
               shrinkWrap: true,
             );
@@ -69,4 +62,71 @@ class _PageContent extends StatelessWidget {
           ),
         ]),
       );
+}
+
+class _Item extends StatelessWidget {
+  final Wallet wallet;
+
+  const _Item(this.wallet);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.white,
+      child: ListTile(
+        leading: targetDone,
+        title: Text(
+          wallet.title,
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: MyColors.darkBlue,
+              ),
+        ),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            info(Icons.attach_money, '1,000'),
+            info(Icons.calendar_today, 'Dec, 2022'),
+          ],
+        ), //  trailing: Icon(Icons.satellite),
+        onTap: () {
+          AppRouter.router.pushNamed(
+            PAGES.walletDetail.screenName,
+            pathParameters: {"id": wallet.id},
+          );
+        },
+      ),
+    );
+  }
+
+  Widget get targetDone => leadingIcon(MyColors.khakiPrimary, Icons.verified);
+
+  Widget leadingIcon(Color color, IconData icon) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.2),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      padding: const EdgeInsets.all(AppPadding.p8),
+      child: Icon(
+        icon,
+        color: color,
+        size: AppSize.iconSize,
+      ),
+    );
+  }
+
+  Widget info(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: AppSize.iconSizeXS,
+        ),
+        const Spacing.w5(),
+        Text(text),
+      ],
+    );
+  }
 }

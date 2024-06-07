@@ -76,10 +76,21 @@ class _Item extends StatelessWidget {
     return Card(
       color: MyColors.khaki,
       child: ListTile(
-        leading: const Icon(Icons.satellite),
-        title: Text(wallet.title),
-        subtitle: Text('Asdfklasjdflkasdjf'),
-        trailing: Icon(Icons.satellite),
+        leading: noTarget,
+        title: Text(
+          wallet.title,
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: MyColors.darkBlue,
+              ),
+        ),
+        subtitle: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            info(Icons.attach_money, '1,000'),
+            info(Icons.calendar_today, 'Dec, 2022'),
+          ],
+        ),
+        //  trailing: Icon(Icons.satellite),
         onTap: () {
           AppRouter.router.pushNamed(
             PAGES.walletDetail.screenName,
@@ -87,6 +98,43 @@ class _Item extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget get targetDone => leadingIcon(Colors.green, Icons.verified);
+
+  Widget get targetFailed =>
+      leadingIcon(Colors.red, Icons.sentiment_very_dissatisfied);
+
+  Widget get noTarget => leadingIcon(MyColors.onWhite, Icons.movie);
+
+  Widget leadingIcon(Color color, IconData icon) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.2),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      padding: const EdgeInsets.all(AppPadding.p8),
+      child: Icon(
+        icon,
+        color: color,
+        size: AppSize.iconSize,
+      ),
+    );
+  }
+
+  Widget info(IconData icon, String text) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: AppSize.iconSizeXS,
+        ),
+        const Spacing.w5(),
+        Text(text),
+      ],
     );
   }
 }
