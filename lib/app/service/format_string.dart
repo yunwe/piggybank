@@ -10,3 +10,10 @@ String interpolate(String string, List<String> params) {
 extension StringExtension on String {
   String format(List<String> params) => interpolate(this, params);
 }
+
+extension NumExtension on double {
+  String formatCurrency() {
+    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    return toStringAsFixed(0).replaceAllMapped(reg, (Match match) => '${match[1]},');
+  }
+}

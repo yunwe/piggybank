@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/route/app_router.dart';
 import 'package:piggybank/app/route/route_utils.dart';
+import 'package:piggybank/app/service/format_date.dart';
+import 'package:piggybank/app/service/format_string.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
@@ -37,8 +39,7 @@ class _PageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ArchivePageBloc>().add(ArchivePageWalletsChanged(wallets));
 
-    return BlocBuilder<ArchivePageBloc, ArchivePageState>(
-        builder: (context, state) {
+    return BlocBuilder<ArchivePageBloc, ArchivePageState>(builder: (context, state) {
       List<Wallet> filteredWallets = state.wallets;
 
       return filteredWallets.isEmpty
@@ -76,7 +77,7 @@ class _Item extends StatelessWidget {
     return Card(
       color: MyColors.khaki,
       child: ListTile(
-        leading: noTarget,
+        leading: icon(wallet),
         title: Text(
           wallet.title,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -86,8 +87,8 @@ class _Item extends StatelessWidget {
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            info(Icons.attach_money, '1,000'),
-            info(Icons.calendar_today, 'Dec, 2022'),
+            info(Icons.attach_money, wallet.amount.formatCurrency()),
+            info(Icons.calendar_today, wallet.archivedDate!.formatMonth()),
           ],
         ),
         //  trailing: Icon(Icons.satellite),
@@ -101,28 +102,12 @@ class _Item extends StatelessWidget {
     );
   }
 
-  Widget get targetDone => leadingIcon(Colors.green, Icons.verified);
-
-  Widget get targetFailed =>
-      leadingIcon(Colors.red, Icons.sentiment_very_dissatisfied);
-
-  Widget get noTarget => leadingIcon(MyColors.onWhite, Icons.movie);
-
-  Widget leadingIcon(Color color, IconData icon) {
-    return Container(
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      padding: const EdgeInsets.all(AppPadding.p8),
-      child: Icon(
-        icon,
-        color: color,
-        size: AppSize.iconSize,
-      ),
-    );
+  Widget icon(Wallet wallet) {
+    if (wallet.targetEndDate == null) {
+      return ColorIcon.saving();
+    } else {
+      return wallet.isTargetAmountReached ? ColorIcon.success() : ColorIcon.failed();
+    }
   }
 
   Widget info(IconData icon, String text) {

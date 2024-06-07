@@ -22,6 +22,12 @@ extension DateFormatting on DateTime {
     String year = this.year.toString();
     return "$day $month $year";
   }
+
+  String formatMonth() {
+    String month = monthNames[this.month - 1];
+    String year = this.year.toString();
+    return "$month, $year";
+  }
 }
 
 extension DateDifferennce on DateTime {
