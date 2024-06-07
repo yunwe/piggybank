@@ -39,12 +39,20 @@ class _PageContent extends StatelessWidget {
 
     return BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
       List<Wallet> filteredWallets = state.wallets;
+      if (state.status == HomePageStatus.processing) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
       return filteredWallets.isEmpty
           ? empty
           : Column(
               children: [
-                _Header(),
+                _Header(
+                  totalAmount: state.totalAmount,
+                  walletCount: state.walletCount,
+                  totalSavedForCurrentMonth: state.totalSavedForCurrentMonth,
+                  totalSavedForLastMonth: state.totalSavedForLastMonth,
+                ),
                 const SizedBox(
                   height: 60,
                 ),
@@ -60,11 +68,12 @@ class _PageContent extends StatelessWidget {
                     ),
                   ),
                 ),
-                ListView.builder(
-                  padding: const EdgeInsets.all(AppPadding.p8),
-                  itemBuilder: (context, index) => HomePageItem(filteredWallets[index]),
-                  itemCount: filteredWallets.length,
-                  shrinkWrap: true,
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(AppPadding.p8),
+                    itemBuilder: (context, index) => HomePageItem(filteredWallets[index]),
+                    itemCount: filteredWallets.length,
+                  ),
                 ),
               ],
             );
@@ -86,7 +95,18 @@ class _PageContent extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
+  const _Header({
+    required this.walletCount,
+    required this.totalAmount,
+    required this.totalSavedForCurrentMonth,
+    required this.totalSavedForLastMonth,
+  });
+
   static const double _corner = 10;
+  final int walletCount;
+  final double totalAmount;
+  final double totalSavedForCurrentMonth;
+  final double totalSavedForLastMonth;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +122,7 @@ class _Header extends StatelessWidget {
               bottomRight: Radius.circular(_corner),
             ),
           ),
-          child: Center(child: _totalSaving(context, 10000000)),
+          child: Center(child: _totalSaving(context, totalAmount)),
         ),
         Positioned(
           bottom: -30,
@@ -149,16 +169,20 @@ class _Header extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _block(context, AppStrings.labelGoals, '3'),
+          _block(
+            context,
+            AppStrings.labelGoals,
+            walletCount.toString(),
+          ),
           _block(
             context,
             AppStrings.labelThisMonth,
-            '\$${(9000.0).formatCurrency()}',
+            '\$${(totalSavedForCurrentMonth).formatCurrency()}',
           ),
           _block(
             context,
             AppStrings.labelLastMonth,
-            '\$${(890.0).formatCurrency()}',
+            '\$${(totalSavedForLastMonth).formatCurrency()}',
           ),
         ],
       ),

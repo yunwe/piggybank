@@ -9,12 +9,14 @@ part 'home_page_state.dart';
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   HomePageBloc()
       : super(
-          const HomePageState(wallets: []),
+          HomePageState.processing(),
         ) {
     on<HomePageWalletsChanged>(_onHomePageWalletsUpdated);
   }
 
   void _onHomePageWalletsUpdated(HomePageWalletsChanged event, Emitter<HomePageState> emit) {
+    emit(HomePageState.processing());
+
     //Filter Out Archived Wallets
     List<Wallet> validWallets = event.wallets.where((element) => !element.isArchived).toList();
     validWallets.sort((a, b) => a.title.compareTo(b.title));
@@ -23,6 +25,22 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       return;
     }
 
-    emit(HomePageState(wallets: validWallets));
+    int walletCount = validWallets.length;
+    double totalAmount = validWallets.fold(0, (previousValue, element) => previousValue + element.amount);
+
+    //TODO: new data to save
+    double totalSavedForCurrentMonth = 8900;
+    double totalSavedForLastMonth = 7800;
+
+    emit(
+      HomePageState(
+        status: HomePageStatus.result,
+        wallets: validWallets,
+        walletCount: walletCount,
+        totalAmount: totalAmount,
+        totalSavedForCurrentMonth: totalSavedForCurrentMonth,
+        totalSavedForLastMonth: totalSavedForLastMonth,
+      ),
+    );
   }
 }
