@@ -17,12 +17,15 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   void _onHomePageWalletsUpdated(HomePageWalletsChanged event, Emitter<HomePageState> emit) {
     emit(HomePageState.processing());
 
+    if (event.wallets.isEmpty) {
+      return emit(HomePageState.empty());
+    }
     //Filter Out Archived Wallets
     List<Wallet> validWallets = event.wallets.where((element) => !element.isArchived).toList();
     validWallets.sort((a, b) => a.title.compareTo(b.title));
 
     if (listEquals(validWallets, state.wallets)) {
-      return;
+      return emit(state.copyWith());
     }
 
     int walletCount = validWallets.length;

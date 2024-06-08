@@ -204,7 +204,7 @@ class _TotalSavedForThisMonth extends StatelessWidget {
                 ),
           ),
           Text(
-            '\$${state.thisMonth?.formatCurrency() ?? '-'}',
+            state.thisMonth == null ? '-' : '\$${state.thisMonth!.formatCurrency()}',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: MyColors.darkBlue,
                 ),
@@ -231,7 +231,7 @@ class _TotalSavedForLastMonth extends StatelessWidget {
                 ),
           ),
           Text(
-            '\$${state.lastMonth?.formatCurrency() ?? '-'}',
+            state.lastMonth == null ? '-' : '\$${state.lastMonth!.formatCurrency()}',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: MyColors.darkBlue,
                 ),

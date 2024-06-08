@@ -17,6 +17,24 @@ class HomePageState extends Equatable {
     );
   }
 
+  factory HomePageState.empty() {
+    return const HomePageState(
+      wallets: [],
+      status: HomePageStatus.result,
+      walletCount: 0,
+      totalAmount: 0,
+    );
+  }
+
+  HomePageState copyWith() {
+    return HomePageState(
+      status: HomePageStatus.result,
+      wallets: wallets,
+      walletCount: walletCount,
+      totalAmount: totalAmount,
+    );
+  }
+
   final List<Wallet> wallets;
   final HomePageStatus status;
 
@@ -24,5 +42,5 @@ class HomePageState extends Equatable {
   final double totalAmount;
 
   @override
-  List<Object?> get props => [wallets];
+  List<Object?> get props => [status, wallets];
 }
