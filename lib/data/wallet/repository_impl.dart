@@ -27,6 +27,7 @@ class FirebaseWalletRepository implements WalletRepository {
   Future<void> create({
     required String userId,
     required String title,
+    required int icon,
     double? targetAmount,
     DateTime? targetEndDate,
   }) async {
@@ -39,6 +40,7 @@ class FirebaseWalletRepository implements WalletRepository {
             WalletMapper.toDocument(
               userId: userId,
               title: title,
+              icon: icon,
               targetAmount: targetAmount,
               targetEndDate: targetEndDate,
             ),

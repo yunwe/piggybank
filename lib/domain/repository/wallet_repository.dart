@@ -8,6 +8,7 @@ abstract class WalletRepository {
   Future<void> create({
     required String userId,
     required String title,
+    required int icon,
     double? targetAmount,
     DateTime? targetEndDate,
   });

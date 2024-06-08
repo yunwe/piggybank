@@ -42,7 +42,10 @@ class HomePageItem extends StatelessWidget {
       return PercentageIcon(report.amountAchievement);
     }
 
-    return ColorIcon.fromType(ColorIconType.saving);
+    bool isValidIcon = wallet.icon >= 0 && wallet.icon < ColorIconType.values.length;
+    ColorIconType type = isValidIcon ? ColorIconType.values[wallet.icon] : ColorIconType.saving;
+
+    return ColorIcon.fromType(type);
   }
 
   Widget infoRow(Wallet wallet) {

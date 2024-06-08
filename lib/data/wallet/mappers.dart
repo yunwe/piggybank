@@ -7,6 +7,7 @@ import 'package:piggybank/domain/model/models.dart';
 
 const USER_ID = 'user_id';
 const TITLE = 'title';
+const ICON = 'icon';
 const AMOUNT = 'amount';
 const TARGET_AMOUNT = 'target_amount';
 const TARGET_DATE = 'target_date';
@@ -25,6 +26,7 @@ class WalletMapper with DataParser {
       id: snapshot.id,
       ownerId: data[USER_ID],
       title: data[TITLE],
+      icon: data[ICON],
       amount: DataParser.toDouble(data[AMOUNT]),
       startDate: DataParser.toDateTime(data[CREATED_AT]),
       targetAmount: DataParser.toDouble(data[TARGET_AMOUNT]),
@@ -37,12 +39,14 @@ class WalletMapper with DataParser {
   static Map<String, dynamic> toDocument({
     required String userId,
     required String title,
+    required int icon,
     double? targetAmount,
     DateTime? targetEndDate,
   }) {
     return <String, dynamic>{
       USER_ID: userId,
       TITLE: title,
+      ICON: icon,
       AMOUNT: 0.0,
       TARGET_AMOUNT: targetAmount,
       TARGET_DATE: targetEndDate?.millisecondsSinceEpoch,

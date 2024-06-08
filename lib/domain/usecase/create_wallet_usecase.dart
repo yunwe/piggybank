@@ -15,6 +15,7 @@ class CreateWalletUseCase implements BaseUseCase<CreateWalletUseCaseInput, void>
       await _repository.create(
         userId: input.userId,
         title: input.title,
+        icon: input.icon,
         targetAmount: input.targetAmount,
         targetEndDate: input.targetDate,
       );
@@ -32,12 +33,14 @@ class CreateWalletUseCase implements BaseUseCase<CreateWalletUseCaseInput, void>
 class CreateWalletUseCaseInput {
   String userId;
   String title;
+  int icon;
   double? targetAmount;
   DateTime? targetDate;
 
   CreateWalletUseCaseInput({
     required this.userId,
     required this.title,
+    required this.icon,
     this.targetAmount,
     this.targetDate,
   });

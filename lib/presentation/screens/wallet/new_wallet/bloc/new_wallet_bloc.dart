@@ -109,8 +109,8 @@ class NewWalletBloc extends Bloc<NewWalletEvent, NewWalletState> {
       CreateWalletUseCaseInput input = CreateWalletUseCaseInput(
         userId: userId,
         title: state.goalName.value,
-        targetAmount:
-            state.setTarget ? double.parse(state.targetAmount.value) : null,
+        icon: state.icon.index,
+        targetAmount: state.setTarget ? double.parse(state.targetAmount.value) : null,
         targetDate: state.setTarget ? state.targetDate.value : null,
       );
       Either<Failure, void> value = await _useCase.execute(input);
