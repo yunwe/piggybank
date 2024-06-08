@@ -5,7 +5,6 @@ import 'package:piggybank/app/service/format_string.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
-import 'package:piggybank/presentation/screens/common_widgets/percentage_icon.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 
 class HomePageItem extends StatelessWidget {
@@ -37,15 +36,19 @@ class HomePageItem extends StatelessWidget {
   }
 
   Widget icon(Wallet wallet) {
+    double? percentage;
     if (wallet.targetEndDate != null) {
       TargetReport report = TargetReport(wallet: wallet);
-      return PercentageIcon(report.amountAchievement);
+      percentage = report.amountAchievement;
     }
 
-    bool isValidIcon = wallet.icon >= 0 && wallet.icon < ColorIconType.values.length;
-    ColorIconType type = isValidIcon ? ColorIconType.values[wallet.icon] : ColorIconType.saving;
+    bool isValidIcon = wallet.icon >= 0 && wallet.icon < IconType.values.length;
+    IconType type = isValidIcon ? IconType.values[wallet.icon] : IconType.saving;
 
-    return ColorIcon.fromType(type);
+    return ColorIcon(
+      iconType: type,
+      percentage: percentage,
+    );
   }
 
   Widget infoRow(Wallet wallet) {

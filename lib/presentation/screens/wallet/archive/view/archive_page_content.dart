@@ -103,9 +103,9 @@ class _Item extends StatelessWidget {
 
   Widget icon(Wallet wallet) {
     if (wallet.targetEndDate == null) {
-      return ColorIcon.saving();
+      return const ColorIcon(iconType: IconType.saving);
     } else {
-      return wallet.isTargetAmountReached ? ColorIcon.success() : ColorIcon.failed();
+      return wallet.isTargetAmountReached ? const ColorIcon(iconType: IconType.success) : const ColorIcon(iconType: IconType.failed);
     }
   }
 

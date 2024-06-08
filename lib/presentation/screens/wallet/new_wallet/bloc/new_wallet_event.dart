@@ -17,7 +17,7 @@ final class NewWalletGoalNameChanged extends NewWalletEvent {
 }
 
 final class NewWalletIconChanged extends NewWalletEvent {
-  final ColorIconType icon;
+  final IconType icon;
 
   const NewWalletIconChanged({required this.icon});
 

@@ -10,25 +10,25 @@ class WalletIconSelector extends StatefulWidget {
     required this.onUpdated,
   });
 
-  static const List<ColorIconType> iconList = [
-    ColorIconType.fastFood,
-    ColorIconType.ramen,
-    ColorIconType.home,
-    ColorIconType.furniture,
-    ColorIconType.appliance,
-    ColorIconType.birthday,
-    ColorIconType.shopping,
-    ColorIconType.car,
-    ColorIconType.bike,
-    ColorIconType.yoga,
-    ColorIconType.school,
-    ColorIconType.child,
-    ColorIconType.trip,
-    ColorIconType.saving,
+  static const List<IconType> iconList = [
+    IconType.fastFood,
+    IconType.ramen,
+    IconType.home,
+    IconType.furniture,
+    IconType.appliance,
+    IconType.birthday,
+    IconType.shopping,
+    IconType.car,
+    IconType.bike,
+    IconType.yoga,
+    IconType.school,
+    IconType.child,
+    IconType.trip,
+    IconType.saving,
   ];
 
-  final ColorIconType selectedIcon;
-  final void Function(ColorIconType) onUpdated;
+  final IconType selectedIcon;
+  final void Function(IconType) onUpdated;
 
   @override
   State<WalletIconSelector> createState() => _WalletIconSelectorState();
@@ -56,7 +56,7 @@ class _WalletIconSelectorState extends State<WalletIconSelector> {
                 isSelecting = true;
               });
             },
-            icon: ColorIcon.fromType(widget.selectedIcon),
+            icon: ColorIcon(iconType: widget.selectedIcon),
           ),
         ],
       );
@@ -107,9 +107,9 @@ class _WalletIconSelectorState extends State<WalletIconSelector> {
                                 Radius.circular(12),
                               ),
                             ),
-                            child: ColorIcon.fromType(icon),
+                            child: ColorIcon(iconType: icon),
                           )
-                        : ColorIcon.fromType(icon),
+                        : ColorIcon(iconType: icon),
                   ),
                 )
                 .toList(),
