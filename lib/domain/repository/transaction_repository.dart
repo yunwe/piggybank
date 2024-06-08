@@ -9,4 +9,6 @@ abstract class TransactionRepository {
   });
 
   Future<List<Transaction>> list(String walletId);
+
+  Future<double> sum(String userId, int month, int year);
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/route/route.dart';
 import 'package:piggybank/app/service/format_string.dart';
 import 'package:piggybank/domain/model/models.dart';
+import 'package:piggybank/presentation/controller/monthly_saving/monthly_saving_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import '../bloc/home_page_bloc.dart';
@@ -50,8 +51,6 @@ class _PageContent extends StatelessWidget {
                 _Header(
                   totalAmount: state.totalAmount,
                   walletCount: state.walletCount,
-                  totalSavedForCurrentMonth: state.totalSavedForCurrentMonth,
-                  totalSavedForLastMonth: state.totalSavedForLastMonth,
                 ),
                 const SizedBox(
                   height: 60,
@@ -98,15 +97,11 @@ class _Header extends StatelessWidget {
   const _Header({
     required this.walletCount,
     required this.totalAmount,
-    required this.totalSavedForCurrentMonth,
-    required this.totalSavedForLastMonth,
   });
 
   static const double _corner = 10;
   final int walletCount;
   final double totalAmount;
-  final double totalSavedForCurrentMonth;
-  final double totalSavedForLastMonth;
 
   @override
   Widget build(BuildContext context) {
@@ -169,40 +164,80 @@ class _Header extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _block(
-            context,
-            AppStrings.labelGoals,
-            walletCount.toString(),
+          Column(
+            children: [
+              Text(
+                AppStrings.labelGoals,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: MyColors.khakiD2,
+                    ),
+              ),
+              Text(
+                walletCount.toString(),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: MyColors.darkBlue,
+                    ),
+              ),
+            ],
           ),
-          _block(
-            context,
-            AppStrings.labelThisMonth,
-            '\$${(totalSavedForCurrentMonth).formatCurrency()}',
-          ),
-          _block(
-            context,
-            AppStrings.labelLastMonth,
-            '\$${(totalSavedForLastMonth).formatCurrency()}',
-          ),
+          const _TotalSavedForThisMonth(),
+          const _TotalSavedForLastMonth(),
         ],
       ),
     );
   }
+}
 
-  Widget _block(BuildContext context, String label, String vlaue) => Column(
+class _TotalSavedForThisMonth extends StatelessWidget {
+  const _TotalSavedForThisMonth();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MonthlySavingBloc, MonthlySavingState>(
+      buildWhen: (previous, current) => previous.thisMonth != current.thisMonth,
+      builder: (context, state) => Column(
         children: [
           Text(
-            label,
+            AppStrings.labelThisMonth,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color: MyColors.khakiD2,
                 ),
           ),
           Text(
-            vlaue,
+            '\$${state.thisMonth?.formatCurrency() ?? '-'}',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: MyColors.darkBlue,
                 ),
           ),
         ],
-      );
+      ),
+    );
+  }
+}
+
+class _TotalSavedForLastMonth extends StatelessWidget {
+  const _TotalSavedForLastMonth();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MonthlySavingBloc, MonthlySavingState>(
+      buildWhen: (previous, current) => previous.lastMonth != current.lastMonth,
+      builder: (context, state) => Column(
+        children: [
+          Text(
+            AppStrings.labelLastMonth,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: MyColors.khakiD2,
+                ),
+          ),
+          Text(
+            '\$${state.lastMonth?.formatCurrency() ?? '-'}',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: MyColors.darkBlue,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
 }

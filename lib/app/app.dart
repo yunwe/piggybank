@@ -6,7 +6,9 @@ import 'package:piggybank/domain/channels/user_channel.dart';
 import 'package:piggybank/domain/channels/wallets_channel.dart';
 import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
+import 'package:piggybank/domain/usecase/sum_transaction_usecase.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
+import 'package:piggybank/presentation/controller/monthly_saving/monthly_saving_bloc.dart';
 import 'package:piggybank/presentation/controller/wallets/wallets_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 
@@ -29,6 +31,11 @@ class App extends StatelessWidget {
           create: (context) => WalletsBloc(
             walletsChannel: injector<WalletsChannel>(),
             listWalletUseCase: injector<ListWalletUseCase>(),
+          ),
+        ),
+        BlocProvider<MonthlySavingBloc>(
+          create: (context) => MonthlySavingBloc(
+            sumTransactionUseCase: injector<SumTransactionUseCase>(),
           ),
         ),
       ],

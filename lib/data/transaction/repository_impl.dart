@@ -71,4 +71,46 @@ class FirebaseTransactionRepository implements TransactionRepository {
       }
     }
   }
+
+  //TODO: filter owner
+  @override
+  Future<double> sum(String userId, int month, int year) async {
+    bool isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      throw const ConnectionFailure();
+    }
+    try {
+      double startOfMonth = DateTime(year, month).millisecondsSinceEpoch.toDouble();
+      double endOfMonth = DateTime(year, month + 1).millisecondsSinceEpoch.toDouble();
+
+      //Retrieve from firestore
+      final snapShot = await _db
+          .collection(_collection)
+          .where(
+            CREATED_AT,
+            isGreaterThanOrEqualTo: startOfMonth,
+          )
+          .where(CREATED_AT, isLessThan: endOfMonth)
+          .get();
+
+      //Convert to Wallet Objects
+      List<domain.Transaction> result = [];
+      for (var docSnapshot in snapShot.docs) {
+        result.add(TransactionMapper.fromDocument(docSnapshot));
+      }
+
+      double sum = 0;
+      for (var transaction in result) {
+        sum += transaction.amount;
+      }
+
+      return sum;
+    } catch (e) {
+      if (e is FirebaseException) {
+        throw FirestoreFailure(e.message ?? 'Unknown failure occured.');
+      } else {
+        throw const FirestoreFailure();
+      }
+    }
+  }
 }

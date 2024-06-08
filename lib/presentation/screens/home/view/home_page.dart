@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/presentation/controller/app/bloc/app_bloc.dart';
+import 'package:piggybank/presentation/controller/monthly_saving/monthly_saving_bloc.dart';
 import 'package:piggybank/presentation/controller/wallets/wallets_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
@@ -19,6 +21,8 @@ class HomePage extends StatelessWidget {
         }
 
         context.read<WalletsBloc>().add(WalletsRequested(userId: appState.user.id));
+        context.read<MonthlySavingBloc>().add(MonthlySavingRequested(userId: appState.user.id));
+
         return BlocBuilder<WalletsBloc, WalletsState>(
           builder: (context, walletState) {
             switch (walletState.status) {

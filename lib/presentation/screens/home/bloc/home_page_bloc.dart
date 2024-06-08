@@ -28,18 +28,12 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     int walletCount = validWallets.length;
     double totalAmount = validWallets.fold(0, (previousValue, element) => previousValue + element.amount);
 
-    //TODO: new data to save
-    double totalSavedForCurrentMonth = 8900;
-    double totalSavedForLastMonth = 7800;
-
     emit(
       HomePageState(
         status: HomePageStatus.result,
         wallets: validWallets,
         walletCount: walletCount,
         totalAmount: totalAmount,
-        totalSavedForCurrentMonth: totalSavedForCurrentMonth,
-        totalSavedForLastMonth: totalSavedForLastMonth,
       ),
     );
   }

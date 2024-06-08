@@ -6,14 +6,7 @@ enum HomePageStatus {
 }
 
 class HomePageState extends Equatable {
-  const HomePageState({
-    required this.status,
-    required this.wallets,
-    required this.walletCount,
-    required this.totalAmount,
-    required this.totalSavedForCurrentMonth,
-    required this.totalSavedForLastMonth,
-  });
+  const HomePageState({required this.status, required this.wallets, required this.walletCount, required this.totalAmount});
 
   factory HomePageState.processing() {
     return const HomePageState(
@@ -21,8 +14,6 @@ class HomePageState extends Equatable {
       status: HomePageStatus.processing,
       walletCount: 0,
       totalAmount: 0,
-      totalSavedForCurrentMonth: 0,
-      totalSavedForLastMonth: 0,
     );
   }
 
@@ -31,8 +22,6 @@ class HomePageState extends Equatable {
 
   final int walletCount;
   final double totalAmount;
-  final double totalSavedForCurrentMonth;
-  final double totalSavedForLastMonth;
 
   @override
   List<Object?> get props => [wallets];

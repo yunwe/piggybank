@@ -18,6 +18,7 @@ import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
 import 'package:piggybank/domain/usecase/signup_usercase.dart';
+import 'package:piggybank/domain/usecase/sum_transaction_usecase.dart';
 import 'package:piggybank/domain/usecase/update_amount_usecase.dart';
 import 'package:piggybank/firebase_options.dart';
 
@@ -135,6 +136,13 @@ initListWalletModule() {
     injector.registerLazySingleton<ListWalletUseCase>(
       () => ListWalletUseCase(
         injector<WalletRepository>(),
+      ),
+    );
+  }
+  if (!GetIt.I.isRegistered<SumTransactionUseCase>()) {
+    injector.registerLazySingleton<SumTransactionUseCase>(
+      () => SumTransactionUseCase(
+        injector<TransactionRepository>(),
       ),
     );
   }
