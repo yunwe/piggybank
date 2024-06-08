@@ -4,6 +4,7 @@ final class NewWalletState extends Equatable {
   const NewWalletState({
     this.status = FormzSubmissionStatus.initial,
     this.goalName = const WalletName.pure(),
+    this.icon = ColorIconType.saving,
     this.targetAmount = const Amount.pure(),
     this.targetDate = const WalletTargetDate.pure(),
     this.setTarget = false,
@@ -13,6 +14,7 @@ final class NewWalletState extends Equatable {
 
   final FormzSubmissionStatus status;
   final WalletName goalName;
+  final ColorIconType icon;
   final Amount targetAmount;
   final WalletTargetDate targetDate;
   final bool setTarget;
@@ -22,6 +24,7 @@ final class NewWalletState extends Equatable {
   NewWalletState copyWith({
     FormzSubmissionStatus? status,
     WalletName? goalName,
+    ColorIconType? icon,
     Amount? targetAmount,
     WalletTargetDate? targetDate,
     bool? setTarget,
@@ -31,6 +34,7 @@ final class NewWalletState extends Equatable {
     return NewWalletState(
       status: status ?? this.status,
       goalName: goalName ?? this.goalName,
+      icon: icon ?? this.icon,
       targetAmount: targetAmount ?? this.targetAmount,
       targetDate: targetDate ?? this.targetDate,
       setTarget: setTarget ?? this.setTarget,
@@ -40,5 +44,6 @@ final class NewWalletState extends Equatable {
   }
 
   @override
-  List<Object> get props => [status, goalName, setTarget, targetAmount, targetDate, failure];
+  List<Object> get props =>
+      [status, goalName, icon, setTarget, targetAmount, targetDate, failure];
 }

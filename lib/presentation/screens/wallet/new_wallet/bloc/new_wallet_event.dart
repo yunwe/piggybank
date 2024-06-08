@@ -16,6 +16,15 @@ final class NewWalletGoalNameChanged extends NewWalletEvent {
   List<Object?> get props => [goalName];
 }
 
+final class NewWalletIconChanged extends NewWalletEvent {
+  final ColorIconType icon;
+
+  const NewWalletIconChanged({required this.icon});
+
+  @override
+  List<Object?> get props => [icon];
+}
+
 final class NewWalletTargetAmountChanged extends NewWalletEvent {
   final String targetAmount;
 

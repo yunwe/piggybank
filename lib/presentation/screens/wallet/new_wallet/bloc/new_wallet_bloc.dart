@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/create_wallet_usecase.dart';
+import 'package:piggybank/presentation/screens/common_widgets/color_icon.dart';
 import 'package:piggybank/presentation/screens/wallet/model/models.dart';
 
 part 'new_wallet_event.dart';
@@ -18,6 +19,7 @@ class NewWalletBloc extends Bloc<NewWalletEvent, NewWalletState> {
     on<NewWalletTargetAmountChanged>(_onTargetAmountChanged);
     on<NewWalletTargetDateChanged>(_onTargetDateChanged);
     on<NewWalletSubmitted>(_onNewWalletSubmitted);
+    on<NewWalletIconChanged>(_onIconChanged);
   }
 
   final CreateWalletUseCase _useCase;
@@ -53,6 +55,15 @@ class NewWalletBloc extends Bloc<NewWalletEvent, NewWalletState> {
         isValid: isValid,
       ),
     );
+  }
+
+  void _onIconChanged(
+    NewWalletIconChanged event,
+    Emitter<NewWalletState> emit,
+  ) {
+    final icon = event.icon;
+
+    emit(state.copyWith(icon: icon));
   }
 
   void _onTargetAmountChanged(
@@ -98,7 +109,8 @@ class NewWalletBloc extends Bloc<NewWalletEvent, NewWalletState> {
       CreateWalletUseCaseInput input = CreateWalletUseCaseInput(
         userId: userId,
         title: state.goalName.value,
-        targetAmount: state.setTarget ? double.parse(state.targetAmount.value) : null,
+        targetAmount:
+            state.setTarget ? double.parse(state.targetAmount.value) : null,
         targetDate: state.setTarget ? state.targetDate.value : null,
       );
       Either<Failure, void> value = await _useCase.execute(input);
