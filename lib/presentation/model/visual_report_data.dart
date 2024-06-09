@@ -61,10 +61,11 @@ class VisualReportData {
     if (totalDigit > 2) {
       power = totalDigit - 2;
       tempMaxY = (tempMaxY / (pow(10, power))).ceil();
-      if (tempMaxY > intervals.last * MAX_ROW) {
-        power += 1;
-        tempMaxY = (tempMaxY / (pow(10, power))).ceil();
-      }
+    }
+
+    if (tempMaxY > intervals.last * MAX_ROW) {
+      power = power + 1;
+      tempMaxY = (tempMaxY / (pow(10, power))).ceil();
     }
 
     for (var num in intervals) {
