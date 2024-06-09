@@ -10,8 +10,8 @@ final class MonthlySavingRequested extends MonthlySavingEvent {
   final String userId;
 }
 
-final class MonthlySavingUpdated extends MonthlySavingEvent {
-  const MonthlySavingUpdated({required this.userId});
+final class MonthlySavingThisMonthUpdated extends MonthlySavingEvent {
+  const MonthlySavingThisMonthUpdated({required this.amount});
 
-  final String userId;
+  final double amount;
 }

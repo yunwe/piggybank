@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/di.dart';
 import 'package:piggybank/app/route/route.dart';
+import 'package:piggybank/domain/channels/this_month_saving_channnel.dart';
 import 'package:piggybank/domain/channels/user_channel.dart';
 import 'package:piggybank/domain/channels/wallets_channel.dart';
 import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
@@ -36,6 +37,7 @@ class App extends StatelessWidget {
         BlocProvider<MonthlySavingBloc>(
           create: (context) => MonthlySavingBloc(
             sumTransactionUseCase: injector<SumTransactionUseCase>(),
+            thisMonthSavingChannel: injector<ThisMonthSavingChannel>(),
           ),
         ),
       ],

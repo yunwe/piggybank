@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:piggybank/presentation/controller/monthly_saving/monthly_saving_bloc.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import '../bloc/wallet_transaction_bloc.dart';
@@ -105,8 +106,7 @@ class _ModeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WalletTransactionBloc, WalletTransactionState>(
-        buildWhen: (previous, current) =>
-            previous.isWithdrawl != current.isWithdrawl,
+        buildWhen: (previous, current) => previous.isWithdrawl != current.isWithdrawl,
         builder: (context, state) {
           return TextButton.icon(
             onPressed: () {
@@ -119,9 +119,7 @@ class _ModeInput extends StatelessWidget {
               color: MyColors.khakiD2,
             ),
             label: Text(
-              state.isWithdrawl
-                  ? AppStrings.labelSaving
-                  : AppStrings.labelWithdrawl,
+              state.isWithdrawl ? AppStrings.labelSaving : AppStrings.labelWithdrawl,
               style: TextStyle(
                 color: MyColors.khakiD2,
               ),
@@ -142,14 +140,10 @@ class _SubmitButton extends StatelessWidget {
                 onPressed: state.isValid
                     ? () {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        context
-                            .read<WalletTransactionBloc>()
-                            .add(const WalletTransactionSubmitted());
+                        context.read<WalletTransactionBloc>().add(const WalletTransactionSubmitted());
                       }
                     : null,
-                label: state.isWithdrawl
-                    ? AppStrings.labelWithdrawlButton
-                    : AppStrings.labelSavingButton,
+                label: state.isWithdrawl ? AppStrings.labelWithdrawlButton : AppStrings.labelSavingButton,
               );
       },
     );

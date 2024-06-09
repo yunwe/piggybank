@@ -4,6 +4,7 @@ import 'package:piggybank/app/service/network_info.dart';
 import 'package:piggybank/data/auth/repository_impl.dart';
 import 'package:piggybank/data/transaction/repository_impl.dart';
 import 'package:piggybank/data/wallet/repository_impl.dart';
+import 'package:piggybank/domain/channels/this_month_saving_channnel.dart';
 import 'package:piggybank/domain/channels/user_channel.dart';
 import 'package:piggybank/domain/channels/wallets_channel.dart';
 import 'package:piggybank/domain/repository/auth_repository.dart';
@@ -46,6 +47,9 @@ Future<void> initAppModule() async {
   );
   injector.registerLazySingleton<WalletsChannel>(
     () => WalletsChannel(repository: injector<WalletRepository>()),
+  );
+  injector.registerLazySingleton<ThisMonthSavingChannel>(
+    () => ThisMonthSavingChannel(),
   );
 
   injector.registerLazySingleton<LogoutUseCase>(
@@ -127,6 +131,7 @@ initWalletTransactionModule() {
     injector.registerLazySingleton<UpdateAmountUseCase>(() => UpdateAmountUseCase(
           transactionRepository: injector<TransactionRepository>(),
           walletRepository: injector<WalletRepository>(),
+          thisMonthSavingChannel: injector<ThisMonthSavingChannel>(),
         ));
   }
 }
