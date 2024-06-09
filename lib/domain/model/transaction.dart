@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 class Transaction extends Equatable {
   final String id;
   final String walletId;
+  final String userId;
   final DateTime createdTime;
   final double amount;
   final double updatedBalance;
@@ -11,6 +12,7 @@ class Transaction extends Equatable {
   const Transaction({
     required this.id,
     required this.walletId,
+    required this.userId,
     required this.createdTime,
     required this.amount,
     required this.updatedBalance,
@@ -18,5 +20,5 @@ class Transaction extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, walletId, createdTime, amount, updatedBalance, remarks];
+  List<Object?> get props => [id, walletId, userId, createdTime, amount, updatedBalance, remarks];
 }

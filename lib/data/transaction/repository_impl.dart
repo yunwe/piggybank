@@ -27,6 +27,7 @@ class FirebaseTransactionRepository implements TransactionRepository {
     try {
       await _db.collection(_collection).add(TransactionMapper.toDocument(
             walletId: wallet.id,
+            userId: wallet.ownerId,
             amount: amount,
             updatedBalance: wallet.amount + amount,
             remark: remark,
@@ -72,7 +73,6 @@ class FirebaseTransactionRepository implements TransactionRepository {
     }
   }
 
-  //TODO: filter owner
   @override
   Future<double> sum(String userId, int month, int year) async {
     bool isConnected = await networkInfo.isConnected;
@@ -86,6 +86,10 @@ class FirebaseTransactionRepository implements TransactionRepository {
       //Retrieve from firestore
       final snapShot = await _db
           .collection(_collection)
+          .where(
+            USER_ID,
+            isEqualTo: userId,
+          )
           .where(
             CREATED_AT,
             isGreaterThanOrEqualTo: startOfMonth,

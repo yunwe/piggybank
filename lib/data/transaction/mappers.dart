@@ -6,6 +6,7 @@ import 'package:piggybank/domain/model/models.dart' as domain;
 
 const ID = 'id';
 const WALLET_ID = 'wallet_id';
+const USER_ID = 'user_id';
 const CREATED_AT = 'created_at';
 const AMOUNT = 'amount';
 const UPDATED_BALANCE = 'updated_balance';
@@ -17,6 +18,7 @@ class TransactionMapper with DataParser {
     return domain.Transaction(
       id: snapshot.id,
       walletId: data[WALLET_ID],
+      userId: data[USER_ID],
       createdTime: DataParser.toDateTime(data[CREATED_AT]),
       amount: DataParser.toDouble(data[AMOUNT]),
       updatedBalance: DataParser.toDouble(data[UPDATED_BALANCE]),
@@ -26,12 +28,14 @@ class TransactionMapper with DataParser {
 
   static Map<String, dynamic> toDocument({
     required String walletId,
+    required String userId,
     required double amount,
     required double updatedBalance,
     String? remark,
   }) {
     return <String, dynamic>{
       WALLET_ID: walletId,
+      USER_ID: userId,
       CREATED_AT: DataParser.currentTimestamp,
       AMOUNT: amount,
       UPDATED_BALANCE: updatedBalance,
