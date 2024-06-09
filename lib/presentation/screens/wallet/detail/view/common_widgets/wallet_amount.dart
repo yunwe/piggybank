@@ -17,17 +17,11 @@ class WalletAmout extends StatelessWidget {
           children: [
             Text(
               '\$${wallet.amount}',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: MyColors.hotPink),
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(color: MyColors.hotPink),
             ),
             Text(
-              AppStrings.labelTotal,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall!
-                  .copyWith(color: MyColors.khakiD2),
+              AppStrings.labelBalance,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(color: MyColors.khakiD2),
             ),
           ],
         ),

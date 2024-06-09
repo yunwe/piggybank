@@ -137,7 +137,7 @@ class _Header extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge!.copyWith(color: MyColors.hotPink),
         ),
         Text(
-          AppStrings.labelTotal,
+          AppStrings.labelBalance,
           style: Theme.of(context).textTheme.titleSmall!.copyWith(color: MyColors.darkBlue),
         ),
       ],
