@@ -195,22 +195,35 @@ class _TotalSavedForThisMonth extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MonthlySavingBloc, MonthlySavingState>(
       buildWhen: (previous, current) => previous.thisMonth != current.thisMonth,
-      builder: (context, state) => Column(
-        children: [
-          Text(
-            AppStrings.labelThisMonth,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: MyColors.khakiD2,
-                ),
-          ),
-          Text(
-            state.thisMonth == null ? '-' : '\$${state.thisMonth!.formatCurrency()}',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: MyColors.darkBlue,
-                ),
-          ),
-        ],
-      ),
+      builder: (context, state) {
+        String displayText = '-';
+        Color color = MyColors.darkBlue;
+        if (state.thisMonth != null) {
+          if (state.thisMonth! < 0) {
+            displayText = '-\$${state.thisMonth!.abs().formatCurrency()}';
+            color = Colors.red;
+          } else {
+            displayText = '\$${state.thisMonth!.formatCurrency()}';
+          }
+        }
+
+        return Column(
+          children: [
+            Text(
+              AppStrings.labelThisMonth,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: MyColors.khakiD2,
+                  ),
+            ),
+            Text(
+              displayText,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: color,
+                  ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -222,22 +235,34 @@ class _TotalSavedForLastMonth extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MonthlySavingBloc, MonthlySavingState>(
       buildWhen: (previous, current) => previous.lastMonth != current.lastMonth,
-      builder: (context, state) => Column(
-        children: [
-          Text(
-            AppStrings.labelLastMonth,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: MyColors.khakiD2,
-                ),
-          ),
-          Text(
-            state.lastMonth == null ? '-' : '\$${state.lastMonth!.formatCurrency()}',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: MyColors.darkBlue,
-                ),
-          ),
-        ],
-      ),
+      builder: (context, state) {
+        String displayText = '...';
+        Color color = MyColors.darkBlue;
+        if (state.lastMonth != null) {
+          if (state.lastMonth! < 0) {
+            displayText = '-\$${state.lastMonth!.abs().formatCurrency()}';
+            color = Colors.red;
+          } else {
+            displayText = '\$${state.lastMonth!.formatCurrency()}';
+          }
+        }
+        return Column(
+          children: [
+            Text(
+              AppStrings.labelLastMonth,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: MyColors.khakiD2,
+                  ),
+            ),
+            Text(
+              displayText,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: color,
+                  ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
