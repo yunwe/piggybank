@@ -65,7 +65,7 @@ class VisualReportData {
 
     if (tempMaxY > intervals.last * MAX_ROW) {
       power = power + 1;
-      tempMaxY = (tempMaxY / (pow(10, power))).ceil();
+      tempMaxY = (tempMaxY / 10).ceil();
     }
 
     for (var num in intervals) {
