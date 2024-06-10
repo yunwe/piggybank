@@ -13,6 +13,7 @@ class ListTransactionUseCase implements BaseUseCase<ListTransactionUseCaseInput,
   Future<Either<Failure, List<Transaction>>> execute(ListTransactionUseCaseInput input) async {
     try {
       final transactions = await _repository.list(input.walletId);
+      transactions.sort((a, b) => b.createdTime.compareTo(a.createdTime));
       return Right(transactions);
     } on BaseException catch (failure) {
       return Left(failure.toFailure);

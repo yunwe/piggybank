@@ -81,7 +81,7 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
         amount: transactionAmount * sign,
         remark: remark,
       );
-      Either<Failure, void> value = await _updateUseCase.execute(input);
+      Either<Failure, Wallet> value = await _updateUseCase.execute(input);
       if (value.isLeft) {
         emit(state.copyWith(
           status: FormzSubmissionStatus.failure,
@@ -92,6 +92,7 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
 
         emit(state.copyWith(
           status: FormzSubmissionStatus.success,
+          wallet: value.right,
           amount: const Amount.pure(),
           remark: const Remark.pure(),
           message: message.format([state.amount.value, wallet.title]),

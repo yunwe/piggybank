@@ -19,7 +19,7 @@ class UpdateAmountUseCase implements BaseUseCase<UpdateAmountUseCaseInput, void>
   });
 
   @override
-  Future<Either<Failure, void>> execute(UpdateAmountUseCaseInput input) async {
+  Future<Either<Failure, Wallet>> execute(UpdateAmountUseCaseInput input) async {
     try {
       Wallet? wallet = walletRepository.getFromCache(input.walletId);
       if (wallet == null) {
@@ -43,7 +43,7 @@ class UpdateAmountUseCase implements BaseUseCase<UpdateAmountUseCaseInput, void>
       final value = await transactionRepository.sum(wallet.ownerId, DateTime.now().month, DateTime.now().year);
       thisMonthSavingChannel.broadcast(value);
 
-      return const Right(null);
+      return Right(wallet.copyWith(amount: wallet.amount + input.amount));
     } on BaseException catch (failure) {
       return Left(failure.toFailure);
     } catch (error) {

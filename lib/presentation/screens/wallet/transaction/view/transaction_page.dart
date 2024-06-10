@@ -11,9 +11,12 @@ import 'view.dart';
 class TransactionPage extends StatelessWidget {
   const TransactionPage({super.key});
 
-  static void show(BuildContext context, Wallet wallet) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
+  static Future<Wallet?> show(BuildContext context, Wallet wallet) async {
+    //If the updated wallet is not return,
+    //the wallet detail page will have to get it from cache,
+    //the cache might not be updated yet.
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute<Wallet>(
         fullscreenDialog: true,
         builder: (context) => BlocProvider(
           create: (context) => WalletTransactionBloc(
@@ -24,6 +27,8 @@ class TransactionPage extends StatelessWidget {
         ),
       ),
     );
+
+    return result;
   }
 
   @override
@@ -38,7 +43,7 @@ class TransactionPage extends StatelessWidget {
             );
         }
         if (state.status.isSuccess) {
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(state.wallet);
 
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()

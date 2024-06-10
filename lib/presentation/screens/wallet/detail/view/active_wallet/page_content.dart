@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
+import 'package:piggybank/presentation/screens/wallet/detail/bloc/wallet_detail_bloc.dart';
 import 'package:piggybank/presentation/screens/wallet/transaction/view/view.dart';
 import '../common_widgets/widgets.dart';
 import 'view.dart';
@@ -37,8 +39,15 @@ class PageContent extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: MyColors.khakiD1,
-        onPressed: () {
-          TransactionPage.show(context, wallet);
+        onPressed: () async {
+          Wallet? updatedWallet = await TransactionPage.show(context, wallet);
+          if (updatedWallet == null) {
+            return;
+          }
+
+          if (context.mounted) {
+            context.read<WalletDetailBloc>().add(WalletDetailWalletUpdated(wallet: updatedWallet));
+          }
         },
         shape: const CircleBorder(),
         child: const Icon(Icons.add),

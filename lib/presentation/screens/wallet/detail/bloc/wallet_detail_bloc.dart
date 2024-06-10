@@ -23,9 +23,10 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
         _archiveUseCase = archiveUseCase,
         _deleteUseCase = deleteUseCase,
         super(const WalletDetialState(status: DetailPageStatus.processing)) {
+    on<WalletDetailPageInitialzed>(_onPageInitialzed);
+    on<WalletDetailWalletUpdated>(_onWalletUpdated);
     on<WalletDetailArchiveRequested>(_onArchiveRequested);
     on<WalletDetailDeleteRequested>(_onDeleteRequested);
-    on<WalletDetailPageInitialzed>(_onPageInitialzed);
     on<WalletDetailTargetDateReached>(_onTargetDateReached);
     on<WalletDetailTargetAmountReached>(_onTargetAmountReached);
   }
@@ -53,14 +54,35 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
       return emit(state.copyWith(status: DetailPageStatus.fail, failure: transactionsValue.left));
     }
 
-    List<Transaction> transactions = transactionsValue.right;
-    transactions.sort((a, b) => b.createdTime.compareTo(a.createdTime));
-
     //Success State
     return emit(WalletDetialState(
       status: DetailPageStatus.pure,
       wallet: walletValue.right,
-      transactions: transactions,
+      transactions: transactionsValue.right,
+    ));
+  }
+
+  void _onWalletUpdated(
+    WalletDetailWalletUpdated event,
+    Emitter<WalletDetialState> emit,
+  ) async {
+    //Get Transactions
+    Either<Failure, List<Transaction>> transactionsValue = await _listTransactionUseCase.execute(
+      ListTransactionUseCaseInput(event.wallet.id),
+    );
+    if (transactionsValue.isLeft) {
+      return emit(
+        state.copyWith(status: DetailPageStatus.fail, failure: transactionsValue.left),
+      );
+    }
+
+    //If the updated wallet is not get from event,
+    //have to get it from cache,
+    //the cache might not be updated yet.
+    return emit(WalletDetialState(
+      status: DetailPageStatus.pure,
+      wallet: event.wallet,
+      transactions: transactionsValue.right,
     ));
   }
 

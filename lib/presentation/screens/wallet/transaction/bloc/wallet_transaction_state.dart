@@ -23,6 +23,7 @@ final class WalletTransactionState extends Equatable {
 
   WalletTransactionState copyWith({
     FormzSubmissionStatus? status,
+    Wallet? wallet,
     Amount? amount,
     Remark? remark,
     bool? isWithdrawl,
@@ -38,7 +39,7 @@ final class WalletTransactionState extends Equatable {
       isValid: isValid ?? this.isValid,
       failure: failure ?? Failure.empty,
       message: message,
-      wallet: wallet,
+      wallet: wallet ?? this.wallet,
     );
   }
 
