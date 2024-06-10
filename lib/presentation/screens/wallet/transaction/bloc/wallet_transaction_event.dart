@@ -7,15 +7,6 @@ sealed class WalletTransactionEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class WalletTransactionPageInitialized extends WalletTransactionEvent {
-  const WalletTransactionPageInitialized(this.walletId);
-
-  final String walletId;
-
-  @override
-  List<Object> get props => [walletId];
-}
-
 final class WalletTransactionAmountChanged extends WalletTransactionEvent {
   const WalletTransactionAmountChanged(this.amount);
 

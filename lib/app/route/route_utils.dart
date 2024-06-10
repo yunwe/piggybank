@@ -6,7 +6,6 @@ enum PAGES {
   walletList,
   walletDetail,
   walletNew,
-  walletTransaction,
   archivedWalletList,
   error,
 }
@@ -20,8 +19,6 @@ extension AppPageExtension on PAGES {
         return "/wallet/:id";
       case PAGES.walletNew:
         return "/new";
-      case PAGES.walletTransaction:
-        return "/transaction/:wallet";
       case PAGES.archivedWalletList:
         return "/archived";
       case PAGES.onboarding:
@@ -46,8 +43,6 @@ extension AppPageExtension on PAGES {
         return "DETAIL";
       case PAGES.walletNew:
         return "NEW";
-      case PAGES.walletTransaction:
-        return "TRANSACTION";
       case PAGES.archivedWalletList:
         return "ARCHIVED";
       case PAGES.onboarding:

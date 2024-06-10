@@ -34,8 +34,7 @@ class TransactionsList extends StatelessWidget {
                 const Spacing.h8(),
                 Expanded(
                   child: ListView.builder(
-                    itemBuilder: (context, index) =>
-                        _TransactionItem(transactions[index]),
+                    itemBuilder: (context, index) => _TransactionItem(transactions[index]),
                     itemCount: transactions.length,
                   ),
                 ),
@@ -56,10 +55,8 @@ class _TransactionItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            block(context, transaction.amount.toString(),
-                transaction.createdTime.format()),
-            block(context, transaction.updatedBalance.toString(),
-                AppStrings.labelBalance),
+            block(context, transaction.amount.toString(), transaction.createdTime.format()),
+            block(context, transaction.updatedBalance.toString(), AppStrings.labelBalance),
             if (transaction.amount < 0)
               const Icon(
                 Icons.arrow_drop_down,
@@ -74,8 +71,7 @@ class _TransactionItem extends StatelessWidget {
               ),
           ],
         ),
-        if (transaction.remarks != null && transaction.remarks!.trim() != '')
-          remark(transaction.remarks!),
+        if (transaction.remarks != null && transaction.remarks!.trim() != '') remark(transaction.remarks!),
         const Spacing.h12(),
       ],
     );

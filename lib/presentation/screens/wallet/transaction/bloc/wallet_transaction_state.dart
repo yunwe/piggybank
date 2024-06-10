@@ -2,7 +2,7 @@ part of 'wallet_transaction_bloc.dart';
 
 final class WalletTransactionState extends Equatable {
   const WalletTransactionState({
-    this.wallet,
+    required this.wallet,
     this.status = FormzSubmissionStatus.initial,
     this.amount = const Amount.pure(),
     this.remark = const Remark.pure(),
@@ -12,7 +12,7 @@ final class WalletTransactionState extends Equatable {
     this.message,
   });
 
-  final Wallet? wallet;
+  final Wallet wallet;
   final FormzSubmissionStatus status;
   final Amount amount;
   final Remark remark;

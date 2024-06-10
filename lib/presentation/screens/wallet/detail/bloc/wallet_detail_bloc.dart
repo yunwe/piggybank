@@ -39,7 +39,7 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
     WalletDetailPageInitialzed event,
     Emitter<WalletDetialState> emit,
   ) async {
-    emit(const WalletDetialState(status: DetailPageStatus.processing));
+    emit(WalletDetialState(status: DetailPageStatus.processing, wallet: state.wallet));
 
     //Get Wallet
     Either<Failure, Wallet?> walletValue = await _getWalletUseCase.execute(GetWalletUseCaseInput(event.walletId));
@@ -49,7 +49,7 @@ class WalletDetailBloc extends Bloc<WalletDetailEvent, WalletDetialState> {
 
     //Get Transactions
     Either<Failure, List<Transaction>> transactionsValue = await _listTransactionUseCase.execute(ListTransactionUseCaseInput(event.walletId));
-    if (walletValue.isLeft) {
+    if (transactionsValue.isLeft) {
       return emit(state.copyWith(status: DetailPageStatus.fail, failure: transactionsValue.left));
     }
 

@@ -54,12 +54,7 @@ class _Title extends StatelessWidget {
     return BlocBuilder<WalletTransactionBloc, WalletTransactionState>(
         buildWhen: (previous, current) => previous.wallet != current.wallet,
         builder: (context, state) {
-          if (state.wallet == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Text(state.wallet!.title);
+          return Text(state.wallet.title);
         });
   }
 }

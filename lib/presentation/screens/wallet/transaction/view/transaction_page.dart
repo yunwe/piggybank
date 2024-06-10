@@ -2,40 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/app/di.dart';
-import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
+import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/domain/usecase/update_amount_usecase.dart';
 import '../bloc/wallet_transaction_bloc.dart';
 import 'view.dart';
 
+// Call from Wallet Detial Page
 class TransactionPage extends StatelessWidget {
-  const TransactionPage({
-    super.key,
-    required this.walletId,
-  });
+  const TransactionPage({super.key});
 
-  final String walletId;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => WalletTransactionBloc(
-        updateUseCase: injector<UpdateAmountUseCase>(),
-        getUseCase: injector<GetWalletUseCase>(),
+  static void show(BuildContext context, Wallet wallet) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (context) => BlocProvider(
+          create: (context) => WalletTransactionBloc(
+            wallet: wallet,
+            updateUseCase: injector<UpdateAmountUseCase>(),
+          ),
+          child: const TransactionPage(),
+        ),
       ),
-      child: _Page(walletId),
     );
   }
-}
-
-class _Page extends StatelessWidget {
-  const _Page(this.walletId);
-
-  final String walletId;
 
   @override
   Widget build(BuildContext context) {
-    context.read<WalletTransactionBloc>().add(WalletTransactionPageInitialized(walletId));
-
     return BlocListener<WalletTransactionBloc, WalletTransactionState>(
       listener: (context, state) {
         if (state.status.isFailure) {
@@ -46,6 +38,8 @@ class _Page extends StatelessWidget {
             );
         }
         if (state.status.isSuccess) {
+          Navigator.of(context).pop();
+
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(

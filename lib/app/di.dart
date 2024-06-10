@@ -117,16 +117,7 @@ initDetailWalletModule() {
       ),
     );
   }
-}
 
-initWalletTransactionModule() {
-  if (!GetIt.I.isRegistered<GetWalletUseCase>()) {
-    injector.registerLazySingleton<GetWalletUseCase>(
-      () => GetWalletUseCase(
-        injector<WalletRepository>(),
-      ),
-    );
-  }
   if (!GetIt.I.isRegistered<UpdateAmountUseCase>()) {
     injector.registerLazySingleton<UpdateAmountUseCase>(() => UpdateAmountUseCase(
           transactionRepository: injector<TransactionRepository>(),

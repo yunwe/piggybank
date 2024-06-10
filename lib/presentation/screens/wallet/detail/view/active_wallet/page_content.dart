@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:piggybank/app/route/route.dart';
 import 'package:piggybank/domain/model/models.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
+import 'package:piggybank/presentation/screens/wallet/transaction/view/view.dart';
 import '../common_widgets/widgets.dart';
 import 'view.dart';
 
@@ -28,9 +28,7 @@ class PageContent extends StatelessWidget {
           Column(
             children: [
               WalletAmout(wallet),
-              wallet.targetEndDate == null
-                  ? WalletReport(wallet: wallet)
-                  : TargetWalletReport(wallet: wallet),
+              wallet.targetEndDate == null ? WalletReport(wallet: wallet) : TargetWalletReport(wallet: wallet),
               VisualReport(wallet: wallet, transactions: transactions),
             ],
           ),
@@ -40,10 +38,7 @@ class PageContent extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: MyColors.khakiD1,
         onPressed: () {
-          AppRouter.router.pushNamed(
-            PAGES.walletTransaction.screenName,
-            pathParameters: {'wallet': wallet.id},
-          );
+          TransactionPage.show(context, wallet);
         },
         shape: const CircleBorder(),
         child: const Icon(Icons.add),

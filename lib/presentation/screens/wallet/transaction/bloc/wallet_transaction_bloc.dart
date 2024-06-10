@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/app/service/format_string.dart';
 import 'package:piggybank/domain/model/models.dart';
-import 'package:piggybank/domain/usecase/get_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/update_amount_usecase.dart';
 import 'package:piggybank/presentation/resources/app_strings.dart';
 import 'package:piggybank/presentation/screens/wallet/model/models.dart';
@@ -14,12 +13,10 @@ part 'wallet_transaction_state.dart';
 
 class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransactionState> {
   WalletTransactionBloc({
+    required Wallet wallet,
     required UpdateAmountUseCase updateUseCase,
-    required GetWalletUseCase getUseCase,
-  })  : _getUseCase = getUseCase,
-        _updateUseCase = updateUseCase,
-        super(const WalletTransactionState()) {
-    on<WalletTransactionPageInitialized>(_onPageInitialized);
+  })  : _updateUseCase = updateUseCase,
+        super(WalletTransactionState(wallet: wallet)) {
     on<WalletTransactionAmountChanged>(_onAmountChanged);
     on<WalletTransactionRemarkChanged>(_onRemarkChanged);
     on<WalletTransactionModeChanged>(_onModeChanged);
@@ -27,21 +24,6 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
   }
 
   final UpdateAmountUseCase _updateUseCase;
-  final GetWalletUseCase _getUseCase;
-
-  void _onPageInitialized(
-    WalletTransactionPageInitialized event,
-    Emitter<WalletTransactionState> emit,
-  ) async {
-    Either<Failure, Wallet?> value = await _getUseCase.execute(GetWalletUseCaseInput(event.walletId));
-
-    if (value.isLeft) {
-      emit(state.copyWith(failure: value.left));
-    } else {
-      return emit(WalletTransactionState(wallet: value.right));
-    }
-  }
-
   void _onAmountChanged(
     WalletTransactionAmountChanged event,
     Emitter<WalletTransactionState> emit,
@@ -78,11 +60,7 @@ class WalletTransactionBloc extends Bloc<WalletTransactionEvent, WalletTransacti
     WalletTransactionSubmitted event,
     Emitter<WalletTransactionState> emit,
   ) async {
-    if (state.wallet == null) {
-      return;
-    }
-
-    Wallet wallet = state.wallet!;
+    Wallet wallet = state.wallet;
 
     if (state.isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
