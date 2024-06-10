@@ -16,6 +16,7 @@ class HomePageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
+      clipBehavior: Clip.hardEdge,
       child: ListTile(
         leading: icon(wallet),
         title: Text(
@@ -43,7 +44,8 @@ class HomePageItem extends StatelessWidget {
     }
 
     bool isValidIcon = wallet.icon >= 0 && wallet.icon < IconType.values.length;
-    IconType type = isValidIcon ? IconType.values[wallet.icon] : IconType.saving;
+    IconType type =
+        isValidIcon ? IconType.values[wallet.icon] : IconType.saving;
 
     return ColorIcon(
       iconType: type,

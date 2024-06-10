@@ -39,7 +39,8 @@ class _PageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ArchivePageBloc>().add(ArchivePageWalletsChanged(wallets));
 
-    return BlocBuilder<ArchivePageBloc, ArchivePageState>(builder: (context, state) {
+    return BlocBuilder<ArchivePageBloc, ArchivePageState>(
+        builder: (context, state) {
       List<Wallet> filteredWallets = state.wallets;
 
       return filteredWallets.isEmpty
@@ -76,6 +77,7 @@ class _Item extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: MyColors.khaki,
+      clipBehavior: Clip.hardEdge,
       child: ListTile(
         leading: icon(wallet),
         title: Text(
@@ -105,7 +107,9 @@ class _Item extends StatelessWidget {
     if (wallet.targetEndDate == null) {
       return const ColorIcon(iconType: IconType.saving);
     } else {
-      return wallet.isTargetAmountReached ? const ColorIcon(iconType: IconType.success) : const ColorIcon(iconType: IconType.failed);
+      return wallet.isTargetAmountReached
+          ? const ColorIcon(iconType: IconType.success)
+          : const ColorIcon(iconType: IconType.failed);
     }
   }
 
