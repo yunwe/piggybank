@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:piggybank/app/di.dart';
+import 'package:piggybank/presentation/screens/auth/recover/recover.dart';
 import 'package:piggybank/presentation/screens/home/home.dart';
 import 'package:piggybank/presentation/screens/auth/login/login.dart';
 import 'package:piggybank/presentation/screens/auth/register/register.dart';
@@ -67,7 +68,10 @@ class AppRouter {
       GoRoute(
         path: PAGES.forgotPassword.screenPath,
         name: PAGES.forgotPassword.screenName,
-        //  builder: (context, state) => const ForgetPasswordView(),
+        builder: (context, state) {
+          initResetPasswordModule();
+          return const RecoverView();
+        },
       ),
       GoRoute(
         path: PAGES.onboarding.screenPath,

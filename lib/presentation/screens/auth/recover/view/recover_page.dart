@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piggybank/app/di.dart';
 import 'package:piggybank/app/route/route_utils.dart';
-import 'package:piggybank/domain/usecase/signup_usercase.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
+import 'package:piggybank/presentation/screens/auth/recover/bloc/recover_bloc.dart';
+import 'package:piggybank/presentation/screens/auth/recover/view/recover_form.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
-import '../bloc/register_bloc.dart';
-import 'view.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+class RecoverView extends StatelessWidget {
+  const RecoverView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +19,10 @@ class RegisterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BlocProvider(
-              create: (context) => RegisterBloc(
-                useCase: injector<SignupUseCase>(),
+              create: (context) => RecoverBloc(
+                useCase: injector(),
               ),
-              child: const RegisterForm(),
+              child: const RecoverForm(),
             ),
             const Divider(),
             const LinkText(

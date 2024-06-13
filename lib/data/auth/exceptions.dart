@@ -46,7 +46,8 @@ class SignUpWithEmailAndPasswordFailure extends BaseException {
 /// {@endtemplate}
 class LogInWithEmailAndPasswordFailure extends BaseException {
   /// {@macro log_in_with_email_and_password_failure}
-  const LogInWithEmailAndPasswordFailure([super.message = 'An unknown exception occurred.']);
+  const LogInWithEmailAndPasswordFailure(
+      [super.message = 'An unknown exception occurred.']);
 
   /// Create an authentication message
   /// from a firebase authentication exception code.
@@ -74,4 +75,31 @@ class LogInWithEmailAndPasswordFailure extends BaseException {
 /// Thrown during the logout process if a failure occurs.
 class LogOutFailure extends BaseException {
   const LogOutFailure([super.message = 'An unknown exception occurred.']);
+}
+
+class ResetPasswordFailure extends BaseException {
+  /// {@macro log_in_with_email_and_password_failure}
+  const ResetPasswordFailure(
+      [super.message = 'An unknown reset password exception occurred.']);
+
+  /// Create an authentication message
+  /// from a firebase authentication exception code.
+  factory ResetPasswordFailure.fromCode(String code) {
+    switch (code) {
+      case 'invalid-email':
+        return const ResetPasswordFailure(
+          'Email is not valid or badly formatted.',
+        );
+      case 'user-disabled':
+        return const ResetPasswordFailure(
+          'This user has been disabled. Please contact support for help.',
+        );
+      case 'user-not-found':
+        return const ResetPasswordFailure(
+          'There is no user corresponding to this email.',
+        );
+      default:
+        return const ResetPasswordFailure();
+    }
+  }
 }

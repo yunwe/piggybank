@@ -99,4 +99,18 @@ class FirebaseAuthRepository extends AuthRepository {
       throw const LogOutFailure();
     }
   }
+
+  @override
+  Future<void> resetPassword({required String email}) async {
+    bool isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      throw const ConnectionFailure();
+    }
+
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (_) {
+      throw const ResetPasswordFailure();
+    }
+  }
 }

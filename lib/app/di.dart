@@ -18,6 +18,7 @@ import 'package:piggybank/domain/usecase/list_transaction_usecase.dart';
 import 'package:piggybank/domain/usecase/list_wallet_usecase.dart';
 import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/domain/usecase/logout_usecase.dart';
+import 'package:piggybank/domain/usecase/reset_passwrod_usecase.dart';
 import 'package:piggybank/domain/usecase/signup_usercase.dart';
 import 'package:piggybank/domain/usecase/sum_transaction_usecase.dart';
 import 'package:piggybank/domain/usecase/update_amount_usecase.dart';
@@ -75,6 +76,14 @@ initSignupModule() {
   }
 }
 
+initResetPasswordModule() {
+  if (!GetIt.I.isRegistered<ResetPasswordUseCase>()) {
+    injector.registerLazySingleton<ResetPasswordUseCase>(
+      () => ResetPasswordUseCase(injector<AuthRepository>()),
+    );
+  }
+}
+
 initCreateWalletModule() {
   if (!GetIt.I.isRegistered<CreateWalletUseCase>()) {
     injector.registerLazySingleton<CreateWalletUseCase>(
@@ -119,11 +128,12 @@ initDetailWalletModule() {
   }
 
   if (!GetIt.I.isRegistered<UpdateAmountUseCase>()) {
-    injector.registerLazySingleton<UpdateAmountUseCase>(() => UpdateAmountUseCase(
-          transactionRepository: injector<TransactionRepository>(),
-          walletRepository: injector<WalletRepository>(),
-          thisMonthSavingChannel: injector<ThisMonthSavingChannel>(),
-        ));
+    injector
+        .registerLazySingleton<UpdateAmountUseCase>(() => UpdateAmountUseCase(
+              transactionRepository: injector<TransactionRepository>(),
+              walletRepository: injector<WalletRepository>(),
+              thisMonthSavingChannel: injector<ThisMonthSavingChannel>(),
+            ));
   }
 }
 
