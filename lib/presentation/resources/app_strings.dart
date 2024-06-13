@@ -9,7 +9,8 @@ class AppStrings {
   static const String signinText = "Already have an account? Log In";
   static const String titleSignin = "Sign In";
   static const String titleRegister = "Sign Up";
-  static const String titleForgotPw = "Reset Password";
+  static const String forgotPw =
+      "Don't worry. \nEnter your email and we'll send you a link to reset your password.";
   static const String titleHome = "My Savings";
   static const String hintUserName = "Username";
   static const String hintPw = "Password";
@@ -19,10 +20,13 @@ class AppStrings {
   static const String labelLogout = "Log Out";
   static const String labelSignup = "Sign up";
   static const String labelReset = "Send a reset email.";
-  static const String errorInvalidPassword = 'Password must be at least 8 characters and contain at least one letter and number';
+  static const String errorInvalidPassword =
+      'Password must be at least 8 characters and contain at least one letter and number';
   static const String errorEmptyPassword = 'Please enter a password';
-  static const String errorShortUsername = 'Username must be at least 4 characters.';
-  static const String errorLongUsername = 'Username must not be more than 30 characters.';
+  static const String errorShortUsername =
+      'Username must be at least 4 characters.';
+  static const String errorLongUsername =
+      'Username must not be more than 30 characters.';
   static const String errorEmptyUsername = 'Username must not be empty';
   static const String errorMismatch = 'Passwords do not match.';
 
@@ -31,9 +35,12 @@ class AppStrings {
   static const String onBoardingTitle2 = 'Track your savings';
   static const String onBoardingTitle3 = 'Achieve your goals';
 
-  static const String onBoardingSubtitle1 = 'Start your journey to financial freedom with SaveUp';
-  static const String onBoardingSubtitle2 = 'Easily monitor your savings and set achievable goals';
-  static const String onBoardingSubtitle3 = 'Reach your financial milestones and secure your future';
+  static const String onBoardingSubtitle1 =
+      'Start your journey to financial freedom with SaveUp';
+  static const String onBoardingSubtitle2 =
+      'Easily monitor your savings and set achievable goals';
+  static const String onBoardingSubtitle3 =
+      'Reach your financial milestones and secure your future';
 
   static const String skip = 'Skip';
 
@@ -56,7 +63,8 @@ class AppStrings {
   static const String errorLessThanZero = 'Input must be larger than zero.';
 
   static const String errorShortWalletname = 'Must be at least 4 characters.';
-  static const String errorLongWalletname = 'Must not be more than 30 characters.';
+  static const String errorLongWalletname =
+      'Must not be more than 30 characters.';
   static const String errorInvalidTargetDate = 'Must be within 3 years.';
   static const String errorLongRemark = 'Must not be more than 35 characters.';
 
@@ -68,10 +76,12 @@ class AppStrings {
   static const String hintRemark = 'Remark';
 
   static const String titleConfirmArchive = 'Archive';
-  static const String contentConfirmArchive = 'Archived wallet can no longer be editable.\n'
+  static const String contentConfirmArchive =
+      'Archived wallet can no longer be editable.\n'
       'But, you can still view it in the archived list.';
   static const String titleConfirmDelete = 'Delete';
-  static const String contentConfirmDelete = 'Deleted wallet can no longer be accessible';
+  static const String contentConfirmDelete =
+      'Deleted wallet can no longer be accessible';
   static const String labelArchive = 'Archive';
   static const String labelDelete = 'Delete';
 
@@ -80,7 +90,8 @@ class AppStrings {
 
   static const String titleError = 'Error';
   static const String labelBackToHome = 'Back to Home';
-  static const String messageWalletArchived = '\'%1\$\' is successfully archived.';
+  static const String messageWalletArchived =
+      '\'%1\$\' is successfully archived.';
 
   static const String messageCreateWallet = 'Create your financial goal.';
 
@@ -92,7 +103,8 @@ class AppStrings {
   static const String labelSavingButton = 'Save Up';
 
   static const String titleUpdate = 'Update';
-  static const String messageExceedingFund = 'Withdrawl amount is exceeding saving fund.';
+  static const String messageExceedingFund =
+      'Withdrawl amount is exceeding saving fund.';
   static const String messageWithdrawn = '\'%1\$\' is withdrawn from \'%2\$\'.';
   static const String messageAddedFund = '\'%1\$\' is added to  \'%2\$\'.';
   static const String labelBalance = 'Balance';
@@ -116,6 +128,8 @@ class AppStrings {
   static const String savedPercent = 'Saved %1\$% of your target.';
   static const String targetAmt = 'Target amount was \$%1\$.';
   static const String titleTargetReached = 'Move to Archive';
-  static const String targetDateReached = 'Target date has reached.\nYou can no longer add new transactions to this goal.';
-  static const String targetAmountReached = 'Congratulations.\nYou have achieved saving goal for \'%1\$\'.';
+  static const String targetDateReached =
+      'Target date has reached.\nYou can no longer add new transactions to this goal.';
+  static const String targetAmountReached =
+      'Congratulations.\nYou have achieved saving goal for \'%1\$\'.';
 }

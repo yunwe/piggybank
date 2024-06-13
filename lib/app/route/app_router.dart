@@ -15,7 +15,7 @@ class AppRouter {
   static final GoRouter _router = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
-    initialLocation: PAGES.onboarding.screenPath,
+    initialLocation: PAGES.signin.screenPath,
     routes: [
       GoRoute(
         path: PAGES.walletList.screenPath,
@@ -63,6 +63,11 @@ class AppRouter {
           initSignupModule();
           return const RegisterPage();
         },
+      ),
+      GoRoute(
+        path: PAGES.forgotPassword.screenPath,
+        name: PAGES.forgotPassword.screenName,
+        //  builder: (context, state) => const ForgetPasswordView(),
       ),
       GoRoute(
         path: PAGES.onboarding.screenPath,

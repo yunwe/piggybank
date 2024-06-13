@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:piggybank/presentation/resources/colors.dart';
 
 class MessageBox {
   static Future<void> showInformation(BuildContext context, String title,
