@@ -27,6 +27,7 @@ class MyTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hint,
         errorText: errorText,
+        errorMaxLines: 2,
         prefixIcon: Icon(
           icon,
           size: AppSize.iconSize,

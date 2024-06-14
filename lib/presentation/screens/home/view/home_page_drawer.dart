@@ -72,15 +72,15 @@ class HomePageDrawer extends StatelessWidget {
               context.read<AppBloc>().add(const AppLogoutRequested());
             },
           ),
-          const Divider(),
-          const _DrawerItem(
-            label: AppStrings.rateUs,
-            icon: Icons.recommend,
-          ),
-          const _DrawerItem(
-            label: AppStrings.removeAd,
-            icon: Icons.remove_circle,
-          ),
+          // const Divider(),
+          // const _DrawerItem(
+          //   label: AppStrings.rateUs,
+          //   icon: Icons.recommend,
+          // ),
+          // const _DrawerItem(
+          //   label: AppStrings.removeAd,
+          //   icon: Icons.remove_circle,
+          // ),
         ],
       ),
     );
