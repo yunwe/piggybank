@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:piggybank/presentation/screens/common_widgets/spacing.dart';
 
-class MyCheckbox extends StatefulWidget {
+class MyCheckbox extends StatelessWidget {
   final String label;
+  final bool isChecked;
+  final void Function(bool?)? onChanged;
 
-  const MyCheckbox({super.key, required this.label});
-
-  @override
-  State<StatefulWidget> createState() => MyCheckboxState();
-}
-
-class MyCheckboxState extends State<MyCheckbox> {
-  bool? isChecked = true;
+  const MyCheckbox({
+    super.key,
+    required this.label,
+    required this.isChecked,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +23,12 @@ class MyCheckboxState extends State<MyCheckbox> {
           height: 25,
           child: Checkbox(
             value: isChecked,
-            onChanged: (newValue) {
-              setState(() {
-                isChecked = newValue;
-              });
-            },
+            onChanged: onChanged,
           ),
         ),
-        const SizedBox(
-          width: 5,
-        ),
+        const Spacing.w5(),
         Text(
-          widget.label,
+          label,
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],

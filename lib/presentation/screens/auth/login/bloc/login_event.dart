@@ -25,6 +25,15 @@ final class LoginPasswordChanged extends LoginEvent {
   List<Object> get props => [password];
 }
 
+final class LoginPersistenceChanged extends LoginEvent {
+  const LoginPersistenceChanged(this.isOn);
+
+  final bool isOn;
+
+  @override
+  List<Object> get props => [isOn];
+}
+
 final class LoginSubmitted extends LoginEvent {
   const LoginSubmitted();
 }

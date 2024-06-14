@@ -15,6 +15,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         super(const LoginState()) {
     on<LoginUsernameChanged>(_onUsernameChanged);
     on<LoginPasswordChanged>(_onPasswordChanged);
+    on<LoginPersistenceChanged>(_onPersistenceChanged);
     on<LoginSubmitted>(_onSubmitted);
   }
 
@@ -48,13 +49,23 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
   }
 
+  void _onPersistenceChanged(
+    LoginPersistenceChanged event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(
+      state.copyWith(rememberMe: event.isOn),
+    );
+  }
+
   Future<void> _onSubmitted(
     LoginSubmitted event,
     Emitter<LoginState> emit,
   ) async {
     if (state.isValid) {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
-      LoginUseCaseInput input = LoginUseCaseInput(state.username.value, state.password.value);
+      LoginUseCaseInput input = LoginUseCaseInput(
+          state.username.value, state.password.value, state.rememberMe);
       Either<Failure, void> value = await _useCase.execute(input);
       if (value.isLeft) {
         emit(state.copyWith(

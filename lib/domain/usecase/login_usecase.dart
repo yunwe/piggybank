@@ -14,12 +14,17 @@ class LoginUseCase implements BaseUseCase<LoginUseCaseInput, void> {
   @override
   Future<Either<Failure, void>> execute(LoginUseCaseInput input) async {
     try {
-      await _repository.signIn(email: input.email, password: input.password);
+      await _repository.signIn(
+        email: input.email,
+        password: input.password,
+        isPersist: input.isPersist,
+      );
       return const Right(null);
     } on BaseException catch (failure) {
       return Left(failure.toFailure);
     } catch (error) {
-      var failure = const Failure('Default Error Message'); //Todo: Change String
+      var failure =
+          const Failure('Default Error Message'); //Todo: Change String
       return Left(failure);
     }
   }
@@ -28,6 +33,7 @@ class LoginUseCase implements BaseUseCase<LoginUseCaseInput, void> {
 class LoginUseCaseInput {
   String email;
   String password;
+  bool isPersist;
 
-  LoginUseCaseInput(this.email, this.password);
+  LoginUseCaseInput(this.email, this.password, this.isPersist);
 }

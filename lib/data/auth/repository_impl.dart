@@ -64,6 +64,7 @@ class FirebaseAuthRepository extends AuthRepository {
   Future<void> signIn({
     required String email,
     required String password,
+    required bool isPersist,
   }) async {
     bool isConnected = await networkInfo.isConnected;
     if (!isConnected) {
@@ -77,7 +78,7 @@ class FirebaseAuthRepository extends AuthRepository {
       );
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw LogInWithEmailAndPasswordFailure.fromCode(e.code);
-    } catch (_) {
+    } catch (e) {
       throw const LogInWithEmailAndPasswordFailure();
     }
   }

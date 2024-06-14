@@ -5,6 +5,7 @@ final class LoginState extends Equatable {
     this.status = FormzSubmissionStatus.initial,
     this.username = const Username.pure(),
     this.password = const Password.pure(),
+    this.rememberMe = true,
     this.isValid = false,
     this.failure = Failure.empty,
   });
@@ -12,6 +13,7 @@ final class LoginState extends Equatable {
   final FormzSubmissionStatus status;
   final Username username;
   final Password password;
+  final bool rememberMe;
   final bool isValid;
   final Failure failure;
 
@@ -19,6 +21,7 @@ final class LoginState extends Equatable {
     FormzSubmissionStatus? status,
     Username? username,
     Password? password,
+    bool? rememberMe,
     bool? isValid,
     Failure? failure,
   }) {
@@ -26,11 +29,12 @@ final class LoginState extends Equatable {
       status: status ?? this.status,
       username: username ?? this.username,
       password: password ?? this.password,
+      rememberMe: rememberMe ?? this.rememberMe,
       isValid: isValid ?? this.isValid,
       failure: failure ?? Failure.empty,
     );
   }
 
   @override
-  List<Object> get props => [status, username, password, failure];
+  List<Object> get props => [status, username, password, rememberMe, failure];
 }

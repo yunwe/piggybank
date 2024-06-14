@@ -42,16 +42,13 @@ class LoginForm extends StatelessWidget {
             const Spacing.h20(),
             _LoginButton(),
             const Spacing.h8(),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyCheckbox(label: AppStrings.rememberMe),
-                LinkText(
-                  page: PAGES.forgotPassword,
-                  text: AppStrings.forgotPassword,
-                ),
-              ],
-            ),
+            const Align(
+              alignment: Alignment.centerRight,
+              child: LinkText(
+                page: PAGES.forgotPassword,
+                text: AppStrings.forgotPassword,
+              ),
+            )
           ],
         ),
       );
@@ -91,6 +88,27 @@ class _PasswordInput extends StatelessWidget {
                 ),
             obscureText: true,
             errorText: state.password.displayError?.text(),
+          );
+        });
+  }
+}
+
+class _RememberMeCheckbox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginBloc, LoginState>(
+        buildWhen: (previous, current) =>
+            previous.rememberMe != current.rememberMe,
+        builder: (context, state) {
+          return MyCheckbox(
+            label: AppStrings.rememberMe,
+            isChecked: state.rememberMe,
+            onChanged: (newvalue) {
+              if (newvalue == null) {
+                return;
+              }
+              context.read<LoginBloc>().add(LoginPersistenceChanged(newvalue));
+            },
           );
         });
   }
