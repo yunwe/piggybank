@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:piggybank/app/route/route.dart';
 import 'package:piggybank/presentation/resources/resources.dart';
 import 'package:piggybank/presentation/screens/common_widgets/widgets.dart';
 import '../bloc/recover_bloc.dart';
@@ -10,36 +11,20 @@ class RecoverForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RecoverBloc, RecoverState>(
-      listener: (context, state) {
-        if (state.status.isFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(state.failure.message)),
-            );
-        }
-      },
-      child: BlocBuilder<RecoverBloc, RecoverState>(builder: (context, state) {
-        if (state.status.isSuccess) {
-          return mailSent(context);
-        }
-        return formContent(context);
-      }),
-    );
-  }
-
-  Widget mailSent(BuildContext context) => Column(
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Your email is on the way'),
-          Text(
-              'Check your email test@test.com and follow the instructions to reset your password'),
-          MyButton.primary(
-            key: AppKeys.registerSubmit,
-            label: AppStrings.labelSignup,
+          formContent(context),
+          const Divider(),
+          const LinkText(
+            page: PAGES.signin,
+            text: AppStrings.signinText,
           ),
         ],
-      );
+      ),
+    );
+  }
 
   Widget formContent(BuildContext context) => FormContainerWidget(
         backgroundColor: Colors.white.withOpacity(AppSize.opacity),
@@ -97,7 +82,7 @@ class _SubmitButton extends StatelessWidget {
                             );
                       }
                     : null,
-                label: AppStrings.labelSignup,
+                label: AppStrings.labelReset,
               );
       },
     );

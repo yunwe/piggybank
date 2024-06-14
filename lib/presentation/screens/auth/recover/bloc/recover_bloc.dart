@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:piggybank/domain/model/models.dart';
-import 'package:piggybank/domain/usecase/login_usecase.dart';
 import 'package:piggybank/domain/usecase/reset_passwrod_usecase.dart';
 import 'package:piggybank/presentation/screens/auth/models/models.dart';
 
