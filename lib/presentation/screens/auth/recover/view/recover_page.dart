@@ -53,17 +53,29 @@ class _Page extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(AppPadding.p20),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                AppStrings.titleMailSent,
-                style: Theme.of(context).textTheme.titleMedium,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    AssetsManager.envelope,
+                    fit: BoxFit.cover,
+                    width: AppSize.squareImage,
+                    height: AppSize.squareImage,
+                  ),
+                  Text(
+                    AppStrings.titleMailSent,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const Spacing.h8(),
+                  Text(
+                    AppStrings.textMailSent,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              Text(
-                AppStrings.textMailSent,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const Spacing.h20(),
               MyButton.primary(
                 key: AppKeys.registerSubmit,
                 label: AppStrings.labelLogin,

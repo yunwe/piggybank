@@ -9,8 +9,7 @@ class AppStrings {
   static const String signinText = "Already have an account? Log In";
   static const String titleSignin = "Sign In";
   static const String titleRegister = "Sign Up";
-  static const String forgotPw =
-      "Don't worry. \nEnter your email and we'll send you a link to reset your password.";
+  static const String forgotPw = "Reset Password";
   static const String titleMailSent = 'Your email is on the way';
   static const String textMailSent =
       'Check your email test@test.com and follow the instructions to reset your password';

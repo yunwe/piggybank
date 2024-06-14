@@ -28,6 +28,8 @@ class AppSize {
   static const double iconSizeL = 35;
 
   static const double elevation = 4;
+
+  static const double squareImage = 280;
 }
 
 class AppKeys {

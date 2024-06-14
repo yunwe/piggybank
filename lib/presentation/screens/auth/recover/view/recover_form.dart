@@ -36,7 +36,7 @@ class RecoverForm extends StatelessWidget {
             children: [
               Text(
                 AppStrings.forgotPw,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const Spacing.h20(),
               _UsernameInput(),
